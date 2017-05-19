@@ -105,7 +105,7 @@ class MovieScraper:
             page_url = 'http://sceper.ws/category/movies/page/' + str(x)
             scraped_movies = self.scrape_page(page_url,scraped_movies)
             
-        self.movieScraped = pd.DataFrame(scraped_movies)
+        self.movieScraped = pd.DataFrame.from_dict(scraped_movies)
         
 #Calling the main function
 #movie_scraped = MovieScraper()
