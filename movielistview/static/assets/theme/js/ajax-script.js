@@ -3,6 +3,8 @@ function scrape_movies() {
     console.log("create post is working!") // sanity check
     console.log($('#scrape_movies_form').serialize())
     var frm = $('#scrape_movies_form');
+    var frm_results = $('#form_results')
+    //frm.LoadingOverlay("show");
     $.ajax({
         type: frm.attr('method'), //GET or POST as defined in HTML
             url: frm.attr('action'), //action defined in HTML
@@ -12,6 +14,9 @@ function scrape_movies() {
         success : function(json) {
             frm[0].reset(); // remove the value from the input
             console.log(json); // log the returned json to the console
+            //frm.LoadingOverlay("hide", true);
+            frm_results.html("<span>You have " + json.no_of_rows +" movies to review</span><br><a href = ''> View Them Now </a>");
+            frm_results.toggleClass('hidden');
             console.log("success"); // another sanity check
         },
 

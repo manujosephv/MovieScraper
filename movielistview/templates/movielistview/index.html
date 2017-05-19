@@ -126,7 +126,7 @@
 
 
                         <div data-form-alert="true">
-                            <div hidden="" data-form-alert-success="true" class="alert alert-form alert-success text-xs-center">Thanks for filling out form!</div>
+                            <div data-form-alert-success="true" class="alert alert-form alert-success text-xs-center hidden" id="form_results">You have 29 movies to review</div>
                         </div>
 
 
@@ -141,7 +141,7 @@
                                         <label class="col-md-1 control-label" for="appendedtext" style="padding-top: 12px;">Scrape</label>
                                         <div class="col-md-2" style="padding-left:1px">
                                             <div class="input-group">
-                                                <input id="scrape_pages" name="scrape_pages" class="form-control" placeholder="100" value="100" type="text" required="">
+                                                <input id="scrape_pages" name="scrape_pages" class="form-control" placeholder="4" value="4" type="text" required="">
                                                 <span class="input-group-addon">pages</span>
                                             </div>
 
@@ -172,7 +172,7 @@
                                             <span></span>
                                         </div>
                                         <div class="col-xs-4">
-                                            <button type="submit" class="btn btn-primary" style="margin-top:20px">SCRAPE NOW</button>
+                                            <button type="submit" class="btn btn-primary btn-lg" id="submit_btn" data-loading-text="<i class='fa fa-spinner fa-spin '></i> SCRAPING MOVIES..." style="margin-top:20px">SCRAPE NOW</button>
                                         </div>
                                         <div class="col-xs-4">
                                             <span></span>
@@ -194,8 +194,9 @@
         </div>
     </footer>
 
-
+     
     <script src="{% static 'assets/web/assets/jquery/jquery.min.js' %}"></script>
+    <script src ="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js"></script>
     <script src="{% static 'assets/tether/tether.min.js' %}"></script>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/smooth-scroll/smooth-scroll.js' %}"></script>
@@ -207,14 +208,22 @@
     <script src="{% static 'assets/formoid/formoid.min.js' %}"></script>
     <script src="{% static 'assets/theme/js/ajax-script.js' %}"></script>
     <script type="text/javascript">
-        $('#scrape_movies_form').on('submit', function(event){
-        event.preventDefault();
-        console.log("form submitted!")  // sanity check
-        scrape_movies();
-});
+                $('#scrape_movies_form').on('submit', function(event){
+                event.preventDefault();
+                console.log("form submitted!")  // sanity check
+                //$('#scrape_movies_form').toggleClass('hidden')
+                scrape_movies();
+            });
+                $(document).ajaxStart(function(){
+                $('#scrape_movies_form').LoadingOverlay("show");
+            });
+            $(document).ajaxStop(function(){
+                $('#scrape_movies_form').LoadingOverlay("hide");
+            });
     </script>
 
-    <input name="animation" type="hidden">
+
+ <!--    <input name="animation" type="hidden"> -->
 </body>
 
 </html>
