@@ -2,6 +2,7 @@
 {% load staticfiles %} 
 {% load humanize %}
 {% load custom_filters %}
+{% load el_pagination_tags %}
 <html>
 
 <head>
@@ -53,7 +54,7 @@
                             <div class="hamburger-icon"></div>
                         </button>
                         <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
-                            <li class="nav-item"><a class="nav-link link" href="#">Home</a></li><li class="nav-item"><a class="nav-link link" href="#form1-1">Scraper</a></li></ul>
+                            <li class="nav-item"><a class="nav-link link" href="/">Home</a></li><li class="nav-item"><a class="nav-link link" href="/#form1-1">Scraper</a></li></ul>
                         <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
                             <div class="close-icon"></div>
                         </button>
@@ -92,7 +93,7 @@
                 <hr class="extra-margins"></hr>
                 <!--Number row-->
                 <div class="row">
-
+                    {% paginate 9 movies %}
                     {% for movie in movies %}
                     <div class="col-md-4">
                         <!--Card-->
@@ -239,15 +240,68 @@
                 </div>
                 <!--/.Number row-->
 
-
+<nav aria-label="Page navigation example">
+  {% get_pages %}
+<ul class="pagination">
+{% if pages.paginated %}
+   
+    <li class="page-item">
+    <a class="page-link" style="color:#232323" href="{{ pages.first.path }}" aria-label="First">
+      <span aria-hidden="true">&lt;&lt;</span>
+      <span class="sr-only">First</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" style="color:#232323" href="{{ pages.previous.path }}" aria-label="Previous">
+      <span aria-hidden="true">&lt;</span>
+      <span class="sr-only">Previous</span>
+    </a>
+  </li>
+   
+  {% for page in pages %}
+    {% if page == None %}
+      <li class="page-item disabled">
+        <a class="page-link" style="color:#232323" href="#" aria-label="...">
+          <span aria-hidden="true">...</span>
+          <span class="sr-only">...</span>
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item {% if page.is_current %} active {% endif %}">
+        <a class="page-link" style="color:#232323" href="{{ page.path }}" aria-label="Page {{page.number}}">
+          <span aria-hidden="true">{{ page.label|safe }}</span>
+          <span class="sr-only">Page {{page.number}}</span>
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+   
+      <li class="page-item">
+    <a class="page-link" style="color:#232323" href="{{ pages.next.path }}" aria-label="Next">
+      <span aria-hidden="true">&gt;</span>
+      <span class="sr-only">Next</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" style="color:#232323" href="{{ pages.last.path }}" aria-label="Last">
+      <span aria-hidden="true">&gt;&gt;</span>
+      <span class="sr-only">Last</span>
+    </a>
+  </li>
+    
+{% endif %}
+</ul>
+</nav>
             </div>
             <!--/.Main layout-->
         </main>
+
     </section>
+
     <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-l" style="background-color: rgb(50, 50, 50); padding-top: 1.75rem; padding-bottom: 1.75rem;">
 
         <div class="container">
-            <p class="text-xs-center">Copyright (c) 2016 Mobirise.</p>
+            <p class="text-xs-center">Copyright (c) 2017 Manu Joseph.</p>
         </div>
     </footer>
 

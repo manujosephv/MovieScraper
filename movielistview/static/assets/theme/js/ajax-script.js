@@ -4,6 +4,9 @@ function scrape_movies() {
     console.log($('#scrape_movies_form').serialize())
     var frm = $('#scrape_movies_form');
     var frm_results = $('#form_results')
+    if (!frm_results.hasClass("hidden")){
+        frm_results.toggleClass('hidden');
+    }
     //frm.LoadingOverlay("show");
     $.ajax({
         type: frm.attr('method'), //GET or POST as defined in HTML
@@ -16,7 +19,13 @@ function scrape_movies() {
             console.log(json); // log the returned json to the console
             //frm.LoadingOverlay("hide", true);
             frm_results.html("<span>You have " + json.no_of_rows +" movies to review</span><br><a href = '/view_movies/'> View Them Now </a>");
-            frm_results.toggleClass('hidden');
+            if (frm_results.hasClass("hidden")){
+                frm_results.toggleClass('hidden');
+            }
+            if (frm_results.hasClass("alert-danger")){
+                frm_results.switchClass("alert-danger", "alert-success",1000,easeInOutQuad);
+            }
+            
             console.log("success"); // another sanity check
         },
 
@@ -25,6 +34,13 @@ function scrape_movies() {
             //$('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
               //  " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            frm_results.html("<span>Something went wrong. Try again</span>");
+            if (frm_results.hasClass("hidden")){
+                frm_results.toggleClass('hidden');
+            }
+            if (frm_results.hasClass("alert-success")){
+                frm_results.switchClass("alert-success", "alert-danger",1000,easeInOutQuad);
+            }
         }
     });
 };

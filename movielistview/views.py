@@ -16,7 +16,7 @@ from django.db import transaction
 
 # Create your views here.
 def index(request):
-    return render(request, 'movielistview/index.html', {})
+    return render(request, 'movielistview/index.html', {"movie_count":Movie.objects.count()})
 
 @transaction.atomic
 def scrape_movies(request):
