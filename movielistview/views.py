@@ -35,7 +35,6 @@ def scrape_movies(request):
             movie_clean.clean_movie()
             movie_df = movie_clean.cleanMovieList
             print("scrape complete")
-
             #Deleting all existing entries
             Movie.objects.all().delete()
             #rename dataframe to match model
@@ -43,7 +42,9 @@ def scrape_movies(request):
                 'imdb_link','rt_link', 'post_link','release_name', 'release_date','thumbnail_link',
                 'date_time','trailer_link', 'tomatometer','rt_rating']
             movie_df.columns = cols
-            movie_df.replace(r'\s+', np.nan, regex=True, inplace=True)
+            print(movie_df.name)
+            movie_df.replace(r'^\s+$', np.nan, regex=True, inplace=True)
+            print(movie_df.name)
             movie_dict = movie_df.to_dict('records')
             #replacing empty strings with None
 
@@ -70,3 +71,9 @@ def scrape_movies(request):
             json.dumps({"result": "this isn't happening"}),
             content_type="application/json"
         )
+
+def view_movies(request):
+    movies = Movie.objects.all()
+    print(movies)
+    return render(request, 'movielistview/view_movies.html', {'movies': movies})
+#    return render(request, 'movielistview/page1.html', {})

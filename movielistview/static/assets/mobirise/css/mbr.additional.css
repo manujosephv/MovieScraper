@@ -425,11 +425,11 @@ h6,
   color: #ffffff;
 }
 #menu-0 .link {
-  font-size: 1.1rem;
+  font-size: 0.75rem;
 }
 #menu-0 .dropdown-item,
 #menu-0 .nav-dropdown-sm .link {
-  font-size: 1.191rem;
+  font-size: 0.812rem;
 }
 #menu-0 .link:hover,
 #menu-0 .dropdown-item:hover,
@@ -439,19 +439,19 @@ h6,
 }
 #menu-0 .link[aria-expanded="true"],
 #menu-0 .dropdown-menu {
-  background: #d03020;
+  background: #0e0e0e;
 }
 #menu-0 .nav-dropdown-sm .link:focus,
 #menu-0 .nav-dropdown-sm .link:hover,
 #menu-0 .nav-dropdown-sm .dropdown-item:focus,
 #menu-0 .nav-dropdown-sm .dropdown-item:hover {
-  background: #e04434!important;
+  background: #202020!important;
 }
 #menu-0 .navbar,
 #menu-0 .nav-dropdown-sm,
 #menu-0 .nav-dropdown-sm .link[aria-expanded="true"],
 #menu-0 .nav-dropdown-sm .dropdown-menu {
-  background: #e25041;
+  background: #282828;
 }
 #menu-0 .bg-color.transparent .link {
   color: #ffffff;
@@ -466,7 +466,7 @@ h6,
 }
 #menu-0 .link[aria-expanded="true"],
 #menu-0 .dropdown-item[aria-expanded="true"] {
-  color: #e25041!important;
+  color: #125afa!important;
 }
 #menu-0.mbr-navbar--stuck .mbr-navbar__section {
   background: #2c2c2c;
@@ -501,11 +501,11 @@ h6,
   color: #ffffff;
 }
 #menu-h .link {
-  font-size: 1.1rem;
+  font-size: 0.75rem;
 }
 #menu-h .dropdown-item,
 #menu-h .nav-dropdown-sm .link {
-  font-size: 1.191rem;
+  font-size: 0.812rem;
 }
 #menu-h .link:hover,
 #menu-h .dropdown-item:hover,
@@ -515,19 +515,19 @@ h6,
 }
 #menu-h .link[aria-expanded="true"],
 #menu-h .dropdown-menu {
-  background: #d03020;
+  background: #0e0e0e;
 }
 #menu-h .nav-dropdown-sm .link:focus,
 #menu-h .nav-dropdown-sm .link:hover,
 #menu-h .nav-dropdown-sm .dropdown-item:focus,
 #menu-h .nav-dropdown-sm .dropdown-item:hover {
-  background: #e04434!important;
+  background: #202020!important;
 }
 #menu-h .navbar,
 #menu-h .nav-dropdown-sm,
 #menu-h .nav-dropdown-sm .link[aria-expanded="true"],
 #menu-h .nav-dropdown-sm .dropdown-menu {
-  background: #e25041;
+  background: #282828;
 }
 #menu-h .bg-color.transparent .link {
   color: #ffffff;
@@ -542,7 +542,7 @@ h6,
 }
 #menu-h .link[aria-expanded="true"],
 #menu-h .dropdown-item[aria-expanded="true"] {
-  color: #e25041!important;
+  color: #c0a375!important;
 }
 #menu-h.mbr-navbar--stuck .mbr-navbar__section {
   background: #2c2c2c;
