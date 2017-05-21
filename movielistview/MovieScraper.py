@@ -12,11 +12,23 @@ import datetime
 import sys
 import re
 from django.utils import timezone
+from dateutil.parser import parse
+import datefinder
+import difflib
+from datetime import datetime, timedelta
 
 
 class MovieScraper:
     
     movieScraped = pd.DataFrame()
+    std_list_of_releases = ['CAMRip','CAM ','TS','TELESYNC','PDVD ','WP','WORKPRINT ','TC','TELECINE ',
+                            'PPV','PPVRip ','SCR','SCREENER','DVDSCR','DVDSCREENER','BDSCR ','DDC ','R5',
+                            'R5.LINE','R5.AC3.5.1.HQ ','DVDRip ','DVDR','DVD-Full','Full-Rip','ISO rip',
+                            'untouched rip','DSR','DSRip','SATRip','DTHRip','DVBRip','HDTV','PDTV','TVRip',
+                            'HDTVRip ','VODRip','VODR ','WEBDL','WEB DL','WEB-DL','HDRip ','WEBRip (P2P)',
+                            'WEB Rip (P2P)','WEB-Rip (P2P)','WEB (Scene) ','WEB-Cap','WEBCAP','WEB Cap ',
+                            'BDRip','BRRip','Blu-Ray','BluRay','BLURAY','BDMV','BDR']
+
     @classmethod
     def __init__(self):
         stdout = sys.stdout
@@ -24,6 +36,20 @@ class MovieScraper:
         sys.setdefaultencoding('utf-8')
         sys.stdout = stdout
     
+    def find_release_type_from_name(name,std_list_of_release_names):
+    std_list_of_release_names = [x.upper() for x in std_list_of_release_names]
+    release = ""
+    release_score = 0
+    for part in name.upper().split('.'):
+        if len(difflib.get_close_matches(part,std_list_of_release_names,1,0.8))==1:
+            curr_release = difflib.get_close_matches(part,std_list_of_release_names,1,0.8)[0]
+            curr_release_score = difflib.SequenceMatcher(None,curr_release, part).ratio()
+            if curr_release_score > release_score:
+                release_score = curr_release_score
+                release = curr_release
+    return release
+
+
     @classmethod
     def scrape_page(self,url,scrape_list):
         entry_dict = {}
@@ -44,6 +70,7 @@ class MovieScraper:
                 post_link = entry.find('h2' , {"class" : "title"}).find('a').get('href')
                 entry_dict['Post Link'] = post_link
                 meta_divs = entry_content.findAll('div', {"class" : "meta"})
+                post_meta = entry.findNext('div', {'class':"post-meta"})
                 release_info = ""
                 release_desc = ""
                 link_div = None
@@ -68,7 +95,15 @@ class MovieScraper:
                     dict_items = re.split(r'\s*:\s*',item)
                     if len(dict_items) > 1:
                         entry_dict[dict_items[0]] = dict_items[1]
-                
+                if 'Release Name' in entry_dict:
+                    entry_dict['Release Type'] = find_release_type_from_name(entry_dict['Release Name'], std_list_of_release_names)
+                if 'Release Date' in entry_dict:
+                try:
+                    if entry_dict['Release Date'] is not None:
+                        entry_dict['Release Date'] = parse(entry_dict['Release Date'])
+                except:
+                    entry_dict['Release Date'] = np.nan
+                #parsing links
                 if link_div is not None:
                     links =link_div.findAll('a')
                     for link in links:
@@ -82,10 +117,19 @@ class MovieScraper:
                         match = re.search(r'[Tt][Rr][Aa][Ii][Ll][Ee][Rr]',link_text)
                         if match is not None:
                             entry_dict['Trailer Link'] = link.get('href')
-                
-                #entry_dict['date_time'] = datetime.datetime.now()
-                entry_dict['date_time'] = timezone.now()
-                scrape_list.append(entry_dict)
+                #Parsing Post Date
+                matches = datefinder.find_dates(post_meta.text)
+                for match in matches:
+                    entry_dict['post_date'] = match
+                    break
+                entry_dict['date_time'] = datetime.now()
+                # #Debug
+                # entry_dict['post_meta'] = post_meta.text
+                #if condition to stop scraping once date is hit
+                if entry_dict['post_date'] > last_date - timedelta(days=1):
+                    scrape_list.append(entry_dict)
+                else:
+                    break
             return scrape_list
         except urllib2.HTTPError :
             print("HTTPERROR!")
@@ -97,14 +141,14 @@ class MovieScraper:
     @classmethod
     def scrape_site(self,pages):
         scraped_movies = []
-        scraped_movies = self.scrape_page('http://sceper.ws/category/movies',scraped_movies)
+        scraped_movies = self.scrape_page('http://sceper.ws/category/movies',scraped_movies,datetime.now()) #Replace with date
         #from progressbar import ProgressBar
         #pbar = ProgressBar()
         #for x in pbar(range(2,pages)):
         for x in range(2,pages):
             print(x)
             page_url = 'http://sceper.ws/category/movies/page/' + str(x)
-            scraped_movies = self.scrape_page(page_url,scraped_movies)
+            scraped_movies = self.scrape_page(page_url,scraped_movies,datetime.now()) #Replace with date
             
         self.movieScraped = pd.DataFrame.from_dict(scraped_movies)
         
