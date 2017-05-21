@@ -18,12 +18,15 @@ class Movie(models.Model):
     rt_link = models.URLField(max_length = 500, null=True, blank=True)
     post_link = models.URLField(max_length = 500, null=True, blank=True)
     release_name = models.CharField(max_length = 300)
+    release_type = models.CharField(max_length = 300)
     release_date = models.CharField(max_length = 100, null=True, blank=True)
     thumbnail_link = models.URLField(max_length = 500)
     date_time = models.DateTimeField()
+    post_date = models.DateTimeField()
     trailer_link = models.URLField(max_length = 500, null=True, blank=True)
     tomatometer = models.CharField(max_length = 5,null=True, blank=True)
     rt_rating = models.FloatField(null=True, blank=True)
+
 
     def __unicode__(self):
         return self.name
