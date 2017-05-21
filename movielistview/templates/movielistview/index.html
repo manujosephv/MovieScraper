@@ -24,7 +24,9 @@
     <link rel="stylesheet" href="{% static 'assets/socicon/css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/custom_style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/smoke-validator/css/smoke.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/mobirise/css/mbr.additional.css' %}" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/css/bootstrap-slider.min.css" rel="stylesheet">
 
 
 
@@ -126,7 +128,7 @@
         <div class="mbr-section mbr-section-nopadding">
             <div class="container">
                 <div class="row">
-                    <div class="col-xs-12 col-lg-10 col-lg-offset-1">
+                    <div class="col-xs-12 col-lg-10 col-lg-offset-2">
 
 
                         <div data-form-alert="true">
@@ -142,29 +144,65 @@
 
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <label class="col-md-1 control-label" for="appendedtext" style="padding-top: 12px;">Scrape</label>
-                                        <div class="col-md-2" style="padding-left:1px">
+                                        <div class ="row">
+                                        <span class="col-md-2"> </span>
+                                        <label class="col-md-3 control-label" for="appendedtext" style="padding-top: 12px;">Pages to be scraped</label>
+                                        <div class="col-md-4" style="padding-top:12px">
                                             <div class="input-group">
-                                                <input id="scrape_pages" name="scrape_pages" class="form-control" placeholder="4" value="4" type="text" required="" type="number">
-                                                <span class="input-group-addon">pages</span>
+                                                <input id="scrape_pages_slider" name="scrape_pages_slider" class="form-control" type="number" 
+                                                data-provide="slider"
+                                                data-slider-min="1"
+                                                data-slider-max="200"
+                                                data-slider-step="1"
+                                                data-slider-value="10"
+                                                data-slider-tooltip="hide">
                                             </div>
 
                                         </div>
-                                        <label class="col-md-2 control-label" for="appendedtext" style="padding-top: 12px;">Min. Rating Req.</label>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                            <input id="scrape_pages" name="scrape_pages" class="form-control" type="number" value="10" data-smk-type="number" data-smk-min="1" data-smk-max="200" required> 
+                                            <span class="input-group-addon">pages</span>
+                                            </div>
+                                            </div>
+<!--                                        <span class="col-md-1"> </span>-->
+                                    </div>
+                                        <hr>
+                                        <div class="row" style="margin-top:25px">
+                                        <span class="col-md-2"> </span>
+                                        <label class="col-md-3 control-label" for="appendedtext">Min. Rating Req.</label>
                                         <div class="col-md-2" style="padding-left:1px">
                                             <div class="input-group">
-                                                <input id="min_rating" name="min_rating" class="form-control" placeholder="6" value="6" type="text" required="">
-                                                <span class="input-group-addon">stars</span>
+                                                <input id="min_rating" name="min_rating" class="form-control" type="number"
+                                                data-provide="slider"
+                                                data-slider-min="1"
+                                                data-slider-max="10"
+                                                data-slider-step=".1"
+                                                data-slider-value="6"
+                                                data-slider-tooltip="always">
+<!--                                                <span class="input-group-addon">stars</span>-->
                                             </div>
 
                                         </div>
-                                        <label class="col-md-2 control-label" for="appendedtext" style="padding-top: 12px;">Min. Votes Req.</label>
+                                        <span class="col-md-5"> </span>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <span class="col-md-2"> </span>
+                                            <label class="col-md-3 control-label" for="appendedtext" >Min. Votes Req.</label>
                                         <div class="col-md-3" style="padding-left:1px">
                                             <div class="input-group">
-                                                <input id="min_votes" name="min_votes" class="form-control" placeholder="1000" value="1000" type="text" required="">
-                                                <span class="input-group-addon">votes</span>
+                                                <input id="min_votes" name="min_votes" class="form-control" type="number"
+                                                data-provide="slider"
+                                                data-slider-min="500"
+                                                data-slider-max="3000"
+                                                data-slider-step="500"
+                                                data-slider-value="1000"
+                                                data-slider-tooltip="always">
                                             </div>
 
+                                        </div>
+                                            <span class="col-md-5"> </span>
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +214,7 @@
                                             <span></span>
                                         </div>
                                         <div class="col-xs-4">
-                                            <button type="submit" class="btn btn-primary btn-lg" id="submit_btn" data-loading-text="<i class='fa fa-spinner fa-spin '></i> SCRAPING MOVIES..." style="margin-top:20px">SCRAPE NOW</button>
+                                            <button type="submit" class="btn btn-primary btn-lg" id="submit_btn" style="margin-top:20px">SCRAPE NOW</button>
                                         </div>
                                         <div class="col-xs-4">
                                             <span></span>
@@ -211,7 +249,9 @@
     <script src="{% static 'assets/theme/js/script.js' %}"></script>
     <script src="{% static 'assets/formoid/formoid.min.js' %}"></script>
     <script src="{% static 'assets/theme/js/ajax-script.js' %}"></script>
-    <!-- <script src="{% static 'assets/theme/js/mdb.min.js' %}"></script> -->
+        <script src="{% static 'assets/smoke-validator/js/smoke.min.js' %}"></script>
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
+    
     <script type="text/javascript">
                 $('#scrape_movies_form').on('submit', function(event){
                 event.preventDefault();
@@ -225,7 +265,19 @@
             $(document).ajaxStop(function(){
                 $('#scrape_movies_form').LoadingOverlay("hide");
             });
+            $(document).ajaxError(function(){
+                $('#scrape_movies_form').LoadingOverlay("hide");
+            });
+        // With JQuery
+        $("#scrape_pages_slider").on("slide", function(slideEvt) {
+            $("#scrape_pages").val(slideEvt.value);
+        });
+        
+//        $(":input").bind('keyup mouseup', function () {
+//            $("#scrape_pages_slider").bootstrapSlider('setValue', $(this).val());
+//        });
     </script>
+        
 
 
  <!--    <input name="animation" type="hidden"> -->

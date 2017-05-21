@@ -28,7 +28,7 @@ def scrape_movies(request):
             scrape_pages = scrape_form.cleaned_data['scrape_pages']
             min_rating = scrape_form.cleaned_data['min_rating']
             min_votes = scrape_form.cleaned_data['min_votes']
-            print('about to scrape')
+            print('about to scrape' + str(scrape_pages) +" pages")
             movie_scraped = MovieScraper()
             movie_scraped.scrape_site(scrape_pages)
             movie_clean = MovieListCleaner(movie_scraped.movieScraped, min_rating,min_votes)

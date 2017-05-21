@@ -23,7 +23,7 @@ function scrape_movies() {
                 frm_results.toggleClass('hidden');
             }
             if (frm_results.hasClass("alert-danger")){
-                frm_results.switchClass("alert-danger", "alert-success",1000,easeInOutQuad);
+                frm_results.addClass("alert-success").removeClass("alert-danger");
             }
             
             console.log("success"); // another sanity check
@@ -34,12 +34,13 @@ function scrape_movies() {
             //$('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
               //  " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            //frm.LoadingOverlay("hide");
             frm_results.html("<span>Something went wrong. Try again</span>");
             if (frm_results.hasClass("hidden")){
                 frm_results.toggleClass('hidden');
             }
             if (frm_results.hasClass("alert-success")){
-                frm_results.switchClass("alert-success", "alert-danger",1000,easeInOutQuad);
+                frm_results.addClass("alert-danger").removeClass("alert-success");
             }
         }
     });

@@ -102,6 +102,7 @@ class MovieScraper:
         #pbar = ProgressBar()
         #for x in pbar(range(2,pages)):
         for x in range(2,pages):
+            print(x)
             page_url = 'http://sceper.ws/category/movies/page/' + str(x)
             scraped_movies = self.scrape_page(page_url,scraped_movies)
             
