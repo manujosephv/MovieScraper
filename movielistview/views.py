@@ -25,26 +25,29 @@ def scrape_movies(request):
         response_data = {}
         if scrape_form.is_valid():
             #Actions to be done here
+            #post_max_date = Movies.objects.all().aggregate(Max('post_date'))
+            post_max_date = datetime.datetime.now()- datetime.timedelta(days=40)
+            #Scraping last x pages checking for new entries only
             scrape_pages = scrape_form.cleaned_data['scrape_pages']
-            min_rating = scrape_form.cleaned_data['min_rating']
-            min_votes = scrape_form.cleaned_data['min_votes']
+            #min_rating = scrape_form.cleaned_data['min_rating']
+            #min_votes = scrape_form.cleaned_data['min_votes']
             print('about to scrape' + str(scrape_pages) +" pages")
             movie_scraped = MovieScraper()
-            movie_scraped.scrape_site(scrape_pages)
-            movie_clean = MovieListCleaner(movie_scraped.movieScraped, min_rating,min_votes)
+            movie_scraped.scrape_site(scrape_pages, post_max_date)
+            movie_clean = MovieListCleaner(movie_scraped.movieScraped)
             movie_clean.clean_movie()
             movie_df = movie_clean.cleanMovieList
             print("scrape complete")
             #Deleting all existing entries
-            Movie.objects.all().delete()
+            #Movie.objects.all().delete()
             #rename dataframe to match model
             cols = [ 'name','year', 'genre', 'imdb_rating', 'imdb_votes','rt_critics','plot', 'starring','director', 
-                'imdb_link','rt_link', 'post_link','release_name', 'release_date','thumbnail_link',
-                'date_time','trailer_link', 'tomatometer','rt_rating']
+                'imdb_link','rt_link', 'post_link','release_name', 'release_type', 'release_date','thumbnail_link',
+                'date_time','trailer_link', 'tomatometer','rt_rating','post_date']
             movie_df.columns = cols
-            print(movie_df.name)
+            #print(movie_df.name)
             movie_df.replace(r'^\s+$', np.nan, regex=True, inplace=True)
-            print(movie_df.name)
+            #print(movie_df.name)
             movie_dict = movie_df.to_dict('records')
             #replacing empty strings with None
 
@@ -54,8 +57,10 @@ def scrape_movies(request):
 
             response_data['no_of_rows'] = Movie.objects.count()
             response_data['result'] = 'Scrape Completed'
-            response_data['movie_count'] = len(movie_df.index)
+            response_data['movie_count_added'] = len(movie_df.index)
             response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
+            response_data['debug_info1'] = Movies.objects.all().aggregate(Max('post_date'))
+            response_data['debug_info2'] = Movies.objects.all().latest('post_date')
 
             return HttpResponse(
                 json.dumps(response_data),

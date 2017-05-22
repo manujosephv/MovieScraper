@@ -16,6 +16,7 @@ from dateutil.parser import parse
 import datefinder
 import difflib
 from datetime import datetime, timedelta
+import time
 
 
 class MovieScraper:
@@ -35,32 +36,47 @@ class MovieScraper:
         reload(sys)
         sys.setdefaultencoding('utf-8')
         sys.stdout = stdout
-    
-    def find_release_type_from_name(name,std_list_of_release_names):
-    std_list_of_release_names = [x.upper() for x in std_list_of_release_names]
-    release = ""
-    release_score = 0
-    for part in name.upper().split('.'):
-        if len(difflib.get_close_matches(part,std_list_of_release_names,1,0.8))==1:
-            curr_release = difflib.get_close_matches(part,std_list_of_release_names,1,0.8)[0]
-            curr_release_score = difflib.SequenceMatcher(None,curr_release, part).ratio()
-            if curr_release_score > release_score:
-                release_score = curr_release_score
-                release = curr_release
-    return release
+
+    @classmethod
+    def find_release_type_from_name(self,name,std_list_of_release_names):
+        std_list_of_release_names = [x.upper() for x in std_list_of_release_names]
+        release = ""
+        release_score = 0
+        for part in name.upper().split('.'):
+            if len(difflib.get_close_matches(part,std_list_of_release_names,1,0.8))==1:
+                curr_release = difflib.get_close_matches(part,std_list_of_release_names,1,0.8)[0]
+                curr_release_score = difflib.SequenceMatcher(None,curr_release, part).ratio()
+                if curr_release_score > release_score:
+                    release_score = curr_release_score
+                    release = curr_release
+        return release
 
 
     @classmethod
-    def scrape_page(self,url,scrape_list):
+    def scrape_page(self,url,scrape_list, post_date):
         entry_dict = {}
         try :
-            
-            proxy = urllib2.ProxyHandler({'https': 'https://www.proxysite.com/'})
-            opener = urllib2.build_opener(proxy)
-            urllib2.install_opener(opener)
+            print('SETTING UP PROXY')
+            #proxy = urllib2.ProxyHandler({'https': 'https://www.proxysite.com/'})
+            #opener = urllib2.build_opener(proxy)
+            #urllib2.install_opener(opener)
+            candidate_proxies = ['https://www.proxysite.com/',
+                     'https://www.freeproxyserver.co/']
+            for proxy in candidate_proxies:
+                print "Trying HTTP proxy %s" % proxy
+                try:
+                    web_page = urllib.urlopen(url, proxies={'http': proxy})
+                    print "Got URL using proxy %s" % proxy
+                    break
+                except:
+                    print "Trying next proxy in 5 seconds"
+                    time.sleep(5)
 
-            req = urllib2.Request(url, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
-            web_page = urllib2.urlopen(req)
+
+            #print('SENDING REQ') #ADd timeout
+            #req = urllib2.Request(url, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
+            #web_page = urllib2.urlopen(req)
+            #print('OPENING WEBPAGE')
             soup = BeautifulSoup(web_page,'html.parser')
             divs = soup.find('div', id='recent-posts')
             entries = divs.findAll('div', { "class" : "entry" })
@@ -96,13 +112,13 @@ class MovieScraper:
                     if len(dict_items) > 1:
                         entry_dict[dict_items[0]] = dict_items[1]
                 if 'Release Name' in entry_dict:
-                    entry_dict['Release Type'] = find_release_type_from_name(entry_dict['Release Name'], std_list_of_release_names)
+                    entry_dict['Release Type'] = self.find_release_type_from_name(entry_dict['Release Name'], self.std_list_of_releases)
                 if 'Release Date' in entry_dict:
-                try:
-                    if entry_dict['Release Date'] is not None:
-                        entry_dict['Release Date'] = parse(entry_dict['Release Date'])
-                except:
-                    entry_dict['Release Date'] = np.nan
+                    try:
+                        if entry_dict['Release Date'] is not None:
+                            entry_dict['Release Date'] = parse(entry_dict['Release Date'])
+                    except ValueError:
+                        entry_dict['Release Date'] = np.nan
                 #parsing links
                 if link_div is not None:
                     links =link_div.findAll('a')
@@ -131,24 +147,26 @@ class MovieScraper:
                 else:
                     break
             return scrape_list
-        except urllib2.HTTPError :
+        except urllib2.HTTPError as err :
             print("HTTPERROR!")
+            print(err.code)
             return 0
         except urllib2.URLError :
             print("URLERROR!")
             return 0
     
     @classmethod
-    def scrape_site(self,pages):
+    def scrape_site(self,pages,post_date):
         scraped_movies = []
-        scraped_movies = self.scrape_page('http://sceper.ws/category/movies',scraped_movies,datetime.now()) #Replace with date
+        scraped_movies = self.scrape_page('http://sceper.ws/category/movies',scraped_movies,post_date) #Replace with date
+        print("scrape first page done")
         #from progressbar import ProgressBar
         #pbar = ProgressBar()
         #for x in pbar(range(2,pages)):
         for x in range(2,pages):
             print(x)
             page_url = 'http://sceper.ws/category/movies/page/' + str(x)
-            scraped_movies = self.scrape_page(page_url,scraped_movies,datetime.now()) #Replace with date
+            scraped_movies = self.scrape_page(page_url,scraped_movies,post_date) #Replace with date
             
         self.movieScraped = pd.DataFrame.from_dict(scraped_movies)
         

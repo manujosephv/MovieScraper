@@ -23,9 +23,12 @@ class Movie(models.Model):
     thumbnail_link = models.URLField(max_length = 500)
     date_time = models.DateTimeField()
     post_date = models.DateTimeField()
+    movie_read_date = models.DateTimeField()
     trailer_link = models.URLField(max_length = 500, null=True, blank=True)
     tomatometer = models.CharField(max_length = 5,null=True, blank=True)
     rt_rating = models.FloatField(null=True, blank=True)
+    movie_read = models.BooleanField(default = False)
+    key = models.CharField(max_length = 5000)
 
 
     def __unicode__(self):
