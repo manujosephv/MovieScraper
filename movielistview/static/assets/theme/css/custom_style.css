@@ -1,5 +1,4 @@
 main {
-    padding-top: 3rem;
     padding-bottom: 2rem;
 }
 
@@ -32,6 +31,30 @@ a {
 
 .alert a {
     color:#fff   
+}
+
+.nav-link a:hover,.nav-link a:focus{
+    color:darkred
+}
+
+/* CSS for slider */
+#filter-movies-form .slider-selection {
+	background: #BABABA;
+}
+
+
+.slider-handle.custom {
+/*	background: transparent none;*/
+    background: #838383
+	/* You can customize the handle and set a background image */
+}
+
+/* Or display content like unicode characters or fontawesome icons */
+.slider-handle.custom::before {
+	line-height: 20px;
+	font-size: 20px;
+	content: '"\f005"'; /*unicode star character*/
+	color: #ffd606;
 }
 
 /*For animated checkbox*/
@@ -105,3 +128,209 @@ a {
 .radio label input[type="radio"]:disabled + .cr {
     opacity: .5;
 } 
+
+
+
+.switch {
+	position: absolute;
+	top: 50%;
+/*	left: 50%;*/
+	width: 150px;
+	height: 50px;
+	text-align: center;
+/*	margin: -30px 0 0 -75px;*/
+	background: #4cd964;
+	transition: all 0.2s ease;
+	border-radius: 25px;
+}
+
+.switch span {
+	position: absolute;
+	width: 20px;
+	height: 4px;
+	top: 50%;
+	left: 50%;
+	margin: -2px 0px 0px -4px;
+	background: #fff;
+	display: block;
+	transform: rotate(-45deg);
+	transition: all 0.2s ease;
+	border-radius: 2px;
+}
+
+.switch span:after {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 4px;
+	height: 12px;
+	margin-top: -8px;
+	background: #fff;
+	transition: all 0.2s ease;
+	border-radius: 2px;
+}
+
+input[type=radio] {
+	display: none;
+}
+
+.switch label {
+	cursor: pointer;
+	color: rgba(0,0,0,0.2);
+	width: 60px;
+	line-height: 50px;
+	transition: all 0.2s ease;
+}
+
+label[for=yes] {
+	position: absolute;
+	left: 0px;
+	height: 20px;
+}
+
+label[for=no] {
+	position: absolute;
+	right: 0px;
+}
+
+#no:checked ~ .switch {
+	background: #ff3b30;
+}
+
+#no:checked ~ .switch span {
+	background: #fff;
+	margin-left: -8px;
+}
+
+#no:checked ~ .switch span:after {
+	background: #fff;
+	height: 20px;
+	margin-top: -8px;
+	margin-left: 8px;
+}
+
+#yes:checked ~ .switch label[for=yes] {
+	color: #fff;
+
+	color: #fff;
+}
+
+#no:checked ~ .switch label[for=no] {
+	color: #fff;
+}
+
+/*test space */
+.container-pill {
+	height: 100%;
+	width: 100%;
+	max-width: 600px;
+	box-sizing: border-box;
+	margin: $margin auto 0;
+	padding: 0 $margin;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.box {
+	margin-bottom: $margin;
+	padding: $margin;
+	
+	text-align: center;
+
+	background: white;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(black, 0.2);
+}
+
+.box-input {
+	color: #ba2b1c;
+    font-weight: 500;
+}
+
+.box-output {
+	color: white;
+	background: #345d71;
+	padding: $margin * 2;
+}
+
+.number-container {
+	margin: 0 0.8em;
+	vertical-align: 20%;
+	color: $col-bg;
+	
+	@include bp-max($bp-small) {
+		display: block;
+		margin: $margin 0;
+	}
+}
+
+.number-input,
+.hash,
+.date-output {
+	font-family: inherit;
+	font-weight: 700;
+	vertical-align: middle;
+}
+
+.hash {
+	margin-right: - 0.2em;
+	font-size: 1.5em;
+}
+
+.number-input {
+	width: 2.25em;
+	padding: 0 0 0 0.2em;
+	box-sizing: border-box;
+	margin: -0.15em 0;
+	
+	font-size: 2.0em;
+	color: inherit;
+
+	background: transparent;
+	border: none;
+	border-bottom: 2px solid $col-bg;
+	outline: none;
+	-moz-appearance: textfield;
+	&::-webkit-inner-spin-button { display: none; }
+	
+	&:before {
+		content: '#';
+	}
+	
+	&::placeholder {
+		opacity: 0.2;
+		color: inherit;
+	}
+}
+
+.output {
+	display: none;
+}
+
+.date-container {
+	margin-bottom: $margin;
+}
+
+.date-output {
+	margin-left: 0.3em;
+	
+	font-size: 2.2em;
+	font-weight: 700;
+	vertical-align: -20%;
+	
+	@include bp-max($bp-small) {
+		display: block;
+		margin: $margin 0;
+	}
+}
+
+.text-container {
+	max-width: 300px;
+	margin: 0 auto;
+}
+
+.number-output,
+.days-output {
+	font-weight: 700;
+}
