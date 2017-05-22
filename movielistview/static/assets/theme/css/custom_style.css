@@ -248,6 +248,11 @@ label[for=no] {
     font-weight: 500;
 }
 
+.box-input .quote-text{
+    font-weight: 600;
+    color:azure
+}
+
 .box-output {
 	color: white;
 	background: #345d71;
@@ -334,3 +339,25 @@ label[for=no] {
 .days-output {
 	font-weight: 700;
 }
+
+
+
+.bqstart {
+float: left;
+    height: 45px;
+    margin-top: -50px;
+    margin-bottom: -50px;
+    font-size: 700%;
+    color: #FF0000;
+    margin-left: -40px
+ }
+
+ .bqend {
+float: right;
+    height: 45px;
+    margin-top: -50px;
+    font-size: 700%;
+    margin-left: -50px;
+    color: #FF0000;
+    margin-right: -35px;
+ }
