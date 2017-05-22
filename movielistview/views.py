@@ -12,6 +12,9 @@ from MovieListCleaner import MovieListCleaner
 import pandas as pd
 import numpy as np
 from django.db import transaction
+from django.db.models import Max
+from django.db.models import Min
+from django.utils import timezone
 
 
 # Create your views here.
@@ -47,6 +50,12 @@ def scrape_movies(request):
             movie_df.columns = cols
             #print(movie_df.name)
             movie_df.replace(r'^\s+$', np.nan, regex=True, inplace=True)
+            #Making Date-time Timezone aware
+            movie_df['release_date'] = movie_df['release_date'].map(lambda x: timezone.make_aware(x))
+            movie_df['date_time'] = movie_df['date_time'].map(lambda x: timezone.make_aware(x))
+            movie_df['post_date'] = movie_df['post_date'].map(lambda x: timezone.make_aware(x))
+            #Make Key
+            movie_df['key'] = movie_df.apply(lambda row: ','.join(map(str, row)), axis=1)
             #print(movie_df.name)
             movie_dict = movie_df.to_dict('records')
             #replacing empty strings with None
@@ -59,8 +68,8 @@ def scrape_movies(request):
             response_data['result'] = 'Scrape Completed'
             response_data['movie_count_added'] = len(movie_df.index)
             response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
-            response_data['debug_info1'] = Movies.objects.all().aggregate(Max('post_date'))
-            response_data['debug_info2'] = Movies.objects.all().latest('post_date')
+            response_data['debug_info1'] = Movie.objects.latest('post_date').post_date.isoformat()
+            #response_data['debug_info2'] = Movie.objects.all().latest('post_date')
 
             return HttpResponse(
                 json.dumps(response_data),
@@ -78,7 +87,7 @@ def scrape_movies(request):
         )
 
 def view_movies(request):
-    movies = Movie.objects.all()
+    movies = Movie.objects.all().order_by('-post_date')
     print(movies)
     return render(request, 'movielistview/view_movies.html', {'movies': movies})
 #    return render(request, 'movielistview/page1.html', {})

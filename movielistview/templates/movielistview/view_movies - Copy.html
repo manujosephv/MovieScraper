@@ -28,7 +28,6 @@
     <link rel="stylesheet" href="{% static 'assets/theme/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/custom_style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/mobirise/css/mbr.additional.css' %}" type="text/css">
-    
 
 
 
@@ -86,18 +85,6 @@
         </div>
 
     </section>
-    <section class="mbr-section mbr-section__container" id="buttons1-o" style="background-color:rgb(255,255,255); padding-top:20px; padding-bottom:20px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="text-xs-center">
-                        <span> Need to add filter elements</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-    </section>
     <section class="content">
         <main>
             <!--Main layout-->
@@ -114,21 +101,10 @@
                             <!--Card image-->
                             <div class="view overlay hm-white-slight" id="thumbnail">
                                 <figure class="mbr-figure">
-                                    <div class="img-wrapper">
-                                        <img src="https://applove.gadgetnyooz.com/websurf/browse.php?u={{ movie.thumbnail_link }}">
-                                        <div class="checkbox close">
-                                            <label>
-                                                <input type="checkbox" value="">
-                                                <span class="cr" style="margin-right:0px;background-color:white; font-size:medium"><i class="cr-icon fa fa-suitcase"></i></span>
-                                            </label>
-                                        </div>
-
-                                    </div>
+                                    <div class="img-wrapper"><img src="https://applove.gadgetnyooz.com/websurf/browse.php?u={{ movie.thumbnail_link }}"></div>
 
                                     <figcaption class="mbr-figure-caption mbr-figure-caption-over">
-                                        <div class="container"><span>{{ movie.name }} ({{ movie.year }})</span>
-                                                                <br> <span>{{ movie.release_type }}</span>
-                                        </div>
+                                        <div class="container">{{ movie.name }} ({{ movie.year }})</div>
                                     </figcaption>
 
                                 </figure>

@@ -35,10 +35,11 @@ class MovieListCleaner:
                             'R5.LINE','R5.AC3.5.1.HQ']
 
 
-    def __init__(self,df, rating, votes):
+    #def __init__(self,df, rating, votes):
+    def __init__(self,df):
         self.inputMovieList = df
-        self.minRating = rating
-        self.minVotes = votes
+        #self.minRating = rating
+        #self.minVotes = votes
 
 
     # ### Extracting Movie Name and other details from the file name   
@@ -68,8 +69,9 @@ class MovieListCleaner:
 # ### Extracting IMDB Rating
     
     def imdb_rating(self,row):
-        #print(row)
+        print("imdb rating: {}".format(row))
         #from IPython.core.debugger import Tracer; Tracer()() 
+        row = str(row).decode('unicode_escape').encode('ascii','ignore')
         if row is not None:
             row = row.replace(",","").replace("(","").replace(")","")
             match = re.search(r'\s*(\d+\.\d+)/(\d+)\s*\w+\s*(\d+)\s*\w+', row)
@@ -96,6 +98,8 @@ class MovieListCleaner:
     
     def rt_rating(self,row):
         #print(row)
+        row = str(row).decode('unicode_escape').encode('ascii','ignore')
+        print("rt rating: {}".format(row))
         #from IPython.core.debugger import Tracer; Tracer()()
         rating = " "
         tomatometer = " "
@@ -148,7 +152,7 @@ class MovieListCleaner:
         #mask = vote_mask & rating_mask & hdts_mask & hdcam_mask & three_d_mask
         movies_extra_info = movies_extra_info[mask]
         ##Dropping duplicates after sorting with rank
-        movies_extra_info['Res_Rank'] = movies_extra_info.Resolution.map(rank_resolution)
+        movies_extra_info['Res_Rank'] = movies_extra_info.Resolution.map(self.rank_list_of_releases)
         movies_extra_info['sort_name'] = movies_extra_info['Name'].str.lower()                 
         movies_extra_info.sort_values(['sort_name','Res_Rank'], ascending=[True,True], axis = 0, inplace=True)
         movies_extra_info.drop_duplicates('sort_name', keep ='first', inplace=True)
