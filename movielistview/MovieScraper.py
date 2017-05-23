@@ -17,6 +17,7 @@ import datefinder
 import difflib
 from datetime import datetime, timedelta
 import time
+import numpy as np
 
 
 class MovieScraper:
@@ -82,7 +83,7 @@ class MovieScraper:
                 print('SENDING REQ') #ADd timeout
                 req = urllib2.Request(url, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
                 print('Opening Page') #ADd timeout
-                web_page = urllib2.urlopen(req)
+                web_page = urllib2.urlopen(req, timeout=30)
                 print('Opened Page') #ADd timeout
                 break
                 #print('OPENING WEBPAGE')
@@ -170,25 +171,39 @@ class MovieScraper:
             if entry_dict['post_date'] > max_post_date - timedelta(days=1):
                 scrape_list.append(entry_dict)
             else:
-                break
-        return scrape_list
+                return scrape_list,False
+        return scrape_list, True
     
     @classmethod
     def scrape_site(self,pages,max_post_date):
         scraped_movies = []
+        continue_scrap = True
         print(1)
-        scraped_movies = self.scrape_page('http://sceper.ws/category/movies',scraped_movies,max_post_date) #Replace with date
+        scraped_movies, continue_scrap = self.scrape_page('http://sceper.ws/category/movies',scraped_movies,max_post_date) #Replace with date
         print("scrape first page done")
         print(type(scraped_movies))
         #from progressbar import ProgressBar
         #pbar = ProgressBar()
         #for x in pbar(range(2,pages)):
-        for x in range(2,pages):
+        x=2
+        while continue_scrap:
             print(x)
             page_url = 'http://sceper.ws/category/movies/page/' + str(x)
-            scraped_movies = self.scrape_page(page_url,scraped_movies,max_post_date) #Replace with date
+            scraped_movies, continue_scrap = self.scrape_page(page_url,scraped_movies,max_post_date) #Replace with date
             print("scrape page {} done".format(x))
+            print("continue scrap {} done".format(continue_scrap))
+            if x == pages:
+                break
+            x= x+1
             time.sleep(5)
+
+
+        # for x in range(2,pages):
+        #     print(x)
+        #     page_url = 'http://sceper.ws/category/movies/page/' + str(x)
+        #     scraped_movies = self.scrape_page(page_url,scraped_movies,max_post_date) #Replace with date
+        #     print("scrape page {} done".format(x))
+        #     time.sleep(5)
         self.movieScraped = pd.DataFrame.from_dict(scraped_movies)
         
 #Calling the main function

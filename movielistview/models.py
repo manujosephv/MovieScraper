@@ -29,7 +29,7 @@ class Movie(models.Model):
     tomatometer = models.CharField(max_length = 5,null=True, blank=True)
     rt_rating = models.FloatField(null=True, blank=True)
     movie_read = models.BooleanField(default = False)
-    key = models.CharField(max_length = 5000, default="*") #to be changed
+    key = models.CharField(max_length = 5000, default="*", unique=True) #to be changed
 
 
     def __unicode__(self):

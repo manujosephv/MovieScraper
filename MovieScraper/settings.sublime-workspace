@@ -1,1 +1,471 @@
-{}
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"min",
+				"min_votes"
+			],
+			[
+				"def",
+				"default"
+			],
+			[
+				"rank",
+				"rank_list_of_releases"
+			],
+			[
+				"time",
+				"timeout"
+			],
+			[
+				"max",
+				"max_post_date"
+			],
+			[
+				"scra",
+				"scrape_list"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/D/Scrap Swag/MovieScraper/movielistview/views.py",
+			"settings":
+			{
+				"buffer_size": 5921,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Scrap Swag/MovieScraper/movielistview/forms.py",
+			"settings":
+			{
+				"buffer_size": 402,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "settings.py",
+			"settings":
+			{
+				"buffer_size": 3417,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Scrap Swag/MovieScraper/movielistview/models.py",
+			"settings":
+			{
+				"buffer_size": 1872,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Scrap Swag/MovieScraper/movielistview/MovieListCleaner.py",
+			"settings":
+			{
+				"buffer_size": 7947,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "# -*- coding: utf-8 -*-\n\"\"\"\nCreated on Fri May 19 07:24:06 2017\n\n@author: manuj\n\"\"\"\n\nimport urllib2\nfrom bs4 import BeautifulSoup\nimport pandas as pd\nimport datetime\nimport sys\nimport re\nfrom django.utils import timezone\nfrom dateutil.parser import parse\nimport datefinder\nimport difflib\nfrom datetime import datetime, timedelta\nimport time\n\n\nclass MovieScraper:\n    \n    movieScraped = pd.DataFrame()\n    std_list_of_releases = ['CAMRip','CAM ','TS','TELESYNC','PDVD ','WP','WORKPRINT ','TC','TELECINE ',\n                            'PPV','PPVRip ','SCR','SCREENER','DVDSCR','DVDSCREENER','BDSCR ','DDC ','R5',\n                            'R5.LINE','R5.AC3.5.1.HQ ','DVDRip ','DVDR','DVD-Full','Full-Rip','ISO rip',\n                            'untouched rip','DSR','DSRip','SATRip','DTHRip','DVBRip','HDTV','PDTV','TVRip',\n                            'HDTVRip ','VODRip','VODR ','WEBDL','WEB DL','WEB-DL','HDRip ','WEBRip (P2P)',\n                            'WEB Rip (P2P)','WEB-Rip (P2P)','WEB (Scene) ','WEB-Cap','WEBCAP','WEB Cap ',\n                            'BDRip','BRRip','Blu-Ray','BluRay','BLURAY','BDMV','BDR']\n\n    @classmethod\n    def __init__(self):\n        stdout = sys.stdout\n        reload(sys)\n        sys.setdefaultencoding('utf-8')\n        sys.stdout = stdout\n\n    @classmethod\n    def find_release_type_from_name(self,name,std_list_of_release_names):\n        std_list_of_release_names = [x.upper() for x in std_list_of_release_names]\n        release = \"\"\n        release_score = 0\n        for part in name.upper().split('.'):\n            if len(difflib.get_close_matches(part,std_list_of_release_names,1,0.8))==1:\n                curr_release = difflib.get_close_matches(part,std_list_of_release_names,1,0.8)[0]\n                curr_release_score = difflib.SequenceMatcher(None,curr_release, part).ratio()\n                if curr_release_score > release_score:\n                    release_score = curr_release_score\n                    release = curr_release\n        return release\n\n\n    @classmethod\n    def scrape_page(self,url,scrape_list, max_post_date):\n        print (\"url: {}\".format(url))\n        print (\"scrape list: {}\".format(type(scrape_list)))\n        print (\"max post date: {}\".format(max_post_date))\n        print(\"start scraping page\")\n        attempts = 0\n        entry_dict = {}\n        while attempts < 4:\n            try :\n                #print('SETTING UP PROXY')\n                #proxy = urllib2.ProxyHandler({'https': 'https://www.proxysite.com/'})\n                #opener = urllib2.build_opener(proxy)\n                #urllib2.install_opener(opener)\n                # candidate_proxies = ['https://www.proxysite.com/',\n                #          'https://www.freeproxyserver.co/']\n                # for proxy in candidate_proxies:\n                #     print \"Trying HTTP proxy %s\" % proxy\n                #     try:\n                #         web_page = urllib.urlopen(url, proxies={'http': proxy})\n                #         print \"Got URL using proxy %s\" % proxy\n                #         break\n                #     except:\n                #         print \"Trying next proxy in 5 seconds\"\n                #         time.sleep(5)\n\n\n                print('SENDING REQ') #ADd timeout\n                req = urllib2.Request(url, headers={'User-Agent' : \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30\"}) \n                print('Opening Page') #ADd timeout\n                web_page = urllib2.urlopen(, timeout=30)\n                print('Opened Page') #ADd timeout\n                break\n                #print('OPENING WEBPAGE')\n            except urllib2.HTTPError as err :\n                print(\"HTTPERROR!\")\n                print(err.code)\n                attempts += 1\n                print(\"Retrying...\")\n                time.sleep(5)\n                if attempts == 3:\n                    return scrape_list.append({})\n            except urllib2.URLError :\n                print(\"URLERROR!\")\n                attempts += 1\n                print(\"Retrying...\")\n                time.sleep(5)\n                if attempts == 3:\n                    return scrape_list.append({})\n\n        soup = BeautifulSoup(web_page,'html.parser')\n        divs = soup.find('div', id='recent-posts')\n        entries = divs.findAll('div', { \"class\" : \"entry\" })\n        for entry in entries:\n            entry_dict = {}\n            entry_content = entry.find('div' , {\"class\" : \"entry-content\"})\n            post_link = entry.find('h2' , {\"class\" : \"title\"}).find('a').get('href')\n            entry_dict['Post Link'] = post_link\n            meta_divs = entry_content.findAll('div', {\"class\" : \"meta\"})\n            post_meta = entry.findNext('div', {'class':\"post-meta\"})\n            release_info = \"\"\n            release_desc = \"\"\n            link_div = None\n            for div in meta_divs:\n                match = re.search(r'\\s*[Rr]elease\\s+[Ii]nfo\\s*', str(div.get_text))\n                if match is not None:\n                    thumbnail = div.findNext(\"p\").find_next('a').get('href')\n                    entry_dict['Thumbnail Link'] = thumbnail\n                    release_info = div.findNext(\"p\").get_text()\n                match = re.search(r'\\s*[Rr]elease\\s+[Dd]escription\\s*', str(div.get_text))\n                if match is not None:\n                    release_desc = div.findNext(\"p\").get_text()\n                match = re.search(r'\\s*[Aa]ssociated\\s+[Ll]inks\\s*', str(div.get_text))\n                if match is not None:\n                    link_div = div.findNext(\"p\")\n       \n            release_info = release_info.decode('unicode_escape').encode('ascii','ignore')\n            release_desc = release_desc.decode('unicode_escape').encode('ascii','ignore')\n            entry_dict['Plot'] = release_desc\n            items = re.split(r'\\s*\\n\\s*', release_info)\n            for item in items:\n                dict_items = re.split(r'\\s*:\\s*',item)\n                if len(dict_items) > 1:\n                    entry_dict[dict_items[0]] = dict_items[1]\n            if 'Release Name' in entry_dict:\n                entry_dict['Release Type'] = self.find_release_type_from_name(entry_dict['Release Name'], self.std_list_of_releases)\n            if 'Release Date' in entry_dict:\n                try:\n                    if entry_dict['Release Date'] is not None:\n                        entry_dict['Release Date'] = parse(entry_dict['Release Date'])\n                except ValueError:\n                    entry_dict['Release Date'] = np.nan\n            #parsing links\n            if link_div is not None:\n                links =link_div.findAll('a')\n                for link in links:\n                    link_text = link.get_text()\n                    match = re.search(r'[Ii][Mm][Dd][Bb]',link_text)\n                    if match is not None:\n                        entry_dict['IMDB Link'] = link.get('href')\n                    match = re.search(r'[Rr][Tt]',link_text)\n                    if match is not None:\n                        entry_dict['RT Link'] = link.get('href')\n                    match = re.search(r'[Tt][Rr][Aa][Ii][Ll][Ee][Rr]',link_text)\n                    if match is not None:\n                        entry_dict['Trailer Link'] = link.get('href')\n            #Parsing Post Date\n            matches = datefinder.find_dates(post_meta.text)\n            for match in matches:\n                entry_dict['post_date'] = match\n                break\n            entry_dict['date_time'] = datetime.now()\n            # #Debug\n            # entry_dict['post_meta'] = post_meta.text\n            #if condition to stop scraping once date is hit\n            if entry_dict['post_date'] > max_post_date - timedelta(days=1):\n                scrape_list.append(entry_dict)\n            else:\n                break\n        return scrape_list\n    \n    @classmethod\n    def scrape_site(self,pages,max_post_date):\n        scraped_movies = []\n        print(1)\n        scraped_movies = self.scrape_page('http://sceper.ws/category/movies',scraped_movies,max_post_date) #Replace with date\n        print(\"scrape first page done\")\n        print(type(scraped_movies))\n        #from progressbar import ProgressBar\n        #pbar = ProgressBar()\n        #for x in pbar(range(2,pages)):\n        for x in range(2,pages):\n            print(x)\n            page_url = 'http://sceper.ws/category/movies/page/' + str(x)\n            scraped_movies = self.scrape_page(page_url,scraped_movies,max_post_date) #Replace with date\n            print(\"scrape page {} done\".format(x))\n            time.sleep(5)\n        self.movieScraped = pd.DataFrame.from_dict(scraped_movies)\n        \n#Calling the main function\n#movie_scraped = MovieScraper()\n#movie_scraped.scrape_site(5)\n#print(movie_scraped.movieScraped.count())",
+			"file": "/D/Scrap Swag/MovieScraper/movielistview/MovieScraper.py",
+			"file_size": 9004,
+			"file_write_time": 131398957514260907,
+			"settings":
+			{
+				"buffer_size": 8817,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Scrap Swag/MovieScraper/movielistview/urls.py",
+			"settings":
+			{
+				"buffer_size": 329,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/D/Scrap Swag/MovieScraper/.gitignore",
+		"/D/Scrap Swag/MovieScraper/movielistview/views.py",
+		"/D/Scrap Swag/MovieScraper/movielistview/urls.py",
+		"/D/Scrap Swag/MovieScraper/movielistview/models.py",
+		"/D/Scrap Swag/MovieScraper/movielistview/MovieListCleaner.py",
+		"/D/Scrap Swag/MovieScraper/movielistview/MovieScraper.py"
+	],
+	"find":
+	{
+		"height": 50.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"min_rating",
+			"encode",
+			"decode",
+			"timezone"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"min_votes"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/views.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5921,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1797,
+								1797
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 389.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/forms.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 402,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								258,
+								267
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "settings.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3417,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2244.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1872,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1755,
+								1755
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/MovieListCleaner.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7947,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4807,
+								4807
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2396.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/MovieScraper.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8817,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5650,
+								5700
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2474.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/urls.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 329,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								294,
+								294
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 30.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "settings.sublime-project",
+	"replace":
+	{
+		"height": 94.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 225.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

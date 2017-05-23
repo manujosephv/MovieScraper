@@ -69,7 +69,7 @@ class MovieListCleaner:
 # ### Extracting IMDB Rating
     
     def imdb_rating(self,row):
-        print("imdb rating: {}".format(row))
+        #print("imdb rating: {}".format(row))
         #from IPython.core.debugger import Tracer; Tracer()() 
         row = str(row).decode('unicode_escape').encode('ascii','ignore')
         if row is not None:
@@ -99,7 +99,7 @@ class MovieListCleaner:
     def rt_rating(self,row):
         #print(row)
         row = str(row).decode('unicode_escape').encode('ascii','ignore')
-        print("rt rating: {}".format(row))
+        #print("rt rating: {}".format(row))
         #from IPython.core.debugger import Tracer; Tracer()()
         rating = " "
         tomatometer = " "
@@ -116,6 +116,8 @@ class MovieListCleaner:
                 match = re.search(r'(\d+)/(\d+)', row)
                 if match is not None:
                     rating = match.group(1)
+                else:
+                    rating = 0
         return pd.Series({'RT':rating, 'Tomatometer':tomatometer})
 
     
@@ -128,7 +130,7 @@ class MovieListCleaner:
         
         # ### Removing Duplicates
         
-        movies_extra_info[['IMDB','Year','Votes']] = movies_extra_info[['IMDB','Year','Votes']].convert_objects(convert_numeric=True)
+        movies_extra_info[['IMDB','Year','Votes','RT']] = movies_extra_info[['IMDB','Year','Votes','RT']].convert_objects(convert_numeric=True)
         #std_resolution = ['1080p','780p','BDRip','BRRip','DVDRip','HC','HDRip','BluRay','HDCAM','WEBDL','UNRATED','HDTS','480p','3D','WebRip',""]
         #rank_resolution = {'1080p':1,'780p':2,'BDRip':4,'BRRip':3,'BluRay':5,'DVDRip':6,'HC':8,'HDRip':7,'WebRip':12,'WEBDL':11,'UNRATED':9,'480p':10,'':13}
         #for index, row in movies_scraped_extra_info.iterrows():
