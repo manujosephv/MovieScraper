@@ -87,9 +87,9 @@
         </div>
 
     </section>
-    <section class="mbr-section mbr-section__container" id="buttons1-o" style="background-color:rgb(0,0,0); padding-top:30px; padding-bottom:20px;">
+    <section class="mbr-section mbr-section__container" id="buttons1-o" style="background-color:rgb(46,46,46); padding-top:30px; padding-bottom:20px;">
         <div class="container">
-            <form action="/filter_movies/" method="post" id="filter-movies-form" data-form-title="SCRAPE MOVIES">
+            <form action="/filter_movies/" method="post" id="filter-movies-form">
                 {% csrf_token %}
             <div class="row">
                     <div class="col-xs-8">
@@ -111,8 +111,8 @@
                         </div>
                     </div>
                     <div class="col-xs-2">
-                            <input type="radio" name="show_read" id="yes"/>
-                              <input type="radio" name="show_read" id="no" checked/>
+                            <input type="radio" name="show_read" value="Y" id="yes"/>
+                              <input type="radio" name="show_read" value="N" id="no" checked/>
                               <div class="switch">
                                  <label style="font-size: smaller;color: #ba2b1c;position: absolute;width: 200px;bottom: 60%;right: -15%;font-weight: 700;">Show read movies</label>
                                 <label for="yes">Yes</label>
@@ -137,6 +137,8 @@
             <div id="card-append" class="container">
 
                 <hr class="extra-margins"></hr>
+                <form action="/mark_read_movies/" method="post" id="mark_read_form">
+                {% csrf_token %}
                 <!--Number row-->
                 <div class="row">
                     {% paginate 9 movies %}
@@ -149,13 +151,14 @@
                                 <figure class="mbr-figure">
                                     <div class="img-wrapper">
                                         <img src="https://applove.gadgetnyooz.com/websurf/browse.php?u={{ movie.thumbnail_link }}">
+                                            
                                         <div class="checkbox close">
                                             <label>
-                                                <input type="checkbox" value="">
+                                                <input type="checkbox" name="post_id" id="post_id" value="{{ movie.id }}" onChange="this.form.submit()">
                                                 <span class="cr" style="margin-right:0px;background-color:white; font-size:medium"><i class="cr-icon fa fa-suitcase"></i></span>
                                             </label>
                                         </div>
-
+                                        
                                     </div>
 
                                     <figcaption class="mbr-figure-caption mbr-figure-caption-over">
@@ -169,6 +172,7 @@
                             <!--/.Card image-->
                             <!--Card content-->
                             <div class="card-block">
+                                <input type="text" value="{{ movie.id }}"/>
                                 <div class="row">
                                     <div class="col-xs-6 col-md-6 text-center">
                                         <div>
@@ -300,8 +304,8 @@
                 <div class="row">
                     {% endif %} {% endfor %}
                 </div>
+            </form>
                 <!--/.Number row-->
-
 <nav aria-label="Page navigation example">
   {% get_pages %}
 <ul class="pagination">
@@ -381,7 +385,30 @@
     <script src="{% static 'assets/formoid/formoid.min.js' %}"></script>
     <script src="{% static 'assets/theme/js/ajax-script.js' %}"></script>
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
-
+    <script type="text/javascript">
+//                $("input:checkbox").on('click', function(){
+//                
+//                console.log("form submitted!")  // sanity check
+//                // in the handler, 'this' refers to the box clicked on
+////                var $box = $(this);
+//                //console.log($box.val())
+//                //$('#scrape_movies_form').toggleClass('hidden')
+////                mark_read_movies($box.val());
+//            });
+                $(document).ajaxStart(function(){
+                $('#scrape_movies_form').LoadingOverlay("show");
+            });
+            $(document).ajaxStop(function(){
+                $('#scrape_movies_form').LoadingOverlay("hide");
+            });
+        $('#mark_read_form').on('submit', function(event){
+                console.log("in on submit")
+                event.preventDefault();
+                console.log("form submitted!")  // sanity check
+                //$('#scrape_movies_form').toggleClass('hidden')
+                //mark_read_movies();
+            });
+    </script>
     <input name="animation" type="hidden">
 </body>
 

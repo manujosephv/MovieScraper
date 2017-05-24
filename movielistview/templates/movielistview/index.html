@@ -112,7 +112,50 @@
             </div>
         </div>
     </section>
+    <section class="mbr-section mbr-section__container" id="buttons1-o" style="background-color:rgb(46,46,46); padding-top:30px; padding-bottom:20px;">
+        <div class="container">
+            <form action="/filter_movies/" method="post" id="filter-movies-form">
+                {% csrf_token %}
+            <div class="row">
+                    <div class="col-xs-8">
+                        <div class="container-pill">
+                          <div class="box box-input" style="margin-top: .4em; background:transparent;">
+                            <blockquote><span class="bqstart">“</span>
+                            <span class="quote-text">Any movie worth it's salt has </span>
+                            <span class="number-container">
+                            <input id="min_rating" name="min_rating" type="number" min="1" max="10" step=".1" placeholder="6" value="6.0" class="number-input" style="width:2.2em;"/>
+                            <span class="fa fa-star fa-lg"></span>
+                            </span>
+                            <span class="quote-text"> with</span>
+                              <span class="number-container">
+                            <input id="min_votes" name="min_votes" type="number" min="1000" max="50000" step="500" placeholder="1000" value="1000" class="number-input" style="width:3.6em;"/>
+                            </span>
+                              <span class="quote-text">votes</span>
+                            <span class="bqend">”</span></blockquote> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                            <input type="radio" name="show_read" value="Y" id="yes"/>
+                              <input type="radio" name="show_read" value="N" id="no" checked/>
+                              <div class="switch">
+                                 <label style="font-size: smaller;color: #ba2b1c;position: absolute;width: 200px;bottom: 60%;right: -15%;font-weight: 700;">Show read movies</label>
+                                <label for="yes">Yes</label>
+                                <label for="no">No</label>
+                                <span></span>
+                              </div>
+                </div>
+                    <div class="col-xs-2">
+                        <div class="text-xs-center">
+                            <button type="submit" class="btn btn-primary btn-lg" id="filter_btn" style="margin-top:3px">SHOW ME</button>
+                        </div>
+                    </div>
 
+            </div>
+            </form>
+        </div>
+    
+    </section>
     <section class="mbr-section" id="form1-1" style="background-color: rgb(255, 255, 255); padding-top: 120px; padding-bottom: 120px;">
 
         <div class="mbr-section mbr-section__container mbr-section__container--middle">

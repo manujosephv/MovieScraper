@@ -46,3 +46,33 @@ function scrape_movies() {
     });
 };
 
+function mark_read_movies(clicked_id) {
+    console.log("mark read is working!") // sanity check
+    // console.log($('#mark-read-movies-form').serialize())
+    console.log(clicked_id)
+    data_dict = {'post_id':clicked_id}
+    // var frm = $('#mark-read-movies-form');
+    $.ajax({
+        type: 'POST', //GET or POST as defined in HTML
+            url: '/mark_read_movies/', //action defined in HTML
+            data: {post_id , clicked_id},
+            dataType : "json",
+
+        // handle a successful response
+        success : function(json) {
+            frm[0].reset(); // remove the value from the input
+            console.log(json); // log the returned json to the console
+            console.log("success"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            //$('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+              //  " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            
+        }
+    });
+};
+
+

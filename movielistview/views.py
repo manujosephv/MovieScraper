@@ -7,6 +7,7 @@ import datetime
 import json
 from .forms import ScrapeForm
 from .forms import FilterForm
+from .forms import MarkReadForm
 from .models import Movie
 from MovieScraper import MovieScraper
 from MovieListCleaner import MovieListCleaner
@@ -29,7 +30,7 @@ def scrape_movies(request):
         response_data = {}
         if scrape_form.is_valid():
             #Deleting all existing entries
-            Movie.objects.all().delete()
+            #Movie.objects.all().delete()
 
             #Actions to be done here
             if Movie.objects.all().count()>0:
@@ -104,33 +105,60 @@ def view_movies(request):
 #    return render(request, 'movielistview/page1.html', {})
 
 def filter_movies(request):
-    print("Duplicate Removing")
-    movies = Movie.objects.all().order_by('-post_date')
-    #print(movies)
-    
-    for row in Movie.objects.all():
-        if Movie.objects.filter(key=row.key).count()>1:
-             print(row)
-    return render(request, 'movielistview/view_movies.html', {'movies': movies})
-    # if request.method == 'POST':
-    #     filter_form = FilterForm(request.POST)
-    #     response_data = {}
-    #     if scrape_form.is_valid():
-    #         #Actions to be done here
-    #         #post_max_date = Movies.objects.all().aggregate(Max('post_date'))
-    #         post_max_date = datetime.datetime.now()- datetime.timedelta(days=40)
-    #         #Scraping last x pages checking for new entries only
-    #         show_read = scrape_form.cleaned_data['show_read']
-    #         min_rating = scrape_form.cleaned_data['min_rating']
-    #         min_votes = scrape_form.cleaned_data['min_votes']
+    if request.method == 'POST':
+        filter_form = FilterForm(data=request.POST)
+        print("form initialised")
+        # print(filter_form.errors())
+        print(filter_form.is_valid())
+        response_data = {'movies':''}
+        if filter_form.is_valid():
+            #Actions to be done here
+            #post_max_date = Movies.objects.all().aggregate(Max('post_date'))
+            #post_max_date = datetime.datetime.now()- datetime.timedelta(days=40)
+            #Scraping last x pages checking for new entries only
+            show_read = filter_form.cleaned_data['show_read']
+            if show_read == "Y":
+                show_read = True
+            else:
+                show_read = False
+            min_rating = filter_form.cleaned_data['min_rating']
+            min_votes = filter_form.cleaned_data['min_votes']
 
-    #         print(show_read)
-    #         print(min_rating)
-    #         print(min_votes)
-    #         #min_rating = scrape_form.cleaned_data['min_rating']
-    #         #min_votes = scrape_form.cleaned_data['min_votes']
-    #         # movies = Movie.objects.all().order_by('-post_date')
-    #         # print(movies)
-    #         movies = Movie.objects.all().order_by('-post_date')
-    #         return render(request, 'movielistview/view_movies.html', {'movies': movies})
+            print(show_read)
+            print(min_rating)
+            print(min_votes)
+            #min_rating = filter_form.cleaned_data['min_rating']
+            #min_votes = filter_form.cleaned_data['min_votes']
+            # movies = Movie.objects.all().order_by('-post_date')
+            # print(movies)
+            #movies = Movie.objects.all().order_by('-post_date')
+            movies = Movie.objects.filter(imdb_rating__gte = min_rating, imdb_votes__gte = min_votes, movie_read = show_read ).order_by('-post_date')
+            response_data = {'movies':movies}
+        return render(request, 'movielistview/view_movies.html', response_data)
 
+def mark_read_movies(request):
+    print("in mark read")
+    print(request)
+    if request.method == 'POST':
+        # mark_read_form = MarkReadForm(request.POST)
+        response_data = {}
+        print(request.GET.get("post_id", None))
+
+        # print(mark_read_form.cleaned_data['post_id'])
+        # response_data['no_of_rows'] = Movie.objects.count()
+        response_data['result'] = 'Scrape Completed'
+        # response_data['movie_count_added'] = len(movie_df.index)
+        # response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
+        # response_data['debug_info1'] = Movie.objects.latest('post_date').post_date.isoformat()
+        # #response_data['debug_info2'] = Movie.objects.all().latest('post_date')
+
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+
+    else:
+        return HttpResponse(
+            json.dumps({"result": "this isn't happening"}),
+            content_type="application/json"
+        )
