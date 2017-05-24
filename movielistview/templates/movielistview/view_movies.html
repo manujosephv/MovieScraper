@@ -154,7 +154,7 @@
                                             
                                         <div class="checkbox close">
                                             <label>
-                                                <input type="checkbox" name="post_id" id="post_id" value="{{ movie.id }}" onChange="this.form.submit()">
+                                                <input type="checkbox" name="post_id" id="post_id" value="{{ movie.id }}" >
                                                 <span class="cr" style="margin-right:0px;background-color:white; font-size:medium"><i class="cr-icon fa fa-suitcase"></i></span>
                                             </label>
                                         </div>
@@ -386,15 +386,16 @@
     <script src="{% static 'assets/theme/js/ajax-script.js' %}"></script>
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
     <script type="text/javascript">
-//                $("input:checkbox").on('click', function(){
-//                
-//                console.log("form submitted!")  // sanity check
-//                // in the handler, 'this' refers to the box clicked on
-////                var $box = $(this);
-//                //console.log($box.val())
-//                //$('#scrape_movies_form').toggleClass('hidden')
-////                mark_read_movies($box.val());
-//            });
+                $("input:checkbox").on('click', function(){
+                
+//                console.log("on click!")  // sanity check
+                // in the handler, 'this' refers to the box clicked on
+//                var $box = $(this);
+                $('#mark_read_form').submit()
+                //console.log($box.val())
+                //$('#scrape_movies_form').toggleClass('hidden')
+//                mark_read_movies($box.val());
+            });
                 $(document).ajaxStart(function(){
                 $('#scrape_movies_form').LoadingOverlay("show");
             });
@@ -406,7 +407,7 @@
                 event.preventDefault();
                 console.log("form submitted!")  // sanity check
                 //$('#scrape_movies_form').toggleClass('hidden')
-                //mark_read_movies();
+                mark_read_movies();
             });
     </script>
     <input name="animation" type="hidden">

@@ -140,23 +140,36 @@ def mark_read_movies(request):
     print("in mark read")
     print(request)
     if request.method == 'POST':
-        # mark_read_form = MarkReadForm(request.POST)
+        mark_read_form = MarkReadForm(request.POST)
         response_data = {}
-        print(request.GET.get("post_id", None))
+        print("checking form is valid")
+        print(mark_read_form.is_valid())
+        print(mark_read_form.errors)
+        if mark_read_form.is_valid():
 
-        # print(mark_read_form.cleaned_data['post_id'])
-        # response_data['no_of_rows'] = Movie.objects.count()
-        response_data['result'] = 'Scrape Completed'
-        # response_data['movie_count_added'] = len(movie_df.index)
-        # response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
-        # response_data['debug_info1'] = Movie.objects.latest('post_date').post_date.isoformat()
-        # #response_data['debug_info2'] = Movie.objects.all().latest('post_date')
+            #Scraping last x pages checking for new entries only
+            post_id = mark_read_form.cleaned_data['post_id']
+            #min_rating = scrape_form.cleaned_data['min_rating']
+            #min_votes = scrape_form.cleaned_data['min_votes']
+            print(post_id)
 
-        return HttpResponse(
-            json.dumps(response_data),
+
+            # response_data['no_of_rows'] = Movie.objects.count()
+            response_data['result'] = 'Scrape Completed'
+            # response_data['movie_count_added'] = len(movie_df.index)
+            # response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
+            # response_data['debug_info1'] = Movie.objects.latest('post_date').post_date.isoformat()
+            #response_data['debug_info2'] = Movie.objects.all().latest('post_date')
+
+            return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )
+        else:
+            return HttpResponse(
+            json.dumps({"result": "invalid form"}),
             content_type="application/json"
         )
-
     else:
         return HttpResponse(
             json.dumps({"result": "this isn't happening"}),

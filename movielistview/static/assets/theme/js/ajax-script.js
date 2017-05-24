@@ -46,18 +46,16 @@ function scrape_movies() {
     });
 };
 
-function mark_read_movies(clicked_id) {
+function mark_read_movies() {
     console.log("mark read is working!") // sanity check
-    // console.log($('#mark-read-movies-form').serialize())
-    console.log(clicked_id)
-    data_dict = {'post_id':clicked_id}
-    // var frm = $('#mark-read-movies-form');
+     console.log($('#mark_read_form').serialize())
+    // console.log(clicked_id)
+    // data_dict = {'post_id':clicked_id}
+     var frm = $('#mark_read_form');
     $.ajax({
-        type: 'POST', //GET or POST as defined in HTML
-            url: '/mark_read_movies/', //action defined in HTML
-            data: {post_id , clicked_id},
-            dataType : "json",
-
+        type: frm.attr('method'), //GET or POST as defined in HTML
+        url: frm.attr('action'), //action defined in HTML
+        data: frm.serialize(), //Serializing the object to pass through
         // handle a successful response
         success : function(json) {
             frm[0].reset(); // remove the value from the input
