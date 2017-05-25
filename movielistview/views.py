@@ -137,25 +137,17 @@ def filter_movies(request):
         return render(request, 'movielistview/view_movies.html', response_data)
 
 def mark_read_movies(request):
-    print("in mark read")
-    print(request)
+    # print("in mark read")
     if request.method == 'POST':
         mark_read_form = MarkReadForm(request.POST)
         response_data = {}
-        print("checking form is valid")
-        print(mark_read_form.is_valid())
-        print(mark_read_form.errors)
         if mark_read_form.is_valid():
-
-            #Scraping last x pages checking for new entries only
+            
             post_id = mark_read_form.cleaned_data['post_id']
-            #min_rating = scrape_form.cleaned_data['min_rating']
-            #min_votes = scrape_form.cleaned_data['min_votes']
-            print(post_id)
-
+            print("Selected post id is {}".format(post_id))
 
             # response_data['no_of_rows'] = Movie.objects.count()
-            response_data['result'] = 'Scrape Completed'
+            response_data['result'] = 'Marked Read'
             # response_data['movie_count_added'] = len(movie_df.index)
             # response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
             # response_data['debug_info1'] = Movie.objects.latest('post_date').post_date.isoformat()

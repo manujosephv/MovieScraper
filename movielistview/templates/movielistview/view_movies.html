@@ -387,14 +387,8 @@
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
     <script type="text/javascript">
                 $("input:checkbox").on('click', function(){
-                
 //                console.log("on click!")  // sanity check
-                // in the handler, 'this' refers to the box clicked on
-//                var $box = $(this);
                 $('#mark_read_form').submit()
-                //console.log($box.val())
-                //$('#scrape_movies_form').toggleClass('hidden')
-//                mark_read_movies($box.val());
             });
                 $(document).ajaxStart(function(){
                 $('#scrape_movies_form').LoadingOverlay("show");
@@ -406,7 +400,6 @@
                 console.log("in on submit")
                 event.preventDefault();
                 console.log("form submitted!")  // sanity check
-                //$('#scrape_movies_form').toggleClass('hidden')
                 mark_read_movies();
             });
     </script>
