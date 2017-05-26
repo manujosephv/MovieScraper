@@ -37,24 +37,12 @@ a {
     color:darkred
 }
 
-/* CSS for slider */
-#filter-movies-form .slider-selection {
-	background: #BABABA;
-}
-
-
-.slider-handle.custom {
-/*	background: transparent none;*/
-    background: #838383
-	/* You can customize the handle and set a background image */
-}
-
-/* Or display content like unicode characters or fontawesome icons */
-.slider-handle.custom::before {
-	line-height: 20px;
-	font-size: 20px;
-	content: '"\f005"'; /*unicode star character*/
-	color: #ffd606;
+.bg-overlay {
+    background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7));
+    background-size: cover;
+    background-position: center center;
+    height: 100%;
+    
 }
 
 /*For animated checkbox*/
@@ -130,7 +118,7 @@ a {
 } 
 
 
-
+/* For the Toggle */
 .switch {
 	position: absolute;
 	top: 50%;

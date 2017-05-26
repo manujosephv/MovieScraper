@@ -57,9 +57,9 @@ def scrape_movies(request):
                 #print(movie_df.name)
                 movie_df.replace(r'^\s+$', np.nan, regex=True, inplace=True)
                 #Making Date-time Timezone aware
-                movie_df['release_date'] = movie_df['release_date'].map(lambda x: timezone.make_aware(x))
-                movie_df['date_time'] = movie_df['date_time'].map(lambda x: timezone.make_aware(x))
-                movie_df['post_date'] = movie_df['post_date'].map(lambda x: timezone.make_aware(x))
+                movie_df['release_date'] = movie_df['release_date'].map(convert_timezone_aware, na_action = 'ignore')
+                movie_df['date_time'] = movie_df['date_time'].map(convert_timezone_aware, na_action = 'ignore')
+                movie_df['post_date'] = movie_df['post_date'].map(convert_timezone_aware, na_action = 'ignore')
                 #Make Key
                 movie_df['key'] = movie_df[['name','year', 'genre', 'imdb_rating', 'imdb_votes','rt_critics','plot', 'starring','director', 
                     'imdb_link','rt_link', 'post_link','release_name', 'release_type', 'release_date','thumbnail_link',
@@ -73,8 +73,18 @@ def scrape_movies(request):
             #replacing empty strings with None
 
             for movie in movie_dict:
-                m = Movie(**movie)
-                m.save()
+                print(timezone.make_naive(movie['post_date']))
+                print(timezone.make_naive(movie['post_date']) <= post_max_date)
+                if isinstance(movie['post_date'], datetime.datetime):
+                    if timezone.make_naive(movie['post_date']) <= post_max_date:
+                        print("Max post date")
+                        if not(Movie.objects.filter(key=movie['key']).exists()):
+                            print("new-saving")
+                            m = Movie(**movie)
+                            m.save()
+                    else:
+                        m = Movie(**movie)
+                        m.save()
 
             response_data['no_of_rows'] = Movie.objects.count()
             response_data['result'] = 'Scrape Completed'
@@ -117,10 +127,6 @@ def filter_movies(request):
             #post_max_date = datetime.datetime.now()- datetime.timedelta(days=40)
             #Scraping last x pages checking for new entries only
             show_read = filter_form.cleaned_data['show_read']
-            if show_read == "Y":
-                show_read = True
-            else:
-                show_read = False
             min_rating = filter_form.cleaned_data['min_rating']
             min_votes = filter_form.cleaned_data['min_votes']
 
@@ -132,7 +138,15 @@ def filter_movies(request):
             # movies = Movie.objects.all().order_by('-post_date')
             # print(movies)
             #movies = Movie.objects.all().order_by('-post_date')
-            movies = Movie.objects.filter(imdb_rating__gte = min_rating, imdb_votes__gte = min_votes, movie_read = show_read ).order_by('-post_date')
+            if show_read == "Y":
+                # show_read = True
+                movies = Movie.objects.filter(imdb_rating__gte = min_rating, imdb_votes__gte = min_votes).order_by('-post_date')
+            elif show_read == "N":
+                show_read = False
+                movies = Movie.objects.filter(imdb_rating__gte = min_rating, imdb_votes__gte = min_votes, movie_read = show_read ).order_by('-post_date')
+            else:
+                movies = Movie()
+            
             response_data = {'movies':movies}
         return render(request, 'movielistview/view_movies.html', response_data)
 
@@ -144,14 +158,17 @@ def mark_read_movies(request):
         if mark_read_form.is_valid():
             
             post_id = mark_read_form.cleaned_data['post_id']
+            checked = mark_read_form.cleaned_data['checked']
             print("Selected post id is {}".format(post_id))
-
-            # response_data['no_of_rows'] = Movie.objects.count()
+            print("And it is checked? {}".format(checked))
+            print("model before update: {}").format(Movie.objects.filter(id = post_id))
+            if checked=="Y":
+                movie_read = True
+            else:
+                movie_read = False
+            Movie.objects.filter(id = post_id).update(movie_read = movie_read)
+            # print("model before update: {}").format(Movie.objects.filter(id = post_id))
             response_data['result'] = 'Marked Read'
-            # response_data['movie_count_added'] = len(movie_df.index)
-            # response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
-            # response_data['debug_info1'] = Movie.objects.latest('post_date').post_date.isoformat()
-            #response_data['debug_info2'] = Movie.objects.all().latest('post_date')
 
             return HttpResponse(
                 json.dumps(response_data),
@@ -167,3 +184,9 @@ def mark_read_movies(request):
             json.dumps({"result": "this isn't happening"}),
             content_type="application/json"
         )
+
+def convert_timezone_aware(x):
+    if isinstance(x,datetime.datetime):
+        return timezone.make_aware(x)
+    else:
+        return x

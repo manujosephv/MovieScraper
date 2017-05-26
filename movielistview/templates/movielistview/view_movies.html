@@ -106,7 +106,8 @@
                             <input id="min_votes" name="min_votes" type="number" min="1000" max="50000" step="500" placeholder="1000" value="1000" class="number-input" style="width:3.6em;"/>
                             </span>
                               <span class="quote-text">votes</span>
-                            <span class="bqend">”</span></blockquote> 
+                            <span class="bqend">”</span></blockquote>
+                              <span> strict</span>
                             </div>
                         </div>
                     </div>
@@ -139,6 +140,8 @@
                 <hr class="extra-margins"></hr>
                 <form action="/mark_read_movies/" method="post" id="mark_read_form">
                 {% csrf_token %}
+                <input type="hidden" name="post_id" id="post_id" id="post_id" value=""/>
+                <input type="hidden" name="checked" id="checked" id="checked" value=""/>
                 <!--Number row-->
                 <div class="row">
                     {% paginate 9 movies %}
@@ -154,7 +157,8 @@
                                             
                                         <div class="checkbox close">
                                             <label>
-                                                <input type="checkbox" name="post_id" id="post_id" value="{{ movie.id }}" >
+                                                <input type="checkbox" name="post_id_check" id="post_id_check" value="{{ movie.id }}" 
+                                                       {% if movie.movie_read %} checked {% endif %} />
                                                 <span class="cr" style="margin-right:0px;background-color:white; font-size:medium"><i class="cr-icon fa fa-suitcase"></i></span>
                                             </label>
                                         </div>
@@ -172,7 +176,7 @@
                             <!--/.Card image-->
                             <!--Card content-->
                             <div class="card-block">
-<!--                                <input type="text" value="{{ movie.id }}"-->
+<!--                                <input type="text" value="{{ movie.movie_read }}"/>-->
                                 <div class="row">
                                     <div class="col-xs-6 col-md-6 text-center">
                                         <div>
@@ -387,7 +391,17 @@
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
     <script type="text/javascript">
                 $("input:checkbox").on('click', function(){
-//                console.log("on click!")  // sanity check
+                console.log("on click!"+ $(this).val() );  // sanity check
+                console.log($(this).prop("checked"));
+                $('#post_id').val($(this).val())
+                if($(this).prop("checked") == true){
+                    $('#checked').val("Y");
+//                    alert("Checkbox is checked.");
+                }
+                else if($(this).prop("checked") == false){
+                    $('#checked').val("N");
+//                    alert("Checkbox is unchecked.");
+                }
                 $('#mark_read_form').submit()
             });
                 $(document).ajaxStart(function(){

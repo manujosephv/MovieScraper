@@ -14,4 +14,5 @@ class FilterForm(forms.Form):
 
 class MarkReadForm(forms.Form):
     post_id = forms.IntegerField(required=True)
+    checked = forms.CharField(max_length = 1,required=True)
     
