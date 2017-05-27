@@ -329,7 +329,7 @@ label[for=no] {
 }
 
 
-
+/* For Quotes */
 .bqstart {
 float: left;
     height: 45px;
@@ -349,3 +349,74 @@ float: right;
     color: #FF0000;
     margin-right: -35px;
  }
+
+/* For Popup */
+.popup-wrap {
+  width:100%;
+  height:100%;
+  display:none;
+  position:absolute;
+  top:0px;
+  left:0px;
+  content:'';
+  background:rgba(0,0,0,0.85);
+}
+
+.popup-box {
+  width:25em;
+  padding:0.5em 2em 1em 2em;
+  transform:translate(-50%, -50%) scale(0.5);
+  position:absolute;
+  top:50%;
+  left:50%;
+  box-shadow:0px 2px 16px rgba(0,0,0,0.5);
+  border-radius:3px;
+  background:#fff;
+  text-align:center;
+}
+  .popup-box h2 {
+    color:#f7faff;
+  }
+  
+.popup-box   h3 {
+    color:#1a1a1a;
+  }
+  
+  .popup-box .close-btn {
+    width:30px;
+    height:30px;
+    display:inline-block;
+    position:absolute;
+    top:10px;
+    right:10px;
+    -webkit-transition:all ease 0.50s;
+    transition:all ease 0.75s;
+    border-radius:1000px;
+    background:#fff;
+    font-weight:bold;
+    text-decoration:none;
+    color:#ba2b1c;
+    line-height:160%;
+    
+    &:hover {
+      -webkit-transform:rotate(360deg);
+      transform:rotate(360deg);
+    }
+  }
+
+
+.transform-in, .transform-out {
+  display:block;
+  -webkit-transition:all ease 0.5s;
+  transition:all ease 0.5s;
+}
+
+.transform-in {
+	-webkit-transform:translate(-50%, -50%) scale(1);
+	transform:translate(-50%, -50%) scale(1);
+}
+
+.transform-out {
+	-webkit-transform:translate(-50%, -50%) scale(0.5);
+	transform:translate(-50%, -50%) scale(0.5);
+}

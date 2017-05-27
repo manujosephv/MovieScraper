@@ -74,17 +74,29 @@
 
 
         <div class="mbr-table-cell">
-
+            
             <div class="container">
+                 <form action="/scrape_movies/" method="post" id="scrape_movies_form" data-form-title="SCRAPE MOVIES">
+
+                            {% csrf_token %}
                 <div class="row">
                     <div class="mbr-section col-md-10 col-md-offset-1 text-xs-center">
 
                         <h1 class="mbr-section-title display-1">SCRAP SWAG</h1>
                         <p class="mbr-section-lead lead">No more trolling the depths of the internet to find out the movies to download</p>
-                        <div class="mbr-section-btn"><a class="btn btn-lg btn-primary" href="index.html#form1-1">SCRAPE NOW</a> <a class="btn btn-lg btn-white btn-white-outline" href="index.html#msg-box2-0">REVIEW</a></div>
+                        <p class="mbr-section-lead lead" id="last_scrap_time" style="font-size:small !important; margin-bottom:1rem">Last scrape done on {{ last_scrap_time }}</p>
+                        <div class="mbr-section-btn"><a class="btn btn-lg btn-primary" id="scrap_button" href="#">SCRAPE NOW</a> <a class="btn btn-lg btn-white btn-white-outline" href="#msg-box2-0">REVIEW</a></div>
                     </div>
                 </div>
+                </form>
             </div>
+            <div class="popup-wrap">
+            <div class="popup-box" id="popup-box">
+              <h2 id="form-results-title" style="font-size:x-large;">Scrape Complete</h2>
+              <h3 id="form-results-text" style="font-size:medium;">A sub-heading for the popup with a little description.</h3>
+              <a class="close-btn popup-close" href="#">x</a>
+            </div>
+          </div>
         </div>
 
         <div class="mbr-arrow mbr-arrow-floating" aria-hidden="true"><a href="#msg-box2-0"><i class="mbr-arrow-icon"></i></a></div>
@@ -103,7 +115,7 @@
                     </div>
                     <div class="mbr-table-cell mbr-right-padding-md-up col-md-8 text-xs-center text-md-left">
                         <h3 class="mbr-info-title mbr-section-title display-2">REVIEW SCRAPED MOVIES</h3>
-                        <h2 class="mbr-info-subtitle mbr-section-subtitle">You have {{ movie_count }} movies to review. Get crackin!</h2>
+                        <h2 class="mbr-info-subtitle mbr-section-subtitle">You have {{ movie_count_unread }} unread movies to review. Get crackin!</h2>
                     </div>
                 </div>
 
@@ -156,121 +168,7 @@
         </div>
     
     </section>
-    <section class="mbr-section" id="form1-1" style="background-color: rgb(255, 255, 255); padding-top: 120px; padding-bottom: 120px;">
-
-        <div class="mbr-section mbr-section__container mbr-section__container--middle">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 text-xs-center">
-                        <h3 class="mbr-section-title display-2">SCRAPE MOVIES</h3>
-                        <small class="mbr-section-subtitle">Scrape movie releases from sceper.ws</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="mbr-section mbr-section-nopadding">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-lg-10 col-lg-offset-2">
-
-
-                        <div data-form-alert="true">
-                            <div data-form-alert-success="true" class="alert alert-form alert-success text-xs-center hidden" id="form_results">You have 29 movies to review</div>
-                        </div>
-
-
-                        <form action="/scrape_movies/" method="post" id="scrape_movies_form" data-form-title="SCRAPE MOVIES">
-
-                            {% csrf_token %}
-
-                            <div class="row row-sm-offset">
-
-                                <div class="col-xs-12">
-                                    <div class="form-group">
-                                        <div class ="row">
-                                        <span class="col-md-2"> </span>
-                                        <label class="col-md-3 control-label" for="appendedtext" style="padding-top: 12px;">Pages to be scraped</label>
-                                        <div class="col-md-4" style="padding-top:12px">
-                                            <div class="input-group">
-                                                <input id="scrape_pages_slider" name="scrape_pages_slider" class="form-control" type="number" 
-                                                data-provide="slider"
-                                                data-slider-min="1"
-                                                data-slider-max="200"
-                                                data-slider-step="1"
-                                                data-slider-value="10"
-                                                data-slider-tooltip="hide">
-                                            </div>
-
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="input-group">
-                                            <input id="scrape_pages" name="scrape_pages" class="form-control" type="number" value="10" data-smk-type="number" data-smk-min="1" data-smk-max="200" required> 
-                                            <span class="input-group-addon">pages</span>
-                                            </div>
-                                            </div>
-<!--                                        <span class="col-md-1"> </span>-->
-                                    </div>
-                                        <hr>
-                                        <div class="row" style="margin-top:25px">
-                                        <span class="col-md-2"> </span>
-                                        <label class="col-md-3 control-label" for="appendedtext">Min. Rating Req.</label>
-                                        <div class="col-md-2" style="padding-left:1px">
-                                            <div class="input-group">
-                                                <input id="min_rating" name="min_rating" class="form-control" type="number"
-                                                data-provide="slider"
-                                                data-slider-min="1"
-                                                data-slider-max="10"
-                                                data-slider-step=".1"
-                                                data-slider-value="6"
-                                                data-slider-tooltip="always">
-<!--                                                <span class="input-group-addon">stars</span>-->
-                                            </div>
-
-                                        </div>
-                                        <span class="col-md-5"> </span>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <span class="col-md-2"> </span>
-                                            <label class="col-md-3 control-label" for="appendedtext" >Min. Votes Req.</label>
-                                        <div class="col-md-3" style="padding-left:1px">
-                                            <div class="input-group">
-                                                <input id="min_votes" name="min_votes" class="form-control" type="number"
-                                                data-provide="slider"
-                                                data-slider-min="500"
-                                                data-slider-max="3000"
-                                                data-slider-step="500"
-                                                data-slider-value="1000"
-                                                data-slider-tooltip="always">
-                                            </div>
-
-                                        </div>
-                                            <span class="col-md-5"> </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <!--                                    <button type="submit" class="btn btn-primary" style="margin-top:20px">SCRAPE NOW</button>-->
-                                    <div class="row">
-                                        <div class="col-xs-4">
-                                            <span></span>
-                                        </div>
-                                        <div class="col-xs-4">
-                                            <button type="submit" class="btn btn-primary btn-lg" id="submit_btn" style="margin-top:20px">SCRAPE NOW</button>
-                                        </div>
-                                        <div class="col-xs-4">
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                        </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </section>
+    
 
     <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-2" style="background-color: rgb(50, 50, 50); padding-top: 1.75rem; padding-bottom: 1.75rem;">
 
@@ -292,33 +190,41 @@
     <script src="{% static 'assets/theme/js/script.js' %}"></script>
     <script src="{% static 'assets/formoid/formoid.min.js' %}"></script>
     <script src="{% static 'assets/theme/js/ajax-script.js' %}"></script>
-        <script src="{% static 'assets/smoke-validator/js/smoke.min.js' %}"></script>
-    <script src ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
+    <script src="{% static 'assets/smoke-validator/js/smoke.min.js' %}"></script>
     
     <script type="text/javascript">
-                $('#scrape_movies_form').on('submit', function(event){
-                event.preventDefault();
-                console.log("form submitted!")  // sanity check
-                //$('#scrape_movies_form').toggleClass('hidden')
-                scrape_movies();
-            });
-                $(document).ajaxStart(function(){
-                $('#scrape_movies_form').LoadingOverlay("show");
-            });
-            $(document).ajaxStop(function(){
-                $('#scrape_movies_form').LoadingOverlay("hide");
-            });
-            $(document).ajaxError(function(){
-                $('#scrape_movies_form').LoadingOverlay("hide");
-            });
-        // With JQuery
-        $("#scrape_pages_slider").on("slide", function(slideEvt) {
-            $("#scrape_pages").val(slideEvt.value);
+
+        $(document).ready(function() {
+          $('#scrap_button').click(function(e) {
+              $('#scrape_movies_form').submit()
+//            $('.popup-wrap').fadeIn(250);
+//            $('.popup-box').removeClass('transform-out').addClass('transform-in');
+//            e.preventDefault();
+          });
+
+          $('.popup-close').click(function(e) {
+            $('.popup-wrap').fadeOut(500);
+            $('.popup-box').removeClass('transform-in').addClass('transform-out');
+
+            e.preventDefault();
+          });
+            $('#scrape_movies_form').on('submit', function(event){
+            event.preventDefault();
+            console.log("form submitted!")  // sanity check
+            //$('#scrape_movies_form').toggleClass('hidden')
+            scrape_movies();
+        });
+            $(document).ajaxStart(function(){
+            $('#scrap_button').LoadingOverlay("show");
+        });
+        $(document).ajaxStop(function(){
+            $('#scrap_button').LoadingOverlay("hide");
+        });
+        $(document).ajaxError(function(){
+            $('#scrap_button').LoadingOverlay("hide");
         });
         
-//        $(":input").bind('keyup mouseup', function () {
-//            $("#scrape_pages_slider").bootstrapSlider('setValue', $(this).val());
-//        });
+        });
     </script>
         
 

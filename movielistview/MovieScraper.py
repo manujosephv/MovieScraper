@@ -63,24 +63,6 @@ class MovieScraper:
         entry_dict = {}
         while attempts < 4:
             try :
-                #print('SETTING UP PROXY')
-                #proxy = urllib2.ProxyHandler({'https': 'https://www.proxysite.com/'})
-                #opener = urllib2.build_opener(proxy)
-                #urllib2.install_opener(opener)
-                # candidate_proxies = ['https://www.proxysite.com/',
-                #          'https://www.freeproxyserver.co/']
-                # for proxy in candidate_proxies:
-                #     print "Trying HTTP proxy %s" % proxy
-                #     try:
-                #         web_page = urllib.urlopen(url, proxies={'http': proxy})
-                #         print "Got URL using proxy %s" % proxy
-                #         break
-                #     except:
-                #         print "Trying next proxy in 5 seconds"
-                #         time.sleep(5)
-
-
-                print('SENDING REQ') #ADd timeout
                 req = urllib2.Request(url, headers={'User-Agent' : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.112 Safari/534.30"}) 
                 print('Opening Page') #ADd timeout
                 web_page = urllib2.urlopen(req, timeout=30)
@@ -89,7 +71,7 @@ class MovieScraper:
                 #print('OPENING WEBPAGE')
             except urllib2.HTTPError as err :
                 print("HTTPERROR!")
-                print(err.code)
+                # print(err.code)
                 attempts += 1
                 print("Retrying...")
                 time.sleep(5)
@@ -180,8 +162,8 @@ class MovieScraper:
         continue_scrap = True
         print(1)
         scraped_movies, continue_scrap = self.scrape_page('http://sceper.ws/category/movies',scraped_movies,max_post_date) #Replace with date
-        print("scrape first page done")
-        print(type(scraped_movies))
+        # print("scrape first page done")
+        # print(type(scraped_movies))
         #from progressbar import ProgressBar
         #pbar = ProgressBar()
         #for x in pbar(range(2,pages)):
@@ -191,19 +173,11 @@ class MovieScraper:
             page_url = 'http://sceper.ws/category/movies/page/' + str(x)
             scraped_movies, continue_scrap = self.scrape_page(page_url,scraped_movies,max_post_date) #Replace with date
             print("scrape page {} done".format(x))
-            print("continue scrap {} done".format(continue_scrap))
+            # print("continue scrap {} done".format(continue_scrap))
             if x == pages:
                 break
             x= x+1
             time.sleep(5)
-
-
-        # for x in range(2,pages):
-        #     print(x)
-        #     page_url = 'http://sceper.ws/category/movies/page/' + str(x)
-        #     scraped_movies = self.scrape_page(page_url,scraped_movies,max_post_date) #Replace with date
-        #     print("scrape page {} done".format(x))
-        #     time.sleep(5)
         self.movieScraped = pd.DataFrame.from_dict(scraped_movies)
         
 #Calling the main function
