@@ -111,7 +111,10 @@
 
                 <div class="mbr-table-md-up">
                     <div class="mbr-table-cell col-md-4">
-                        <div class="text-xs-center"><a class="btn btn-primary" href="/view_movies/">REVIEW MOVIES</a></div>
+                        <div class="text-xs-center">
+                            <a class="btn btn-primary" href="/view_movies/">REVIEW MOVIES</a>
+                            <a class="btn btn-primary" id="update" href="/update_ratings/">UPDATE RATINGS</a>
+                        </div>
                     </div>
                     <div class="mbr-table-cell mbr-right-padding-md-up col-md-8 text-xs-center text-md-left">
                         <h3 class="mbr-info-title mbr-section-title display-2">REVIEW SCRAPED MOVIES</h3>
@@ -223,7 +226,32 @@
         $(document).ajaxError(function(){
             $('#scrap_button').LoadingOverlay("hide");
         });
-        
+        $('#update').click(function(e) {
+                console.log("Start updating")
+              e.preventDefault()
+              $.ajax({
+                type: 'GET', //GET or POST as defined in HTML
+                url: '/update_ratings/', //action defined in HTML
+//                data: frm.serialize(), //Serializing the object to pass through
+                // handle a successful response
+                success : function(json) {
+                    // frm[0].reset(); // remove the value from the input
+                    console.log(json); // log the returned json to the console
+                    console.log("success"); // another sanity check
+                },
+
+                // handle a non-successful response
+                error : function(xhr,errmsg,err) {
+                    //$('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                      //  " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+
+                }
+            });
+//            $('.popup-wrap').fadeIn(250);
+//            $('.popup-box').removeClass('transform-out').addClass('transform-in');
+//            e.preventDefault();
+          });
         });
     </script>
         

@@ -17,6 +17,8 @@ from django.db import transaction
 from django.db.models import Max
 from django.db.models import Min
 from django.utils import timezone
+import imdb
+import re
 
 MAX_SCRAP_PAGES = 100
 INIT_SCRAP_TIME = 30 #days
@@ -131,6 +133,37 @@ def mark_read_movies(request):
             content_type="application/json"
         )
 
+@transaction.atomic
+def update_ratings(request):
+    if request.method == 'GET':
+        # scrape_form = ScrapeForm(request.POST)
+        #Deleting all existing entries
+        #Movie.objects.all().delete()
+        no_of_rows_updated = update_all_ratings()
+        # movie_count_added = 0
+        response_data = {}
+        response_data['no_of_rows'] = Movie.objects.count()
+        response_data['no_of_rows_updated'] = no_of_rows_updated
+        response_data['result'] = 'Update Completed'
+        # response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
+        # response_data['last_scrap_time'] = timezone.make_naive(Movie.objects.latest('date_time').date_time).isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
+        #response_data['debug_info2'] = Movie.objects.all().latest('post_date')
+
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"result": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+
+
+
+
+
 def convert_timezone_aware(x):
     if isinstance(x,datetime.datetime):
         return timezone.make_aware(x)
@@ -188,3 +221,57 @@ def scrape_and_add_movies():
                 m.save()
 
     return len(movie_df.index)
+
+def update_all_ratings():
+    movies = Movie.objects.all()
+    # Create the object that will be used to access the IMDb's database.
+    ia = imdb.IMDb() # by default access the web.
+    counter = 0
+    for movie in movies:
+        print("movie name: {}".format(movie.name))
+        print("movie link: {}".format(movie.imdb_link))
+        movie_info, imdb_link_present = get_imdb_info(movie.imdb_link,movie.name,ia)
+        if movie_info:
+            if 'rating' in movie_info.keys():
+                print ("new rating: {} <--- old rating: {}".format(movie_info['rating'],movie.imdb_rating))
+            else:
+                print("no ratings")
+            if 'votes' in movie_info.keys():
+                print ("new votes: {} <--- old votes: {}".format(movie_info['votes'],movie.imdb_votes))
+            else:
+                print ("no votes")
+            counter = counter +1
+    return counter
+
+
+# def update_all_ratings():
+#     movies = Movie.objects.all()
+#     # Create the object that will be used to access the IMDb's database.
+#     ia = imdb.IMDb() # by default access the web.
+#     counter = 0
+#     for movie in movies:
+#         movie_info, imdb_link_present = get_imdb_info(movie.imdb_link,movie.name,ia)
+#         if movie_info:
+#             if 'rating' in movie_info.keys():
+#                 movie.imdb_rating = movie_info['rating']
+#             if 'votes' in movie_info.keys():
+#                 movie.imdb_votes = movie_info['votes']
+#             if 'plot' in movie_info.keys():
+#                 movie.plot = movie_info['plot']
+#             if not imdb_link_present:
+#                 movie.imdb_link = ia.get_imdbURL(movie_info)
+#             movie.save()
+#             counter = counter +1
+#     return counter
+
+def get_imdb_info(imdb_link,imdb_name,ia):
+    match = re.search(r'^https?://[^\s]+/[^\s]+/tt([^\s]+)$', imdb_link.strip('/'))
+    if match is not None:
+        id = match.group(1)
+        return ia.get_movie(id), True
+    else:
+        result_set = ia.search_movie(imdb_name)
+        if len(result_set)>0:
+            return ia.search_movie(imdb_name)[0], False
+        else:
+            return False, False
