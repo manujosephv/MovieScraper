@@ -19,6 +19,7 @@ from django.db.models import Min
 from django.utils import timezone
 import imdb
 import re
+from imdb._exceptions import IMDbDataAccessError, IMDbParserError
 
 MAX_SCRAP_PAGES = 100
 INIT_SCRAP_TIME = 30 #days
@@ -222,53 +223,65 @@ def scrape_and_add_movies():
 
     return len(movie_df.index)
 
+# def update_all_ratings():
+#     #for debug only
+#     movies = Movie.objects.filter(movie_read = False)
+#     # Create the object that will be used to access the IMDb's database.
+#     ia = imdb.IMDb() # by default access the web.
+#     counter = 0
+#     for movie in movies:
+#         print("movie name: {}".format(movie.name))
+#         print("movie link: {}".format(movie.imdb_link))
+#         movie_info, imdb_link_present = get_imdb_info(movie.imdb_link,movie.name,ia)
+#         if movie_info:
+#             if 'rating' in movie_info.keys():
+#                 print ("new rating: {} <--- old rating: {}".format(movie_info['rating'],movie.imdb_rating))
+#             else:
+#                 print("no ratings")
+#             if 'votes' in movie_info.keys():
+#                 print ("new votes: {} <--- old votes: {}".format(movie_info['votes'],movie.imdb_votes))
+#             else:
+#                 print ("no votes")
+#             counter = counter +1
+#             #For Debug only
+#             # movie.movie_read = True
+#             # movie.save()
+#     return counter
+
+
 def update_all_ratings():
     movies = Movie.objects.all()
     # Create the object that will be used to access the IMDb's database.
     ia = imdb.IMDb() # by default access the web.
     counter = 0
     for movie in movies:
-        print("movie name: {}".format(movie.name))
-        print("movie link: {}".format(movie.imdb_link))
         movie_info, imdb_link_present = get_imdb_info(movie.imdb_link,movie.name,ia)
         if movie_info:
             if 'rating' in movie_info.keys():
-                print ("new rating: {} <--- old rating: {}".format(movie_info['rating'],movie.imdb_rating))
-            else:
-                print("no ratings")
+                movie.imdb_rating = movie_info['rating']
             if 'votes' in movie_info.keys():
-                print ("new votes: {} <--- old votes: {}".format(movie_info['votes'],movie.imdb_votes))
-            else:
-                print ("no votes")
+                movie.imdb_votes = movie_info['votes']
+            if 'plot' in movie_info.keys():
+                movie.plot = movie_info['plot']
+            if not imdb_link_present:
+                movie.imdb_link = ia.get_imdbURL(movie_info)
+            movie.save()
             counter = counter +1
     return counter
-
-
-# def update_all_ratings():
-#     movies = Movie.objects.all()
-#     # Create the object that will be used to access the IMDb's database.
-#     ia = imdb.IMDb() # by default access the web.
-#     counter = 0
-#     for movie in movies:
-#         movie_info, imdb_link_present = get_imdb_info(movie.imdb_link,movie.name,ia)
-#         if movie_info:
-#             if 'rating' in movie_info.keys():
-#                 movie.imdb_rating = movie_info['rating']
-#             if 'votes' in movie_info.keys():
-#                 movie.imdb_votes = movie_info['votes']
-#             if 'plot' in movie_info.keys():
-#                 movie.plot = movie_info['plot']
-#             if not imdb_link_present:
-#                 movie.imdb_link = ia.get_imdbURL(movie_info)
-#             movie.save()
-#             counter = counter +1
-#     return counter
 
 def get_imdb_info(imdb_link,imdb_name,ia):
     match = re.search(r'^https?://[^\s]+/[^\s]+/tt([^\s]+)$', imdb_link.strip('/'))
     if match is not None:
         id = match.group(1)
-        return ia.get_movie(id), True
+        try:
+            movie = ia.get_movie(id)
+            return movie, True
+        except IMDbParserError as e:
+            result_set = ia.search_movie(imdb_name)
+            if len(result_set)>0:
+                return ia.search_movie(imdb_name)[0], False
+            else:
+                return False, False 
     else:
         result_set = ia.search_movie(imdb_name)
         if len(result_set)>0:
