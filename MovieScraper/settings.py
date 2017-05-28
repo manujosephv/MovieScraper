@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 """
 Django settings for MovieScraper project.
 
@@ -12,6 +13,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 from django.conf.global_settings import TEMPLATES
+from celery.schedules import crontab
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -124,3 +127,40 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Define the Queue Settings
+QUEUES = {
+    'default': {
+        'ENGINE': 'rabbitmq',
+        'NAME': 'scrapswaghost',
+        'USER': 'manujosephv',
+        'PASSWORD': 'hritik',
+        'HOST': 'localhost',
+        'PORT': '5672',
+    }
+}
+
+# Generate the Broker Url
+BROKER_URL = 'amqp://' + QUEUES['default']['USER'] + ':' + QUEUES['default']['PASSWORD'] + '@' + QUEUES['default']['HOST'] + ':' + QUEUES['default']['PORT'] + '/' + QUEUES['default']['NAME']
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
+
+CELERYBEAT_SCHEDULE = {
+    'movie_scrape-every-midnight': {
+    'task': 'tasks.scrape_movies_task',
+    'schedule': crontab(minute=0, hour=0) ,
+    # 'args': (1,2),
+    },
+    'update_ratings-every-4am': {
+    'task': 'tasks.update_ratings_task',
+    'schedule': crontab(minute=0, hour=4) ,
+    # 'args': (1,2),
+    },
+    'delete-read-movies-every-month': {
+    'task': 'tasks.delete_read_movies_task',
+    'schedule': crontab(0, 0, day_of_month='2') ,
+    # 'args': (1,2),
+    },
+}
