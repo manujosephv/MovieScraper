@@ -48,7 +48,6 @@ def scrape_movies(request):
         response_data['movie_count_added'] = movie_count_added
         response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
         response_data['last_scrap_time'] = timezone.make_naive(Movie.objects.latest('date_time').date_time).isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
-        #response_data['debug_info2'] = Movie.objects.all().latest('post_date')
 
         return HttpResponse(
             json.dumps(response_data),
@@ -67,10 +66,21 @@ def view_movies(request):
 #    return render(request, 'movielistview/page1.html', {})
 
 def filter_movies(request):
+    print(request)
+    print(request.method)
+    if not request.method == 'POST':
+        print("not POST")
+        print('filter-params' in request.session)
+        if 'filter-params' in request.session:
+            request.POST = request.session['filter-params']
+            request.method = 'POST'
+
+
     if request.method == 'POST':
-        filter_form = FilterForm(data=request.POST)
+        filter_form = FilterForm(data=request.POST or None)
+        request.session['filter-params'] = request.POST
         print("form initialised")
-        # print(filter_form.errors())
+        print(filter_form)
         print(filter_form.is_valid())
         response_data = {'movies':''}
         if filter_form.is_valid():
@@ -90,16 +100,16 @@ def filter_movies(request):
             # movies = Movie.objects.all().order_by('-post_date')
             # print(movies)
             #movies = Movie.objects.all().order_by('-post_date')
-            if show_read == "Y":
+            if show_read:
                 # show_read = True
                 movies = Movie.objects.filter(imdb_rating__gte = min_rating, imdb_votes__gte = min_votes).order_by('-post_date')
-            elif show_read == "N":
-                show_read = False
-                movies = Movie.objects.filter(imdb_rating__gte = min_rating, imdb_votes__gte = min_votes, movie_read = show_read ).order_by('-post_date')
             else:
-                movies = Movie()
-            
+                # show_read = False
+                movies = Movie.objects.filter(imdb_rating__gte = min_rating, imdb_votes__gte = min_votes, movie_read = show_read ).order_by('-post_date')
             response_data = {'movies':movies}
+        else:
+            movie = Movie()
+            response_data = {'movies':movie}
         return render(request, 'movielistview/view_movies.html', response_data)
 
 def mark_read_movies(request):

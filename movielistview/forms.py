@@ -8,7 +8,7 @@ class ScrapeForm(forms.Form):
     min_votes = forms.IntegerField(required=True)
 
 class FilterForm(forms.Form):
-    show_read = forms.CharField(max_length = 1,required=True)
+    show_read = forms.BooleanField(required=False)
     min_rating = forms.FloatField(required=True)
     min_votes = forms.IntegerField(required=True)
 

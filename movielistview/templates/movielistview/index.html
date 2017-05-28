@@ -108,30 +108,12 @@
 
         <div class="container">
             <div class="row">
-
-                <div class="mbr-table-md-up">
-                    <div class="mbr-table-cell col-md-4">
-                        <div class="text-xs-center">
-                            <a class="btn btn-primary" href="/view_movies/">REVIEW MOVIES</a><a class="btn btn-primary" id="update" href="/update_ratings/">UPDATE RATINGS</a>
-                        </div>
-                    </div>
-                    <div class="mbr-table-cell mbr-right-padding-md-up col-md-8 text-xs-center text-md-left">
-                        <h3 class="mbr-info-title mbr-section-title display-2">REVIEW SCRAPED MOVIES</h3>
-                        <h2 class="mbr-info-subtitle mbr-section-subtitle">You have {{ movie_count_unread }} unread movies to review. Get crackin!</h2>
-                    </div>
-                </div>
-
-
-
-            </div>
-        </div>
-    </section>
-    <section class="mbr-section mbr-section__container" id="buttons1-o" style="background-color:rgb(46,46,46); padding-top:30px; padding-bottom:20px;">
-        <div class="container">
-            <form action="/filter_movies/" method="post" id="filter-movies-form">
+                <form action="/filter_movies/" method="post" id="filter-movies-form">
                 {% csrf_token %}
-            <div class="row">
-                    <div class="col-xs-8">
+                <div class="mbr-table-md-up">
+                    <div class="mbr-table-cell mbr-right-padding-md-up col-md-8 text-xs-center text-md-left">
+<!--                        <h3 class="mbr-info-title mbr-section-title display-2">REVIEW SCRAPED MOVIES</h3>-->
+                        <div class="row">
                         <div class="container-pill">
                           <div class="box box-input" style="margin-top: .4em; background:transparent;">
                             <blockquote><span class="bqstart">“</span>
@@ -148,28 +130,57 @@
                             <span class="bqend">”</span></blockquote> 
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xs-2">
-                            <input type="radio" name="show_read" value="Y" id="yes"/>
+                            </div>
+<!--                        <h2 class="mbr-info-subtitle mbr-section-subtitle">You have {{ movie_count_unread }} unread movies to review. Get crackin!</h2>-->
+                        <div class="row row-eq-height">
+                            <div class="col-md-6" style="padding-top: 1em;padding-bottom: 1em;padding-left: 2em;">
+                                <span class="align-middle" style="color:white;"> Show Read Movies?</span>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="toggle-button toggle-button--aava">
+                                <input name="show_read" id="toggleButton" type="checkbox" value="Yes">
+<!--
+                                <input type="radio" name="show_read" value="Y" id="yes"/>
                               <input type="radio" name="show_read" value="N" id="no" checked/>
-                              <div class="switch">
-                                 <label style="font-size: smaller;color: #ba2b1c;position: absolute;width: 200px;bottom: 60%;right: -15%;font-weight: 700;">Show read movies</label>
-                                <label for="yes">Yes</label>
-                                <label for="no">No</label>
-                                <span></span>
-                              </div>
-                </div>
-                    <div class="col-xs-2">
-                        <div class="text-xs-center">
-                            <button type="submit" class="btn btn-primary btn-lg" id="filter_btn" style="margin-top:3px">SHOW ME</button>
+-->
+                                    
+                                <label for="toggleButton" data-on-text="Yes" data-off-text="No"></label>
+                                <div class="toggle-button__icon"></div>
+                            </div>    
+                            </div>
                         </div>
                     </div>
+                    <div class="mbr-table-cell col-md-4">
+                        <div class="text-xs-center">
+<!--
+                            <div class="row">
+                                
+                            <div class="toggle-button toggle-button--aava">
+                                <input id="toggleButton" type="checkbox">
+                                <label for="toggleButton" data-on-text="Yes" data-off-text="No"></label>
+                                <div class="toggle-button__icon"></div>
+                            </div>
+                            </div>
+-->
+                            <div class="row">
+<!--                            <a type="submit" class="btn btn-primary" id="filter_btn">YEAH, I AGREE</a>-->
+                            <button type="submit" class="btn btn-primary btn-lg" id="filter_btn" >YEAH, I AGREE</button>
+                            </div>
+                            
+                            <div class = "row">
+                            <a class="btn btn-primary" href="/view_movies/">NAH! SHOW EVERYTHING</a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                </form>
 
             </div>
-            </form>
         </div>
-    
     </section>
+
     
 
     <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-2" style="background-color: rgb(50, 50, 50); padding-top: 1.75rem; padding-bottom: 1.75rem;">
@@ -199,9 +210,6 @@
         $(document).ready(function() {
           $('#scrap_button').click(function(e) {
               $('#scrape_movies_form').submit()
-//            $('.popup-wrap').fadeIn(250);
-//            $('.popup-box').removeClass('transform-out').addClass('transform-in');
-//            e.preventDefault();
           });
 
           $('.popup-close').click(function(e) {
@@ -210,10 +218,10 @@
 
             e.preventDefault();
           });
+            
             $('#scrape_movies_form').on('submit', function(event){
             event.preventDefault();
             console.log("form submitted!")  // sanity check
-            //$('#scrape_movies_form').toggleClass('hidden')
             scrape_movies();
         });
             $(document).ajaxStart(function(){
@@ -225,6 +233,8 @@
         $(document).ajaxError(function(){
             $('#scrap_button').LoadingOverlay("hide");
         });
+            
+        
         $('#update').click(function(e) {
                 console.log("Start updating")
               e.preventDefault()
