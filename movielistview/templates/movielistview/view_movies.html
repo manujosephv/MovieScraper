@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="{% static 'assets/theme/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/custom_style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/mobirise/css/mbr.additional.css' %}" type="text/css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/css/bootstrap-slider.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/jquery-live-preview/css/livepreview-demo.css' %}">
     
 
 
@@ -282,6 +282,11 @@
                                 </div>
 
                             <hr></hr>
+                            <div class="row text-xs-center">
+                                <a href="{% yts_link movie.name %}" target="_blank" class="livepreview" data-position="top"> YTS.AG Search</a> <span> | </span>
+                                    <a href="{% torrentz_link movie.name movie.year|stringformat:"i"%}" target="_blank" class="livepreview" data-position="top">Torrentz Search</a>
+                            </div>
+                    <hr></hr>
                                 <!--Text-->
                                 <p class="card-text collapse" style="transform: none" id="card_text{{ forloop.counter }}">
 
@@ -293,9 +298,6 @@
                                     </span>
                                     <br> </br>
 
-                                    <a href="{% yts_link movie.name %}" target="_blank"> YTG.AG Search</a> <span> | </span>
-                                    <a href="{% torrentz_link movie.name movie.year|stringformat:"i"%}" target="_blank">Torrentz Search</a>
-                                        <br> </br>
                             <span style="font-weight:bold;padding-right:15px">
                                     Release Date:
                                 </span>
@@ -427,6 +429,7 @@
     <script src="{% static 'assets/theme/js/script.js' %}"></script>
     <script src="{% static 'assets/formoid/formoid.min.js' %}"></script>
     <script src="{% static 'assets/theme/js/ajax-script.js' %}"></script>
+    <script src="{% static 'assets/jquery-live-preview/js/jquery-live-preview.min.js' %}"></script>
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
     <script type="text/javascript">
                 $('#mark_read_form').find("input:checkbox").on('click', function(){
@@ -472,6 +475,10 @@
                 $('#toggleButton').removeAttr('checked');
                 $('#filter-movies-form').submit()
             });
+        //For popup link preview. Remove class in a tags and top css and js file
+//        $(document).ready(function() { 
+//          $(".livepreview").livePreview();
+//        });
     </script>
     <input name="animation" type="hidden">
 </body>
