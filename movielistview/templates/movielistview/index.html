@@ -168,7 +168,8 @@
                             </div>
                             
                             <div class = "row">
-                            <a class="btn btn-primary" href="/view_movies/">NAH! SHOW EVERYTHING</a>
+<!--                            <a class="btn btn-primary" href="/view_movies/">VIEW ALL</a>-->
+                                <a class="btn btn-primary" id = "clear-filter-btn">NAH! SHOW EVERYTHING</a>
                             </div>
                             
                         </div>
@@ -183,7 +184,7 @@
 
     
 
-    <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-2" style="background-color: rgb(50, 50, 50); padding-top: 1.75rem; padding-bottom: 1.75rem;">
+    <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-2" style="background-color: rgb(249, 249, 249); padding-top: 1.75rem; padding-bottom: 1.75rem;">
 
         <div class="container">
             <p class="text-xs-center">Copyright (c) 2017 Manu Joseph.</p>
@@ -261,6 +262,14 @@
 //            $('.popup-box').removeClass('transform-out').addClass('transform-in');
 //            e.preventDefault();
           });
+            $("#clear-filter-btn").on('click', function(){
+                console.log("on click!");  // sanity check
+                $('#min_rating').val(0);
+                $('#min_votes').val(0);
+             //console.log($('#toggleButton'))
+                $('#toggleButton').removeAttr('checked');
+                $('#filter-movies-form').submit()
+            });
         });
     </script>
         

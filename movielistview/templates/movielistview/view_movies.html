@@ -95,18 +95,19 @@
                 <div class="mbr-table-md-up">
                     <div class="mbr-table-cell mbr-right-padding-md-up col-md-8 text-xs-center text-md-left">
 <!--                        <h3 class="mbr-info-title mbr-section-title display-2">REVIEW SCRAPED MOVIES</h3>-->
+                        
                         <div class="row">
                         <div class="container-pill">
                           <div class="box box-input" style="margin-top: .4em; background:transparent;">
                             <blockquote><span class="bqstart">“</span>
                             <span class="quote-text">Any movie worth it's salt has </span>
                             <span class="number-container">
-                            <input id="min_rating" name="min_rating" type="number" min="1" max="10" step=".1" placeholder="6" value="6.0" class="number-input" style="width:2.2em;"/>
+                            <input id="min_rating" name="min_rating" type="number" min="0" max="10" step=".1" placeholder="6" value="{% if min_rating == 0 %}0{%else%}{{ min_rating|default:"6" }}{%endif%}" class="number-input" style="width:2.2em;"/>
                             <span class="fa fa-star fa-lg"></span>
                             </span>
                             <span class="quote-text"> with</span>
                               <span class="number-container">
-                            <input id="min_votes" name="min_votes" type="number" min="500" max="50000" step="500" placeholder="1000" value="1000" class="number-input" style="width:3.6em;"/>
+                            <input id="min_votes" name="min_votes" type="number" min="0" max="50000" step="500" placeholder="1000" value="{% if min_votes == 0 %}0{%else%}{{ min_votes|default:"1000" }}{%endif%}" class="number-input" style="width:3.6em;"/>
                             </span>
                               <span class="quote-text">votes</span>
                             <span class="bqend">”</span></blockquote> 
@@ -120,7 +121,11 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="toggle-button toggle-button--aava">
-                                <input name="show_read" id="toggleButton" type="checkbox" value="Yes">
+                                <input name="show_read" id="toggleButton" type="checkbox" value="Yes" 
+                                       {% if show_read %}
+                                       checked
+                                        {% endif %}
+                                       >
 <!--
                                 <input type="radio" name="show_read" value="Y" id="yes"/>
                               <input type="radio" name="show_read" value="N" id="no" checked/>
@@ -134,19 +139,20 @@
                     </div>
                     <div class="mbr-table-cell col-md-4">
                         <div class="text-xs-center">
-<!--
+
                             <div class="row">
-                                
-                            <div class="toggle-button toggle-button--aava">
-                                <input id="toggleButton" type="checkbox">
-                                <label for="toggleButton" data-on-text="Yes" data-off-text="No"></label>
-                                <div class="toggle-button__icon"></div>
-                            </div>
-                            </div>
--->
-                            
-<!--                            <a type="submit" class="btn btn-primary" id="filter_btn">YEAH, I AGREE</a>-->
                             <button type="submit" class="btn btn-primary btn-lg" id="filter_btn" >YEAH, I AGREE</button>
+                            </div>
+                            
+                            <div class = "row">
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary" id = "clear-filter-btn">SHOW ALL</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary" id = "reset-filter-btn">RESET</a>
+                                </div>
+                            
+                            </div>
                             
                             
                             
@@ -271,7 +277,7 @@
                                         </a>
                                     </div>
                                     <div class="col-xs-6 col-md-6 text-center">
-                                        <a data-toggle="collapse" data-target="#card_text{{ forloop.counter }}" aria-expanded="false" aria-controls="card_text{{ forloop.counter }}" id="post-link"><i aria-hidden="true" class="fa fa-plus" style="padding-right:15px"></i> Read more</a>
+                                        <a style="cursor:pointer;" data-toggle="collapse" data-target="#card_text{{ forloop.counter }}" aria-expanded="false" aria-controls="card_text{{ forloop.counter }}" id="post-link"><i aria-hidden="true" class="fa fa-plus" style="padding-right:15px"></i> Read more</a>
                                     </div>
                                 </div>
 
@@ -285,6 +291,10 @@
                                     <span id="release-name">
                                     {{ movie.release_name }}
                                     </span>
+                                    <br> </br>
+
+                                    <a href="{% yts_link movie.name %}" target="_blank"> YTG.AG Search</a> <span> | </span>
+                                    <a href="{% torrentz_link movie.name movie.year|stringformat:"i"%}" target="_blank">Torrentz Search</a>
                                         <br> </br>
                             <span style="font-weight:bold;padding-right:15px">
                                     Release Date:
@@ -419,7 +429,7 @@
     <script src="{% static 'assets/theme/js/ajax-script.js' %}"></script>
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
     <script type="text/javascript">
-                $("input:checkbox").on('click', function(){
+                $('#mark_read_form').find("input:checkbox").on('click', function(){
                 console.log("on click!"+ $(this).val() );  // sanity check
                 console.log($(this).prop("checked"));
                 $('#post_id').val($(this).val())
@@ -444,6 +454,23 @@
                 event.preventDefault();
                 console.log("form submitted!")  // sanity check
                 mark_read_movies();
+            });
+        
+         $("#clear-filter-btn").on('click', function(){
+                console.log("on click!");  // sanity check
+                $('#min_rating').val(0);
+                $('#min_votes').val(0);
+             //console.log($('#toggleButton'))
+                $('#toggleButton').removeAttr('checked');
+                $('#filter-movies-form').submit()
+            });
+        $("#reset-filter-btn").on('click', function(){
+                console.log("on click!");  // sanity check
+                $('#min_rating').val(6);
+                $('#min_votes').val(1000);
+             //console.log($('#toggleButton'))
+                $('#toggleButton').removeAttr('checked');
+                $('#filter-movies-form').submit()
             });
     </script>
     <input name="animation" type="hidden">

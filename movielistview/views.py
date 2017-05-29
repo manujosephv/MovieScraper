@@ -106,7 +106,7 @@ def filter_movies(request):
             else:
                 # show_read = False
                 movies = Movie.objects.filter(imdb_rating__gte = min_rating, imdb_votes__gte = min_votes, movie_read = show_read ).order_by('-post_date')
-            response_data = {'movies':movies}
+            response_data = {'movies':movies, 'show_read':show_read, 'min_rating':min_rating, 'min_votes':min_votes}
         else:
             movie = Movie()
             response_data = {'movies':movie}
