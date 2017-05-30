@@ -30,4 +30,4 @@ def update_ratings_task():
 
 @task(name='tasks.delete_read_movies_task')
 def delete_read_movies_task():
-    print "Task finished with error"
+    print "Delete Task"

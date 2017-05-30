@@ -28,9 +28,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '2+x*x0ij=b#kev0s4vd6^5$09wr_&p@)1rg6oo96=9(y*&h85&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['scrapswag.heroku.com']
 
 
 # Application definition
@@ -199,7 +199,8 @@ CELERYBEAT_SCHEDULE = {
     },
     'delete-read-movies-every-month': {
     'task': 'tasks.delete_read_movies_task',
-    'schedule': crontab(0, 0, day_of_month='2') ,
+    # 'schedule': crontab(6, 6, day_of_month='2') ,
+    'schedule': crontab() ,
     # 'args': (1,2),
     },
 }
