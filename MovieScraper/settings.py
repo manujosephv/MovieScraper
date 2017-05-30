@@ -199,8 +199,8 @@ CELERYBEAT_SCHEDULE = {
     },
     'delete-read-movies-every-month': {
     'task': 'tasks.delete_read_movies_task',
-    # 'schedule': crontab(6, 6, day_of_month='2') ,
-    'schedule': crontab() ,
+    'schedule': crontab(6, 6, day_of_month='2') ,
+    # 'schedule': crontab() ,
     # 'args': (1,2),
     },
 }
