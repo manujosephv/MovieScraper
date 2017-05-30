@@ -30,6 +30,7 @@ INIT_SCRAP_TIME = 30 #days
 
 # Create your views here.
 def index(request):
+    return render(request, 'movielistview/index.html', {})
     return render(request, 'movielistview/index.html', {"movie_count_unread":Movie.objects.filter(movie_read = False).count(),
                                                         "last_scrap_time" : timezone.make_naive(Movie.objects.latest('date_time').date_time)
         })
