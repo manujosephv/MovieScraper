@@ -1,5 +1,7 @@
 from django import template
 
+
+
 register = template.Library()
 
 @register.filter(name='get_no_of_stars')
@@ -8,6 +10,12 @@ def get_no_of_stars(value):
         return 0
     else:
         return (round(float(value)/float(2)))
+
+
+@register.filter(name='encode_utf')
+def encode_utf(value):
+    return (value.encode('ascii','ignore'))
+
 
 # @register.filter(name='get_yts_link')
 # def get_yts_link(value, arg):
