@@ -173,7 +173,14 @@ QUEUES = {
 }
 
 # Generate the Broker Url
-BROKER_URL = 'amqp://' + QUEUES['default']['USER'] + ':' + QUEUES['default']['PASSWORD'] + '@' + QUEUES['default']['HOST'] + ':' + QUEUES['default']['PORT'] + '/' + QUEUES['default']['NAME']
+#BROKER_URL = 'amqp://' + QUEUES['default']['USER'] + ':' + QUEUES['default']['PASSWORD'] + '@' + QUEUES['default']['HOST'] + ':' + QUEUES['default']['PORT'] + '/' + QUEUES['default']['NAME']
+BROKER_URL = os.environ.get("CLOUDAMQP_URL", "django://")
+BROKER_POOL_LIMIT = 1
+BROKER_CONNECTION_MAX_RETRIES = None
+
+CELERY_TASK_SERIALIZER = "json"
+CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
+
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
