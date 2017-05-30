@@ -30,7 +30,7 @@ SECRET_KEY = '2+x*x0ij=b#kev0s4vd6^5$09wr_&p@)1rg6oo96=9(y*&h85&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['scrapswag.heroku.com']
+ALLOWED_HOSTS = ['scrapswag.herokuapp.com']
 
 
 # Application definition
