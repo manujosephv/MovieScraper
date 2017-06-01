@@ -12,17 +12,17 @@ def scrape_movies_task():
 
     # What we return here, will be available as an argument
     # in the success callback function
-    print "doing task"
-    time.sleep(20)
+    print "Scraping Movie Task"
+    # time.sleep(20)
     utils = Utils()
     movie_count_added = utils.scrape_and_add_movies()
-    print "finished task"
+    print "Scrape Movie Task complete"
     return movie_count_added
 
 @task(name='tasks.update_ratings_task')
 def update_ratings_task():
 
-    
+    print "Update Ratings TaskA"
     utils = Utils()
     no_of_rows_updated = utils.update_all_ratings()
     print "Task finished successfully"

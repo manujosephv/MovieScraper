@@ -4,6 +4,34 @@
 		"selected_items":
 		[
 			[
+				"mo",
+				"movie_name"
+			],
+			[
+				"res",
+				"response_data"
+			],
+			[
+				"POST",
+				"POST"
+			],
+			[
+				"scra",
+				"scrape_movies"
+			],
+			[
+				"date",
+				"datetime"
+			],
+			[
+				"make",
+				"make_aware"
+			],
+			[
+				"time",
+				"timezone"
+			],
+			[
 				"movie",
 				"movie_read"
 			],
@@ -104,16 +132,8 @@
 				"rank_list_of_releases"
 			],
 			[
-				"time",
-				"timeout"
-			],
-			[
 				"max",
 				"max_post_date"
-			],
-			[
-				"scra",
-				"scrape_list"
 			]
 		]
 	},
@@ -123,26 +143,16 @@
 			"file": "/D/Scrap Swag/MovieScraper/movielistview/views.py",
 			"settings":
 			{
-				"buffer_size": 12806,
+				"buffer_size": 13557,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "celery.py",
+			"file": "local_settings.py",
 			"settings":
 			{
-				"buffer_size": 510,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "__init__.py",
-			"settings":
-			{
-				"buffer_size": 186,
-				"encoding": "UTF-8",
+				"buffer_size": 6028,
 				"line_ending": "Windows"
 			}
 		},
@@ -150,16 +160,40 @@
 			"file": "/D/Scrap Swag/MovieScraper/movielistview/tasks.py",
 			"settings":
 			{
-				"buffer_size": 810,
+				"buffer_size": 921,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/Scrap Swag/MovieScraper/movielistview/MovieScraper.py",
+			"file": "/D/Scrap Swag/MovieScraper/movielistview/templatetags/custom_filters.py",
 			"settings":
 			{
-				"buffer_size": 8213,
+				"buffer_size": 968,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Scrap Swag/MovieScraper/movielistview/forms.py",
+			"settings":
+			{
+				"buffer_size": 550,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Scrap Swag/MovieScraper/movielistview/Utils.py",
+			"settings":
+			{
+				"buffer_size": 7108,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Scrap Swag/MovieScraper/movielistview/MovieListCleaner.py",
+			"settings":
+			{
+				"buffer_size": 8012,
 				"line_ending": "Windows"
 			}
 		},
@@ -168,15 +202,6 @@
 			"settings":
 			{
 				"buffer_size": 4422,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "settings.py",
-			"settings":
-			{
-				"buffer_size": 3877,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -232,14 +257,40 @@
 	},
 	"file_history":
 	[
-		"/D/Scrap Swag/MovieScraper/movielistview/MovieScraper.py",
+		"/D/Scrap Swag/MovieScraper_Local/MovieScraper/settings.py",
+		"/D/Scrap Swag/MovieScraper - Dev Local/MovieScraper/settings.py",
+		"/D/Scrap Swag/MovieScraper - Dev Local/MovieScraper/settings_dev.py",
+		"/D/Scrap Swag/start-celery-server.bat",
+		"/D/Scrap Swag/MovieScraper/MovieScraper/wsgi dev.py",
+		"/D/Scrap Swag/MovieScraper/.gitignore",
+		"/D/Scrap Swag/MovieScraper/MovieScraper/wsgi.py",
+		"/D/Scrap Swag/MovieScraper/MovieScraper/wsgi_dev.py",
+		"/D/Scrap Swag/MovieScraper/MovieScraper/wsgi_prod.py",
+		"/D/Scrap Swag/MovieScraper/MovieScraper/base.py",
+		"/D/Scrap Swag/MovieScraper/MovieScraper/local_settings.py",
+		"/D/Scrap Swag/MovieScraper/MovieScraper/settings.py",
+		"/D/Scrap Swag/MovieScraper/Procfile",
+		"/D/Scrap Swag/MovieScraper/movielistview/management/commands/call_update_ratings_task.py",
+		"/D/Scrap Swag/MovieScraper/movielistview/management/commands/call_delete_task.py",
+		"/D/Scrap Swag/MovieScraper/movielistview/management/commands/call_scrape_movie_task.py",
+		"/D/Scrap Swag/MovieScraper/manage.py",
+		"/D/Scrap Swag/MovieScraper/run_task.py",
+		"/D/Scrap Swag/MovieScraper/movielistview/__init__.py",
+		"/D/Scrap Swag/MovieScraper/requirements.txt",
+		"/D/test/scrapswag/requirements.txt",
+		"/D/Scrap Swag/MovieScraper/procfile",
 		"/D/Scrap Swag/MovieScraper/movielistview/MovieListCleaner.py",
+		"/D/Scrap Swag/MovieScraper/movielistview/MovieScraper.py",
+		"/D/Scrap Swag/MovieScraper/MovieScraper/__init__.py",
+		"/D/Scrap Swag/MovieScraper/MovieScraper/celery.py",
+		"/D/Scrap Swag/start-flower.bat",
+		"/D/Scrap Swag/start-django-server.bat",
+		"/D/Scrap Swag/start-app.bat",
 		"/D/Scrap Swag/MovieScraper/movielistview/forms.py",
 		"/D/Scrap Swag/MovieScraper/movielistview/admin.py",
 		"/D/Celery Django Test/Picha-1/picha/settings.py",
 		"/D/Celery Django Test/Picha-1/picha/celery.py",
 		"/D/Celery Django Test/Picha-1/picha/__init__.py",
-		"/D/Scrap Swag/MovieScraper/.gitignore",
 		"/D/Scrap Swag/MovieScraper/movielistview/views.py",
 		"/D/Scrap Swag/MovieScraper/movielistview/urls.py",
 		"/D/Scrap Swag/MovieScraper/movielistview/models.py"
@@ -260,6 +311,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"encode",
 			"min_rating",
 			"encode",
 			"decode",
@@ -282,7 +334,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -291,15 +343,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12806,
+						"buffer_size": 13557,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								688,
-								688
+								1684,
+								1684
 							]
 						],
 						"settings":
@@ -309,113 +361,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3300.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "celery.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 510,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								279,
-								279
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "__init__.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 186,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								186,
-								186
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 632.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "/D/Scrap Swag/MovieScraper/movielistview/tasks.py",
+					"buffer": 1,
+					"file": "local_settings.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 810,
+						"buffer_size": 6028,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								810,
-								810
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "/D/Scrap Swag/MovieScraper/movielistview/MovieScraper.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8213,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								336,
-								340
+								2308,
+								2308
 							]
 						],
 						"settings":
@@ -425,14 +391,160 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": -0.0,
-						"translation.y": 1386.0,
+						"translation.y": 1188.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/tasks.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 921,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								679,
+								679
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 66.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/templatetags/custom_filters.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 968,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								451,
+								451
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/forms.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 550,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								304,
+								304
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/Utils.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7108,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4392,
+								4394
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2616.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/MovieListCleaner.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8012,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3248,
+								3299
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1208.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
 					"file": "/D/Scrap Swag/MovieScraper/movielistview/static/assets/theme/js/ajax-script.js",
 					"semi_transient": false,
 					"settings":
@@ -458,41 +570,11 @@
 						"translation.y": 848.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "settings.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3877,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3877,
-								3877
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2434.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
+					"buffer": 8,
 					"file": "/D/Scrap Swag/MovieScraper/movielistview/models.py",
 					"semi_transient": false,
 					"settings":
@@ -522,7 +604,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 9,
 					"file": "/D/Scrap Swag/MovieScraper/movielistview/urls.py",
 					"semi_transient": false,
 					"settings":
@@ -534,8 +616,8 @@
 						"selection":
 						[
 							[
-								541,
-								541
+								548,
+								548
 							]
 						],
 						"settings":
@@ -546,7 +628,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 8,
 					"type": "text"
 				}
 			]
