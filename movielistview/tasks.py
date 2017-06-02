@@ -1,9 +1,11 @@
 from __future__ import absolute_import
 
-from celery import task
+from celery import task, current_task
 from .Utils import Utils
 # from some_project import my_intensive_task # need to change
 # from my_app.models import my_model # need to change
+import random
+
 
 import time
 
@@ -31,3 +33,20 @@ def update_ratings_task():
 @task(name='tasks.delete_read_movies_task')
 def delete_read_movies_task():
     print "Delete Task"
+
+@task(name='tasks.test_task')
+def test_task():
+
+    print "in test task"
+    n=60
+    """
+    Brainless number crunching just to have a substantial task:
+    """
+    for i in range(n):
+        
+        # if(i%30 == 0):
+        #     process_percent = int(100 * float(i) / float(n))
+        #     current_task.update_state(state='PROGRESS',
+        #                               meta={'process_percent': process_percent})
+        time.sleep(1)
+    return True

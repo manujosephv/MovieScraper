@@ -225,15 +225,15 @@
             console.log("form submitted!")  // sanity check
             scrape_movies();
         });
-            $(document).ajaxStart(function(){
-            $('#scrap_button').LoadingOverlay("show");
-        });
-        $(document).ajaxStop(function(){
-            $('#scrap_button').LoadingOverlay("hide");
-        });
-        $(document).ajaxError(function(){
-            $('#scrap_button').LoadingOverlay("hide");
-        });
+//            $(document).ajaxStart(function(){
+//            $('#scrap_button').LoadingOverlay("show");
+//        });
+//        $(document).ajaxStop(function(){
+//            $('#scrap_button').LoadingOverlay("hide");
+//        });
+//        $(document).ajaxError(function(){
+//            $('#scrap_button').LoadingOverlay("hide");
+//        });
             
         
         $('#update').click(function(e) {

@@ -22,8 +22,10 @@ import imdb
 import re
 from imdb._exceptions import IMDbDataAccessError, IMDbParserError
 
-from .tasks import scrape_movies_task, update_ratings_task
+from .tasks import scrape_movies_task, update_ratings_task, test_task
 
+from celery.result import AsyncResult
+from django.views.decorators.csrf import csrf_exempt
 
 MAX_SCRAP_PAGES = 100
 INIT_SCRAP_TIME = 30 #days
@@ -41,7 +43,8 @@ def scrape_movies(request):
         
         # utils = Utils()
         # movie_count_added = utils.scrape_and_add_movies()
-        movie_count_added = scrape_movies_task.delay()
+        # movie_count_added = scrape_movies_task.delay()
+        res = test_task.delay()
         response_data = {}
         response_data['no_of_rows'] = Movie.objects.count()
         response_data['no_of_unread_rows'] = Movie.objects.filter(movie_read = False).count()
@@ -49,6 +52,7 @@ def scrape_movies(request):
         # response_data['movie_count_added'] = movie_count_added
         response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
         response_data['last_scrap_time'] = timezone.make_naive(Movie.objects.latest('date_time').date_time).isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
+        response_data['task_id'] = res.id
 
         return HttpResponse(
             json.dumps(response_data),
@@ -59,6 +63,28 @@ def scrape_movies(request):
             json.dumps({"result": "this isn't happening"}),
             content_type="application/json"
         )
+
+
+@csrf_exempt
+def poll_state(request):
+    """ A view to report the progress to the user """
+    data = 'Fail'
+    if request.is_ajax():
+        print('task_id' in request.POST.keys())
+        if 'task_id' in request.POST.keys() and request.POST['task_id']:
+            task_id = request.POST['task_id']
+            task = AsyncResult(task_id)
+            data = task.result or task.state
+            print(task.result)
+            print(task.state)
+        else:
+            data = 'No task_id in the request'
+    else:
+        data = 'This is not an ajax request'
+
+    json_data = json.dumps(data)
+    return HttpResponse(json_data, content_type='application/json')
+
 
 def view_movies(request):
     movies = Movie.objects.all().order_by('-post_date')

@@ -22,6 +22,37 @@ function scrape_movies() {
             $('.popup-box').removeClass('transform-out').addClass('transform-in');
             $('#last_scrap_time').html("Last scrape done on " + humanizeDate(json.last_scrap_time))
             console.log("success"); // another sanity check
+            var poll_xhr;
+            var willstop = 0;
+            (function(){
+                var poll = function(){
+                  var json_dump = json.data;
+                  var task_id = json.task_id;
+
+                  console.log(task_id);
+                  poll_xhr = $.ajax({
+                    url:'/poll_state/',
+                    type: 'POST',
+                    data: {
+                        task_id: task_id,
+
+                    },
+                    success: function(result) {
+                                console.log(result);
+                                if (result == true){
+                                    willstop = 1
+                                }
+                                }
+                  });
+                };
+
+                var refreshIntervalId = setInterval(function() {
+                  poll();
+                  if(willstop == 1){
+                    clearInterval(refreshIntervalId);
+                  }
+                },1000);
+              })();
         },
 
         // handle a non-successful response

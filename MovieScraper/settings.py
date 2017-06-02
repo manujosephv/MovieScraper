@@ -181,6 +181,7 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Kolkata'
+CELERY_RESULT_BACKEND = 'rpc'
 
 CELERYBEAT_SCHEDULE = {
     'movie_scrape-every-midnight': {
