@@ -117,10 +117,10 @@
                             </div>
 <!--                        <h2 class="mbr-info-subtitle mbr-section-subtitle">You have {{ movie_count_unread }} unread movies to review. Get crackin!</h2>-->
                         <div class="row row-eq-height">
-                            <div class="col-md-6" style="padding-top: 1em;padding-bottom: 1em;padding-left: 2em;">
+                            <div class="col-md-4" style="padding-top: 1em;padding-bottom: 1em;padding-left: 2em;">
                                 <span class="align-middle" style="color:white;"> Show Read Movies?</span>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="toggle-button toggle-button--aava">
                                 <input name="show_read" id="toggleButton" type="checkbox" value="Yes" 
                                        {% if show_read %}
@@ -135,6 +135,17 @@
                                 <label for="toggleButton" data-on-text="Yes" data-off-text="No"></label>
                                 <div class="toggle-button__icon"></div>
                                 </div>    
+                            </div>
+                            <div class="col-md-4" style="padding:1em; padding-left:2em;">
+                                <label class="toggleSwitch" onclick="">
+                                <input id = "proxy_toggle" type="checkbox" style="display:none;" value="Y"/>
+                                <span style="color:azure;">
+                                    <span>OFF</span>
+                                    <span>ON</span>
+                                    Proxy
+                                </span>
+                                <a style="bottom:6%;"></a>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -189,7 +200,8 @@
                             <div class="view overlay hm-white-slight" id="thumbnail">
                                 <figure class="mbr-figure">
                                     <div class="img-wrapper">
-                                        <img src="https://applove.gadgetnyooz.com/websurf/browse.php?u={{ movie.thumbnail_link }}">
+<!--                                        <img src="https://applove.gadgetnyooz.com/websurf/browse.php?u={{ movie.thumbnail_link }}">-->
+                                        <img src="{{ movie.thumbnail_link }}">
                                             
                                         <div class="checkbox close">
                                             <label>
@@ -476,6 +488,22 @@
                 $('#toggleButton').removeAttr('checked');
                 $('#filter-movies-form').submit()
             });
+        
+        $("#proxy_toggle").on('click', function(){
+                console.log("on click!");  // sanity check
+            proxy = "https://applove.gadgetnyooz.com/websurf/browse.php?u=";
+                if($(this).prop("checked") == true){
+                    $('.card').find('img').each(function() {
+                        $(this).attr('src',proxy + $(this).attr('src'));
+                    });    
+                } else {
+                    $('.card').find('img').each(function() {
+                        $(this).attr('src',$(this).attr('src').replace(proxy,""));
+                    });  
+                }
+                
+            });
+        
         //For popup link preview. Remove class in a tags and top css and js file
 //        $(document).ready(function() { 
 //          $(".livepreview").livePreview();
