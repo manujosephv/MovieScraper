@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 <html>
-
+    
 <head>
     <!-- Site made with Mobirise Website Builder v3.12.1, https://mobirise.com -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="generator" content="Mobirise v3.12.1, mobirise.com">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{% static 'assets/images/e43283a1e4900e1e4ffb8f78c7c8b58f.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+    <title>ScrapSwag</title>
     <meta name="description" content="">
-
+    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;subset=latin">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
@@ -54,7 +55,7 @@
                         </button>
 
                         <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
-                            <li class="nav-item"><a class="nav-link link" href="#">Home</a></li><li class="nav-item"><a class="nav-link link" href="#form1-1">Scraper</a></li><li class="nav-item"><a class="nav-link link" href="#msg-box2-0">Reviewer</a></li></ul>
+                            <li class="nav-item"><a class="nav-link link" href="#">Home</a></li><li class="nav-item"><a class="nav-link link" href="#msg-box2-0">Reviewer</a></li></ul>
                         
                         <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
                             <div class="close-icon"></div>
@@ -84,7 +85,7 @@
 
                         <h1 class="mbr-section-title display-1">SCRAP SWAG</h1>
                         <p class="mbr-section-lead lead">No more trolling the depths of the internet to find out the movies to download</p>
-                        <p class="mbr-section-lead lead" id="last_scrap_time" style="font-size:small !important; margin-bottom:1rem">Last scrape done on {{ last_scrap_time }}</p>
+                        <p class="mbr-section-lead lead" id="last_scrape_time" style="font-size:small !important; margin-bottom:1rem">Last scrape done on {{ last_scrape_time }}</p>
                         <div class="mbr-section-btn"><a class="btn btn-lg btn-primary" id="scrap_button" href="#">SCRAPE NOW</a> <a class="btn btn-lg btn-white btn-white-outline" href="#msg-box2-0">REVIEW</a></div>
                     </div>
                 </div>
@@ -180,8 +181,28 @@
 
             </div>
         </div>
-    </section>
+        <div id="notification_scrape_result" class="container-notification hide">
+	   <div class="rectangle">
+		<div class="notification-text">
+			<i class="fa fa-info-circle"></i>
+			<span>&nbsp;&nbsp;This is a test notification.</span>
+		</div>
+	   </div>
+            
+        </div>
+        <div id="notification_scrape_start" class="container-notification hide">
+	   <div class="rectangle">
+		<div class="notification-text">
+			<i class="fa fa-info-circle"></i>
+			<span>&nbsp;&nbsp;Started Scraping sceper.ws</span>
+		</div>
+	   </div>
+            
+        </div>
 
+
+    </section>
+    
     
 
     <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-2" style="background-color: rgb(249, 249, 249); padding-top: 1.75rem; padding-bottom: 1.75rem;">
@@ -210,7 +231,8 @@
 
         $(document).ready(function() {
           $('#scrap_button').click(function(e) {
-              $('#scrape_movies_form').submit()
+              $('#scrap_button').addClass('disabled')
+              $('#scrape_movies_form').submit();
           });
 
           $('.popup-close').click(function(e) {

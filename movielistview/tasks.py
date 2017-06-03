@@ -38,7 +38,7 @@ def delete_read_movies_task():
 def test_task():
 
     print "in test task"
-    n=60
+    n=5
     """
     Brainless number crunching just to have a substantial task:
     """
@@ -49,4 +49,4 @@ def test_task():
         #     current_task.update_state(state='PROGRESS',
         #                               meta={'process_percent': process_percent})
         time.sleep(1)
-    return True
+    return 32

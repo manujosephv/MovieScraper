@@ -34,7 +34,7 @@ INIT_SCRAP_TIME = 30 #days
 def index(request):
     # return render(request, 'movielistview/index.html', {})
     return render(request, 'movielistview/index.html', {"movie_count_unread":Movie.objects.filter(movie_read = False).count(),
-                                                        "last_scrap_time" : timezone.make_naive(Movie.objects.latest('date_time').date_time)
+                                                        "last_scrape_time" : timezone.make_naive(Movie.objects.latest('date_time').date_time)
         })
 
 @transaction.atomic
@@ -46,12 +46,12 @@ def scrape_movies(request):
         # movie_count_added = scrape_movies_task.delay()
         res = test_task.delay()
         response_data = {}
-        response_data['no_of_rows'] = Movie.objects.count()
-        response_data['no_of_unread_rows'] = Movie.objects.filter(movie_read = False).count()
-        response_data['result'] = 'Scrape Completed'
+        # response_data['no_of_rows'] = Movie.objects.count()
+        # response_data['no_of_unread_rows'] = Movie.objects.filter(movie_read = False).count()
+        response_data['result'] = 'Scrape Started'
         # response_data['movie_count_added'] = movie_count_added
-        response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
-        response_data['last_scrap_time'] = timezone.make_naive(Movie.objects.latest('date_time').date_time).isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
+        # response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
+        # response_data['last_scrape_time'] = timezone.make_naive(Movie.objects.latest('date_time').date_time).isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
         response_data['task_id'] = res.id
 
         return HttpResponse(
@@ -77,12 +77,21 @@ def poll_state(request):
             data = task.result or task.state
             print(task.result)
             print(task.state)
+            response_data = {}
+            # response_data['no_of_rows'] = Movie.objects.count()
+            # response_data['no_of_unread_rows'] = Movie.objects.filter(movie_read = False).count()
+            response_data['result'] = 'Scrape Completed'
+            response_data['movie_count_added'] = task.result
+            response_data['state'] = task.state
+            # response_data['movie_count_added'] = movie_count_added
+            # response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
+            response_data['last_scrape_time'] = timezone.make_naive(Movie.objects.latest('date_time').date_time).isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
         else:
-            data = 'No task_id in the request'
+            response_data = 'No task_id in the request'
     else:
-        data = 'This is not an ajax request'
+        response_data = 'This is not an ajax request'
 
-    json_data = json.dumps(data)
+    json_data = json.dumps(response_data)
     return HttpResponse(json_data, content_type='application/json')
 
 

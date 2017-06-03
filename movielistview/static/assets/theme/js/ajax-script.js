@@ -3,6 +3,7 @@ function scrape_movies() {
     console.log("create post is working!") // sanity check
     console.log($('#scrape_movies_form').serialize())
     var frm = $('#scrape_movies_form');
+    show_notifications('notification_scrape_start',3000)
     var frm_results_title = $('#form-results-title')
     var frm_results_text = $('#form-results-text')
     $.ajax({
@@ -15,13 +16,14 @@ function scrape_movies() {
             frm[0].reset(); // remove the value from the input
             console.log(json); // log the returned json to the console
             //frm.LoadingOverlay("hide", true);
-            frm_results_title.html("<span>Scrape Complete</span>");
-            frm_results_text.html("<span>" + json.movie_count_added +" movies added</span><br><a style='color:#fff;font-size:small;' href = '/view_movies/'> View Them Now </a>");
-            $('#popup-box').css('background-color', '#16b766');
-            $('.popup-wrap').fadeIn(250);
-            $('.popup-box').removeClass('transform-out').addClass('transform-in');
-            $('#last_scrap_time').html("Last scrape done on " + humanizeDate(json.last_scrap_time))
-            console.log("success"); // another sanity check
+            
+            // frm_results_title.html("<span>Scrape Complete</span>");
+            // frm_results_text.html("<span>" + json.movie_count_added +" movies added</span><br><a style='color:#fff;font-size:small;' href = '/view_movies/'> View Them Now </a>");
+            // $('#popup-box').css('background-color', '#16b766');
+            // $('.popup-wrap').fadeIn(250);
+            // $('.popup-box').removeClass('transform-out').addClass('transform-in');
+            // $('#last_scrap_time').html("Last scrape done on " + humanizeDate(json.last_scrap_time))
+            console.log("started"); // another sanity check
             var poll_xhr;
             var willstop = 0;
             (function(){
@@ -37,21 +39,37 @@ function scrape_movies() {
                         task_id: task_id,
 
                     },
-                    success: function(result) {
-                                console.log(result);
-                                if (result == true){
+                    success: function(response) {
+                                console.log(response);
+                                if (response.state == 'SUCCESS'){
                                     willstop = 1
+                                    $('#notification_scrape_result').find('.notification-text').find('span').html('&nbsp;&nbsp;Scrape complete. ' +response.movie_count_added +' movies added');
+                                    $('#last_scrape_time').html("Last scrape done on " + humanizeDate(response.last_scrape_time))
+                                    show_notifications('notification_scrape_result', 5000)
+                                    $('#scrap_button').removeClass('disabled')
+                                    // $('#notification_scrape_result').toggleClass('hide')
+                                    // setTimeout(function() {
+                                    //  $('#notification_scrape_result').animate({
+                                    //     top: "60%",
+                                    //     opacity: 0
+                                    //  }, "fast")
+                                    // }, 5000);
                                 }
                                 }
                   });
                 };
 
                 var refreshIntervalId = setInterval(function() {
-                  poll();
+                    console.log("calling poll")
                   if(willstop == 1){
+                    console.log("clearing interval")
                     clearInterval(refreshIntervalId);
+                  } else{
+                    poll();
                   }
-                },1000);
+
+                  
+                },3000);
               })();
         },
 
@@ -70,6 +88,16 @@ function scrape_movies() {
         }
     });
 };
+
+function show_notifications(div_id, duration) {
+    $('#' + div_id).toggleClass('hide')
+    setTimeout(function() {
+     $('#' + div_id).animate({
+        top: "60%",
+        opacity: 0
+     }, "fast")
+    }, duration);
+}
 
 function mark_read_movies() {
     
