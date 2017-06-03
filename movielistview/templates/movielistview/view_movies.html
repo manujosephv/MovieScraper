@@ -464,27 +464,31 @@
         
         $("#proxy_toggle").on('change', function(){
                 console.log("on click!");  // sanity check
-            proxy = "https://applove.gadgetnyooz.com/websurf/browse.php?u=";
+                proxy = "https://applove.gadgetnyooz.com/websurf/browse.php?u=";
                 if($(this).prop("checked") == true){
                     $('.card').find('img').each(function() {
                         $(this).attr('src',proxy + $(this).attr('src'));
-                        if (typeof(Storage) !== "undefined") {
+                    });    
+                    if (typeof(Storage) !== "undefined") {
                             sessionStorage.setItem("proxy",true)
                         }
-                    });    
                 } else {
                     $('.card').find('img').each(function() {
                         $(this).attr('src',$(this).attr('src').replace(proxy,""));
-                        if (typeof(Storage) !== "undefined") {
+                    });
+                    if (typeof(Storage) !== "undefined") {
                             sessionStorage.setItem("proxy",false)
                         }
-                    });  
                 }
                 
             });
         $(document).ready(function() {
              if (typeof(Storage) !== "undefined") {
-                 $("#proxy_toggle").prop('checked', sessionStorage.proxy)
+                     if (sessionStorage.proxy == "true"){
+                        $("#proxy_toggle").prop('checked', true)    
+                     } else if (sessionStorage.proxy == "false"){
+                        $("#proxy_toggle").prop('checked', false) 
+                     }
              }
             
         });
