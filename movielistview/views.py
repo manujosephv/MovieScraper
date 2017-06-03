@@ -43,8 +43,8 @@ def scrape_movies(request):
         
         # utils = Utils()
         # movie_count_added = utils.scrape_and_add_movies()
-        # movie_count_added = scrape_movies_task.delay()
-        res = test_task.delay()
+        res = scrape_movies_task.delay()
+        # res = test_task.delay()
         response_data = {}
         # response_data['no_of_rows'] = Movie.objects.count()
         # response_data['no_of_unread_rows'] = Movie.objects.filter(movie_read = False).count()

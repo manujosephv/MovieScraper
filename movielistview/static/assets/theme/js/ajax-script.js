@@ -3,7 +3,6 @@ function scrape_movies() {
     console.log("create post is working!") // sanity check
     console.log($('#scrape_movies_form').serialize())
     var frm = $('#scrape_movies_form');
-    show_notifications('notification_scrape_start',3000)
     var frm_results_title = $('#form-results-title')
     var frm_results_text = $('#form-results-text')
     $.ajax({
@@ -23,7 +22,8 @@ function scrape_movies() {
             // $('.popup-wrap').fadeIn(250);
             // $('.popup-box').removeClass('transform-out').addClass('transform-in');
             // $('#last_scrap_time').html("Last scrape done on " + humanizeDate(json.last_scrap_time))
-            console.log("started"); // another sanity check
+            console.log("started");
+            show_notifications('notification_scrape_start',3000) // another sanity check
             var poll_xhr;
             var willstop = 0;
             (function(){
@@ -69,7 +69,7 @@ function scrape_movies() {
                   }
 
                   
-                },3000);
+                },5000);
               })();
         },
 
@@ -79,6 +79,7 @@ function scrape_movies() {
               //  " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
             //frm.LoadingOverlay("hide");
+            $('#scrap_button').removeClass('disabled')
             frm_results_title.html("Scrape Cancelled");
             frm_results_text.html("<span>Something went wrong. Please try again.");
             $('#popup-box').css('background-color', '#ba2b1c');
