@@ -127,7 +127,6 @@ def filter_movies(request):
             show_read = filter_form.cleaned_data['show_read']
             min_rating = filter_form.cleaned_data['min_rating']
             min_votes = filter_form.cleaned_data['min_votes']
-
             print(show_read)
             print(min_rating)
             print(min_votes)

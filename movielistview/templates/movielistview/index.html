@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 <html>
-    
 <head>
     <!-- Site made with Mobirise Website Builder v3.12.1, https://mobirise.com -->
     <meta charset="UTF-8">
@@ -25,9 +24,7 @@
     <link rel="stylesheet" href="{% static 'assets/socicon/css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/custom_style.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/smoke-validator/css/smoke.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/mobirise/css/mbr.additional.css' %}" type="text/css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/css/bootstrap-slider.min.css" rel="stylesheet">
 
 
 
@@ -72,14 +69,11 @@
     <section class="engine"><a rel="external" href="https://mobirise.com">Mobirise Web Site Maker</a></section>
     <section class="mbr-section mbr-section-hero mbr-section-full mbr-parallax-background mbr-section-with-arrow" id="header1-1" style="background-image: url(static/assets/images/mbr-2-2000x1333.jpg);">
 
-
-
         <div class="mbr-table-cell">
             
             <div class="container">
                  <form action="/scrape_movies/" method="post" id="scrape_movies_form" data-form-title="SCRAPE MOVIES">
-
-                            {% csrf_token %}
+                  {% csrf_token %}
                 <div class="row">
                     <div class="mbr-section col-md-10 col-md-offset-1 text-xs-center">
 
@@ -113,7 +107,6 @@
                 {% csrf_token %}
                 <div class="mbr-table-md-up">
                     <div class="mbr-table-cell mbr-right-padding-md-up col-md-8 text-xs-center text-md-left">
-<!--                        <h3 class="mbr-info-title mbr-section-title display-2">REVIEW SCRAPED MOVIES</h3>-->
                         <div class="row">
                         <div class="container-pill">
                           <div class="box box-input" style="margin-top: .4em; background:transparent;">
@@ -132,7 +125,6 @@
                             </div>
                         </div>
                             </div>
-<!--                        <h2 class="mbr-info-subtitle mbr-section-subtitle">You have {{ movie_count_unread }} unread movies to review. Get crackin!</h2>-->
                         <div class="row row-eq-height">
                             <div class="col-md-6" style="padding-top: 1em;padding-bottom: 1em;padding-left: 2em;">
                                 <span class="align-middle" style="color:white;"> Show Read Movies?</span>
@@ -140,11 +132,6 @@
                             <div class="col-md-6">
                                 <div class="toggle-button toggle-button--aava">
                                 <input name="show_read" id="toggleButton" type="checkbox" value="Yes">
-<!--
-                                <input type="radio" name="show_read" value="Y" id="yes"/>
-                              <input type="radio" name="show_read" value="N" id="no" checked/>
--->
-                                    
                                 <label for="toggleButton" data-on-text="Yes" data-off-text="No"></label>
                                 <div class="toggle-button__icon"></div>
                                 </div>    
@@ -153,23 +140,11 @@
                     </div>
                     <div class="mbr-table-cell col-md-4">
                         <div class="text-xs-center">
-<!--
                             <div class="row">
-                                
-                            <div class="toggle-button toggle-button--aava">
-                                <input id="toggleButton" type="checkbox">
-                                <label for="toggleButton" data-on-text="Yes" data-off-text="No"></label>
-                                <div class="toggle-button__icon"></div>
-                            </div>
-                            </div>
--->
-                            <div class="row">
-<!--                            <a type="submit" class="btn btn-primary" id="filter_btn">YEAH, I AGREE</a>-->
                             <button type="submit" class="btn btn-primary btn-lg" id="filter_btn" >YEAH, I AGREE</button>
                             </div>
                             
                             <div class = "row">
-<!--                            <a class="btn btn-primary" href="/view_movies/">VIEW ALL</a>-->
                                 <a class="btn btn-primary" id = "clear-filter-btn">NAH! SHOW EVERYTHING</a>
                             </div>
                             
@@ -214,7 +189,6 @@
 
      
     <script src="{% static 'assets/web/assets/jquery/jquery.min.js' %}"></script>
-    <script src ="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js"></script>
     <script src="{% static 'assets/tether/tether.min.js' %}"></script>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/smooth-scroll/smooth-scroll.js' %}"></script>
@@ -225,7 +199,6 @@
     <script src="{% static 'assets/theme/js/script.js' %}"></script>
     <script src="{% static 'assets/formoid/formoid.min.js' %}"></script>
     <script src="{% static 'assets/theme/js/ajax-script.js' %}"></script>
-    <script src="{% static 'assets/smoke-validator/js/smoke.min.js' %}"></script>
     
     <script type="text/javascript">
 
@@ -247,57 +220,17 @@
             console.log("form submitted!")  // sanity check
             scrape_movies();
         });
-//            $(document).ajaxStart(function(){
-//            $('#scrap_button').LoadingOverlay("show");
-//        });
-//        $(document).ajaxStop(function(){
-//            $('#scrap_button').LoadingOverlay("hide");
-//        });
-//        $(document).ajaxError(function(){
-//            $('#scrap_button').LoadingOverlay("hide");
-//        });
-            
         
-        $('#update').click(function(e) {
-                console.log("Start updating")
-              e.preventDefault()
-              $.ajax({
-                type: 'GET', //GET or POST as defined in HTML
-                url: '/update_ratings/', //action defined in HTML
-//                data: frm.serialize(), //Serializing the object to pass through
-                // handle a successful response
-                success : function(json) {
-                    // frm[0].reset(); // remove the value from the input
-                    console.log(json); // log the returned json to the console
-                    console.log("success"); // another sanity check
-                },
-
-                // handle a non-successful response
-                error : function(xhr,errmsg,err) {
-                    //$('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                      //  " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-
-                }
-            });
-//            $('.popup-wrap').fadeIn(250);
-//            $('.popup-box').removeClass('transform-out').addClass('transform-in');
-//            e.preventDefault();
-          });
             $("#clear-filter-btn").on('click', function(){
                 console.log("on click!");  // sanity check
                 $('#min_rating').val(0);
                 $('#min_votes').val(0);
-             //console.log($('#toggleButton'))
                 $('#toggleButton').removeAttr('checked');
                 $('#filter-movies-form').submit()
             });
         });
     </script>
-        
-
-
- <!--    <input name="animation" type="hidden"> -->
+     <input name="animation" type="hidden"> 
 </body>
 
 </html>

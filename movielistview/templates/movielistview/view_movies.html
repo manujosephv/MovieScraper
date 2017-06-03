@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
     <!-- Font Awesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.1.1/ekko-lightbox.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'assets/bootstrap-material-design-font/css/material.css' %}">
     <link rel="stylesheet" href="{% static 'assets/tether/tether.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
@@ -30,10 +31,6 @@
     <link rel="stylesheet" href="{% static 'assets/theme/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/custom_style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/mobirise/css/mbr.additional.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'assets/jquery-live-preview/css/livepreview-demo.css' %}">
-    
-
-
 
 </head>
 
@@ -95,9 +92,7 @@
                 <form action="/filter_movies/" method="post" id="filter-movies-form">
                 {% csrf_token %}
                 <div class="mbr-table-md-up">
-                    <div class="mbr-table-cell mbr-right-padding-md-up col-md-8 text-xs-center text-md-left">
-<!--                        <h3 class="mbr-info-title mbr-section-title display-2">REVIEW SCRAPED MOVIES</h3>-->
-                        
+                    <div class="mbr-table-cell mbr-right-padding-md-up col-md-8 text-xs-center text-md-left">                        
                         <div class="row">
                         <div class="container-pill">
                           <div class="box box-input" style="margin-top: .4em; background:transparent;">
@@ -116,7 +111,6 @@
                             </div>
                         </div>
                             </div>
-<!--                        <h2 class="mbr-info-subtitle mbr-section-subtitle">You have {{ movie_count_unread }} unread movies to review. Get crackin!</h2>-->
                         <div class="row row-eq-height">
                             <div class="col-md-4" style="padding-top: 1em;padding-bottom: 1em;padding-left: 2em;">
                                 <span class="align-middle" style="color:white;"> Show Read Movies?</span>
@@ -127,19 +121,14 @@
                                        {% if show_read %}
                                        checked
                                         {% endif %}
-                                       >
-<!--
-                                <input type="radio" name="show_read" value="Y" id="yes"/>
-                              <input type="radio" name="show_read" value="N" id="no" checked/>
--->
-                                    
+                                       />
                                 <label for="toggleButton" data-on-text="Yes" data-off-text="No"></label>
                                 <div class="toggle-button__icon"></div>
                                 </div>    
                             </div>
                             <div class="col-md-4" style="padding:1em; padding-left:2em;">
                                 <label class="toggleSwitch" onclick="">
-                                <input id = "proxy_toggle" type="checkbox" style="display:none;" value="Y"/>
+                                <input id = "proxy_toggle" type="checkbox" style="display:none;" value="Yes"/>
                                 <span style="color:azure;">
                                     <span>OFF</span>
                                     <span>ON</span>
@@ -152,11 +141,9 @@
                     </div>
                     <div class="mbr-table-cell col-md-4">
                         <div class="text-xs-center">
-
                             <div class="row">
                             <button type="submit" class="btn btn-primary btn-lg" id="filter_btn" >YEAH, I AGREE</button>
                             </div>
-                            
                             <div class = "row">
                                 <div class="col-md-6">
                                     <a class="btn btn-primary" id = "clear-filter-btn">SHOW ALL</a>
@@ -164,21 +151,13 @@
                                 <div class="col-md-6">
                                     <a class="btn btn-primary" id = "reset-filter-btn">RESET</a>
                                 </div>
-                            
                             </div>
-                            
-                            
-                            
                         </div>
                     </div>
                 </div>
-
                 </form>
-
             </div>
-            
         </div>
-    
     </section>
     <section class="content">
         <main>
@@ -202,7 +181,12 @@
                                 <figure class="mbr-figure">
                                     <div class="img-wrapper">
 <!--                                        <img src="https://applove.gadgetnyooz.com/websurf/browse.php?u={{ movie.thumbnail_link }}">-->
-                                        <img src="{{ movie.thumbnail_link }}">
+                                        <img src=" {% if proxy %}
+                                                  https://applove.gadgetnyooz.com/websurf/browse.php?u={{ movie.thumbnail_link }}
+                                                  {% else %}
+                                                  {{ movie.thumbnail_link }}
+                                                  {% endif %}
+                                                  ">
                                             
                                         <div class="checkbox close">
                                             <label>
@@ -225,7 +209,6 @@
                             <!--/.Card image-->
                             <!--Card content-->
                             <div class="card-block">
-<!--                                <input type="text" value="{{ movie.movie_read }}"/>-->
                                 <div class="row">
                                     <div class="col-xs-6 col-md-6 text-center">
                                         <div>
@@ -282,7 +265,7 @@
                                 <hr></hr>
                                 <div class="row">
                                     <div class="col-xs-6 col-md-6 text-center">
-                                        <a href="{{ movie.trailer_link }}" id="trailer-link">
+                                        <a data-toggle="lightbox" data-gallery="remoteload" href="{{ movie.trailer_link }}" id="trailer-link">
                                             <i aria-hidden="true" class="fa fa-youtube-play" style="padding-right:15px">
                                     </i>
                                             <span style="font-weight:bold;padding-right:15px">
@@ -432,7 +415,6 @@
 
 
     <script src="{% static 'assets/web/assets/jquery/jquery.min.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js"></script>
     <script src="{% static 'assets/tether/tether.min.js' %}"></script>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/smooth-scroll/smooth-scroll.js' %}"></script>
@@ -443,8 +425,8 @@
     <script src="{% static 'assets/theme/js/script.js' %}"></script>
     <script src="{% static 'assets/formoid/formoid.min.js' %}"></script>
     <script src="{% static 'assets/theme/js/ajax-script.js' %}"></script>
-    <script src="{% static 'assets/jquery-live-preview/js/jquery-live-preview.min.js' %}"></script>
-    <script src ="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.1.1/ekko-lightbox.js"></script>
+
     <script type="text/javascript">
                 $('#mark_read_form').find("input:checkbox").on('click', function(){
                 console.log("on click!"+ $(this).val() );  // sanity check
@@ -452,19 +434,11 @@
                 $('#post_id').val($(this).val())
                 if($(this).prop("checked") == true){
                     $('#checked').val("Y");
-//                    alert("Checkbox is checked.");
                 }
                 else if($(this).prop("checked") == false){
                     $('#checked').val("N");
-//                    alert("Checkbox is unchecked.");
                 }
                 $('#mark_read_form').submit()
-            });
-                $(document).ajaxStart(function(){
-                $('#scrape_movies_form').LoadingOverlay("show");
-            });
-            $(document).ajaxStop(function(){
-                $('#scrape_movies_form').LoadingOverlay("hide");
             });
         $('#mark_read_form').on('submit', function(event){
                 console.log("in on submit")
@@ -477,7 +451,6 @@
                 console.log("on click!");  // sanity check
                 $('#min_rating').val(0);
                 $('#min_votes').val(0);
-             //console.log($('#toggleButton'))
                 $('#toggleButton').removeAttr('checked');
                 $('#filter-movies-form').submit()
             });
@@ -485,30 +458,43 @@
                 console.log("on click!");  // sanity check
                 $('#min_rating').val(6);
                 $('#min_votes').val(1000);
-             //console.log($('#toggleButton'))
                 $('#toggleButton').removeAttr('checked');
                 $('#filter-movies-form').submit()
             });
         
-        $("#proxy_toggle").on('click', function(){
+        $("#proxy_toggle").on('change', function(){
                 console.log("on click!");  // sanity check
             proxy = "https://applove.gadgetnyooz.com/websurf/browse.php?u=";
                 if($(this).prop("checked") == true){
                     $('.card').find('img').each(function() {
                         $(this).attr('src',proxy + $(this).attr('src'));
+                        if (typeof(Storage) !== "undefined") {
+                            sessionStorage.setItem("proxy",true)
+                        }
                     });    
                 } else {
                     $('.card').find('img').each(function() {
                         $(this).attr('src',$(this).attr('src').replace(proxy,""));
+                        if (typeof(Storage) !== "undefined") {
+                            sessionStorage.setItem("proxy",false)
+                        }
                     });  
                 }
                 
             });
-        
-        //For popup link preview. Remove class in a tags and top css and js file
-//        $(document).ready(function() { 
-//          $(".livepreview").livePreview();
-//        });
+        $(document).ready(function() {
+             if (typeof(Storage) !== "undefined") {
+                 $("#proxy_toggle").prop('checked', sessionStorage.proxy)
+             }
+            
+        });
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox({
+                alwaysShowClose: true
+            }
+            );
+        });
     </script>
     <input name="animation" type="hidden">
 </body>
