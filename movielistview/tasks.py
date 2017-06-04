@@ -33,6 +33,7 @@ def update_ratings_task():
 @task(name='tasks.delete_read_movies_task')
 def delete_read_movies_task():
     print "Delete Task"
+    Movie.objects.filter(post_date__lte =timezone.now()-datetime.timedelta(days=10),movie_read = True).delete()
 
 @task(name='tasks.test_task')
 def test_task():

@@ -422,140 +422,6 @@ float: right;
 }
 
 
-/*Toggle 2 Dev*/
-
-/*@import url("https://fonts.googleapis.com/css?family=Raleway:400,500,700");*/
-
-.toggle-button {
-	margin: 0 20px;
-}
-/*
- * Toggle button styles
- */
-.toggle-button {
-	position: relative;
-	display: inline-block;
-	color: #fff;
-}
-
-.toggle-button label {
-	display: inline-block;
-	text-transform: uppercase;
-	cursor: pointer;
-	text-align: left;
-}
-
-.toggle-button input {
-	display: none;
-}
-
-.toggle-button__icon {
-	cursor: pointer;
-	pointer-events: none;
-}
-
-.toggle-button__icon:before,
-.toggle-button__icon:after {
-	content: "";
-	position: absolute;
-	top: 45%;
-	left: 35%;
-	transition: 0.2s ease-out;
-}
-/*
- * Toggle button variables
- */
-/*
- * Toggle button styles
- */
-.toggle-button--aava label {
-	height: 50px;
-	line-height: 50px;
-	transition: all 0.2s;
-	border-radius: 2rem;
-    margin:auto;
-}
-
-.toggle-button--aava label:before,
-.toggle-button--aava label:after {
-	position: absolute;
-	right: 1.5rem;
-	transition: all 0.2s 0.1s ease-out;
-}
-
-.toggle-button--aava label:before {
-	content: attr(data-on-text);
-}
-
-.toggle-button--aava label:after {
-	content: attr(data-off-text);
-}
-
-.toggle-button--aava input[type=checkbox] + label {
-	width: 120px;
-	background: #e25041;
-}
-
-.toggle-button--aava input[type=checkbox] + label:before {
-	opacity: 0;
-	transform: translate(0, 20px);
-}
-
-.toggle-button--aava input[type=checkbox] + label:after {
-	opacity: 1;
-	transform: translate(0, 0);
-}
-
-.toggle-button--aava input[type=checkbox]:checked ~ label {
-	width: 120px;
-	background: #61b136;
-}
-
-.toggle-button--aava input[type=checkbox]:checked ~ label:before {
-	opacity: 1;
-	transform: translate(0, 0);
-}
-
-.toggle-button--aava input[type=checkbox]:checked ~ label:after {
-	opacity: 0;
-	transform: translate(0, -20px);
-}
-
-.toggle-button--aava input[type=checkbox]:checked ~ .toggle-button__icon:before {
-	transform: translate(-10%, 100%) rotate(45deg);
-	width: 16.66667px;
-}
-
-.toggle-button--aava input[type=checkbox]:checked ~ .toggle-button__icon:after {
-	transform: translate(30%) rotate(-45deg);
-}
-
-.toggle-button--aava .toggle-button__icon {
-	position: absolute;
-	left: 0;
-	top: 0;
-	height: 50px;
-	width: 50px;
-}
-
-.toggle-button--aava .toggle-button__icon:before,
-.toggle-button--aava .toggle-button__icon:after {
-	height: 3px;
-	border-radius: 3px;
-	background: #fff;
-	box-shadow: 0 1px 0 rgba(0,0,0,0.1);
-}
-
-.toggle-button--aava .toggle-button__icon:before {
-	width: 25px;
-	transform: rotate(45deg);
-}
-
-.toggle-button--aava .toggle-button__icon:after {
-	width: 25px;
-	transform: rotate(-45deg);
-}
-
 
 /*dev bootstrap*/
 .row-eq-height {
@@ -565,6 +431,9 @@ float: right;
   display: flex;
 }
 
+.hide {
+    display: none !important;
+}
 
 
 /*  Toggle Switch 2   */
@@ -802,6 +671,224 @@ float: right;
   }
 }
 
-.hide {
+
+/* Test Toggle */
+
+
+.tg-list {
+  text-align: center;
+  display: flex;
+  align-items: center;
+    padding-top: .5em;
+}
+
+.tg-list-item {
+  margin: 0 0em;
+}
+
+.tgl {
+  display: none;
+}
+.tgl, .tgl:after, .tgl:before, .tgl *, .tgl *:after, .tgl *:before, .tgl + .tgl-btn {
+  box-sizing: border-box;
+}
+.tgl::selection, .tgl:after::selection, .tgl:before::selection, .tgl *::selection, .tgl *:after::selection, .tgl *:before::selection, .tgl + .tgl-btn::selection {
+  background: none;
+}
+.tgl + .tgl-btn {
+  outline: 0;
+  display: block;
+  width: 4em;
+  height: 2em;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+.tgl + .tgl-btn:after, .tgl + .tgl-btn:before {
+  position: relative;
+  display: block;
+  content: "";
+  width: 50%;
+  height: 100%;
+}
+.tgl + .tgl-btn:after {
+  left: 0;
+}
+.tgl + .tgl-btn:before {
+  display: none;
+}
+.tgl:checked + .tgl-btn:after {
+  left: 50%;
+}
+
+.tgl-flip + .tgl-btn {
+  padding: 2px;
+  transition: all .2s ease;
+  font-family: sans-serif;
+  perspective: 100px;
+}
+.tgl-flip + .tgl-btn:after, .tgl-flip + .tgl-btn:before {
+  display: inline-block;
+  transition: all .4s ease;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  line-height: 2em;
+  font-weight: bold;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  border-radius: 4px;
+}
+.tgl-flip + .tgl-btn:after {
+  content: attr(data-tg-on);
+  background: #61b136;
+  transform: rotateY(-180deg);
+}
+.tgl-flip + .tgl-btn:before {
+  background: #ba2b1c;
+  content: attr(data-tg-off);
+}
+.tgl-flip + .tgl-btn:active:before {
+  transform: rotateY(-20deg);
+}
+.tgl-flip:checked + .tgl-btn:before {
+  transform: rotateY(180deg);
+}
+.tgl-flip:checked + .tgl-btn:after {
+  transform: rotateY(0);
+  left: 0;
+  background: #61b136;
+}
+.tgl-flip:checked + .tgl-btn:active:after {
+  transform: rotateY(20deg);
+}
+
+/* Round buttons */
+/*
+ * These hover-margin's don't work for some reason
+ * 0 - $spacing - $border
+ * ($spacing + $border) * -1
+*/
+
+.round-buttons {
+/*  padding: 40px;*/
+    width:100%;
+}
+
+.round-buttons div {
+  float: left;
+  font-size: 2em;
+  margin-right: .4em;
+  line-height: 0.85em;
+  position: relative;
+  text-align: center;
+}
+.round-buttons div a {
+  background-color: #fff;
+  color: #ba2b1c;
+  display: block;
+  position: relative;
+  text-decoration: none;
+  height: 1em;
+  width: 1em;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  -moz-transition: color 0.2s;
+  -o-transition: color 0.2s;
+  -webkit-transition: color 0.2s;
+  transition: color 0.2s;
+    transition-timing-function:ease-in-out;
+    cursor: pointer;
+}
+.round-buttons div a i {
+  position: relative;
+  z-index: 1;
+}
+.round-buttons div a .inner {
+  background-color: #ba2b1c;
+  display: block;
+  height: 0;
+  left: 50%;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  width: 0;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+    transition-timing-function:ease-in-out;
+}
+.round-buttons div a:hover {
+  color: #fff;
+}
+.round-buttons div a:hover .inner {
+  height: 1.5em;
+  margin-left: -0.75em;
+  margin-top: -0.75em;
+  width: 1.5em;
+}
+
+.round-buttons .label {
+/*    position: absolute;*/
+    color: azure;
+    position: relative;
+/*    top: 17%;*/
+    font-size: small;
+/*    left: 54%;*/
+    font-weight: 400;
     display: none;
+    z-index: 1;
+}
+
+.round-buttons div a:hover .label {
+    color:azure;
+    font-weight: 600;
+    display:inline;
+    display: initial;
+    top: -13%;
+    left: -14%;
+/*    animation: scale 4s ease-in-out;*/
+}
+.round-buttons div a:hover i {
+    display:none;
+}
+
+
+/*
+@keyframes scale {
+  100% {
+     transform: scale(1);
+  }
+0% {
+     transform: scale(0);
+  }
+}
+*/
+
+.ripple {
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  transform: scale(0);
+  position: absolute;
+  opacity: 1;
+}
+.rippleEffect {
+    animation: rippleDrop .3s ease-in-out;
+}
+
+@keyframes rippleDrop {
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
 }
