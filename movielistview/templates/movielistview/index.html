@@ -126,17 +126,27 @@
                         </div>
                             </div>
                         <div class="row row-eq-height">
-                            <div class="col-md-6" style="padding-top: 1em;padding-bottom: 1em;padding-left: 2em;">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3" style="padding:.7em 0 0 0;">
                                 <span class="align-middle" style="color:white;"> Show Read Movies?</span>
                             </div>
-                            <div class="col-md-6">
-                                <div class="toggle-button toggle-button--aava">
-                                <input name="show_read" id="toggleButton" type="checkbox" value="Yes">
-                                <label for="toggleButton" data-on-text="Yes" data-off-text="No"></label>
-                                <div class="toggle-button__icon"></div>
-                                </div>    
+                            <div class="col-md-3 pull-left" style="padding:0 0 0 0.5em;">
+                                <div class="tg-list">
+                                  <div class="tg-list-item">
+                                     <input name = "show_read" id="toggleButton" type="checkbox" class="tgl tgl-flip" value="Yes"
+                                           {% if show_read %}
+                                       checked
+                                        {% endif %}
+                                       />
+                                    <label data-tg-off="Nope" data-tg-on="Yeah!" for="toggleButton" class="tgl-btn"></label>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
                             </div>
                         </div>
+                        
                     </div>
                     <div class="mbr-table-cell col-md-4">
                         <div class="text-xs-center">

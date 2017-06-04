@@ -129,7 +129,11 @@
 -->
                                 <div class="tg-list">
                                   <div class="tg-list-item">
-                                    <input name = "show_read" id="toggleButton" type="checkbox" class="tgl tgl-flip" value="Yes"/>
+                                    <input name = "show_read" id="toggleButton" type="checkbox" class="tgl tgl-flip" value="Yes"
+                                           {% if show_read %}
+                                       checked
+                                        {% endif %}
+                                       />
                                     <label data-tg-off="Nope" data-tg-on="Yeah!" for="toggleButton" class="tgl-btn"></label>
                                   </div>
                                 </div>
