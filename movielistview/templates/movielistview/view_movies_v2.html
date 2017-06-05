@@ -1,0 +1,536 @@
+<!DOCTYPE html> 
+{% load staticfiles %} 
+{% load humanize %}
+{% load custom_filters %}
+{% load el_pagination_tags %}
+<html>
+
+<head>
+    <!-- Site made with Mobirise Website Builder v3.12.1, https://mobirise.com -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="generator" content="Mobirise v3.12.1, mobirise.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" /> 
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+    <title>ScrapSwag - Movies</title>
+    <meta name="description" content="">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;subset=latin">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+    <!-- Font Awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.1.1/ekko-lightbox.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/bootstrap-material-design-font/css/material.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/tether/tether.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/dropdown/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/animate.css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/socicon/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/theme/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/theme/css/custom_style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/mobirise/css/mbr.additional.css' %}" type="text/css">
+
+</head>
+
+<body>
+    <section id="menu-h">
+
+        <nav class="navbar navbar-dropdown bg-color transparent navbar-fixed-top">
+            <div class="container">
+
+                <div class="mbr-table">
+                    <div class="mbr-table-cell">
+
+                        <div class="navbar-brand">
+                            <a href="/" class="class="socicon socicon-odnoklassniki mbr-iconfont mbr-iconfont-menu navbar-logo""></a>
+                            <a class="navbar-caption" href="/">SCRAPSWAG</a>
+                        </div>
+
+                    </div>
+                    <div class="mbr-table-cell">
+
+                        <button class="navbar-toggler pull-xs-right hidden-md-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
+                            <div class="hamburger-icon"></div>
+                        </button>
+                        <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
+                            <li class="nav-item"><a class="nav-link link" href="/">Home</a></li></ul>
+                        <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
+                            <div class="close-icon"></div>
+                        </button>
+
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+
+    </section>
+
+    <section class="engine"><a rel="external" href="https://mobirise.com">mobirise.com</a></section>
+    <section class="mbr-section article mbr-parallax-background mbr-after-navbar" id="msg-box8-m" style="background-image: url(../static/assets/images/movies-digital-art-collage-movie-posters-fan-art-1920x1080-2000x1125.jpg); padding-top: 100px; padding-bottom: 40px;">
+
+        <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(34, 34, 34);">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-xs-center">
+                    <h3 class="mbr-section-title display-2">REVIEW MOVIES</h3>
+                    <div class="lead">
+                        <p>Scroll through and download!</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <section class="mbr-section mbr-section__container" id="buttons1-o" style="background-color:rgb(46,46,46); padding-top:30px; padding-bottom:20px;">
+        <div class="container">
+                <div class="row">
+                <form action="/filter_movies/" method="post" id="filter-movies-form">
+                {% csrf_token %}
+                <div class="mbr-table-md-up">
+                    <div class="mbr-table-cell mbr-right-padding-md-up col-md-8 text-xs-center text-md-left">                        
+                        <div class="row">
+                        <div class="container-pill">
+                          <div class="box box-input" style="margin-top: .4em; background:transparent;">
+                            <blockquote><span class="bqstart">“</span>
+                            <span class="quote-text">Any movie worth it's salt has </span>
+                            <span class="number-container">
+                            <input id="min_rating" name="min_rating" type="number" min="0" max="10" step=".1" placeholder="6" value="{% if min_rating == 0 %}0{%else%}{{ min_rating|default:"6" }}{%endif%}" class="number-input" style="width:2.2em;"/>
+                            <span class="fa fa-star fa-lg"></span>
+                            </span>
+                            <span class="quote-text"> with</span>
+                              <span class="number-container">
+                            <input id="min_votes" name="min_votes" type="number" min="0" max="50000" step="500" placeholder="1000" value="{% if min_votes == 0 %}0{%else%}{{ min_votes|default:"1000" }}{%endif%}" class="number-input" style="width:3.6em;"/>
+                            </span>
+                              <span class="quote-text">votes</span>
+                            <span class="bqend">”</span></blockquote> 
+                            </div>
+                        </div>
+                            </div>
+                        <div class="row row-eq-height">
+                            <div class="col-md-3" style="padding:.7em 0 0 0;">
+                                <span class="align-middle" style="color:white;"> Show Read Movies?</span>
+                            </div>
+                            <div class="col-md-3 pull-left" style="padding:0 0 0 0.5em;">
+<!--
+                                <div class="toggle-button toggle-button--aava">
+                                <input name="show_read" id="toggleButton" type="checkbox" value="Yes" 
+                                       {% if show_read %}
+                                       checked
+                                        {% endif %}
+                                       />
+                                <label for="toggleButton" data-on-text="Yes" data-off-text="No"></label>
+                                <div class="toggle-button__icon"></div>
+                                </div>
+-->
+                                <div class="tg-list">
+                                  <div class="tg-list-item">
+                                    <input name = "show_read" id="toggleButton" type="checkbox" class="tgl tgl-flip" value="Yes"
+                                           {% if show_read %}
+                                       checked
+                                        {% endif %}
+                                       />
+                                    <label data-tg-off="Nope" data-tg-on="Yeah!" for="toggleButton" class="tgl-btn"></label>
+                                  </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-2"  style="padding:0.5em 0.5em 0 0.5em">
+                                <div class="round-buttons">
+                                    <div>
+                                      <a id = "reset-filter-btn">
+                                        <span class="label">Reset</span>
+                                        <span class="inner"></span>
+                                        <i class="fa fa-refresh" style="font-size:x-large;"></i>
+                                      </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="padding:0.9em .5em 0 .5em;">
+                                <label class="toggleSwitch" onclick="">
+                                <input id = "proxy_toggle" type="checkbox" style="display:none;" value="Yes"/>
+                                <span style="color:azure;">
+                                    <span>OFF</span>
+                                    <span>ON</span>
+                                    Proxy
+                                </span>
+                                <a style="bottom:6%;"></a>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mbr-table-cell col-md-4">
+                        <div class="text-xs-center">
+                            <div class="row">
+                            <button type="submit" class="btn btn-primary btn-lg" id="filter_btn" >YEAH, I AGREE</button>
+                            </div>
+                            <div class = "row">
+<!--
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary" id = "clear-filter-btn">SHOW ALL</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary" id = "reset-filter-btn">RESET</a>
+                                </div>
+-->
+                                <a class="btn btn-primary" id = "clear-filter-btn">NAH! SHOW EVERYTHING</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+        <main>
+            <div id="card-append" class="container">
+<hr class="extra-margins"></hr>
+                <form action="/mark_read_movies/" method="post" id="mark_read_form">
+                {% csrf_token %}
+                <input type="hidden" name="post_id" id="post_id" id="post_id" value=""/>
+                <input type="hidden" name="checked" id="checked" id="checked" value=""/>
+    <div class="row active-with-click">
+         {% paginate 9 movies %}
+                    {% for movie in movies %}
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <article class="material-card {{ color_dict.2}}" id="{{ forloop.counter }}">
+                <h2>
+                    <span>{{ movie.name }} ({{ movie.year }})</span>
+                    <strong>
+                        <i class="fa fa-fw fa-star"></i>
+                        {{ movie.imdb_rating|floatformat:1 }} ({% if movie.imdb_votes == 0 %}
+                                            Not Available
+                                            {% else %}
+                                            {{ movie.imdb_votes|intcomma }}
+                                            {% endif %}) | {% if movie.release_type %} {{ movie.release_type }} {% else %} Not Available {% endif %}
+                    </strong>
+                </h2>
+                <div class="mc-content">
+                    <div class="img-container">
+                        <img class="img-responsive" src=" {% if proxy %}
+                                                  https://applove.gadgetnyooz.com/websurf/browse.php?u={{ movie.thumbnail_link }}
+                                                  {% else %}
+                                                  {{ movie.thumbnail_link }}
+                                                  {% endif %}
+                                                  ">
+                                <div class="checkbox close">
+                                            <label>
+                                                <input type="checkbox" name="post_id_check" id="post_id_check" value="{{ movie.id }}" 
+                                                       {% if movie.movie_read %} checked {% endif %} />
+                                                <span class="cr" style="margin-right:0px;background-color:white; font-size:medium"><i class="cr-icon fa fa-suitcase"></i></span>
+                                            </label>
+                                        </div>
+                    </div>
+                    <div class="mc-description">
+                        <div class="row">
+                                    <div class="col-xs-6 col-md-6 text-center">
+                                        <div>
+                                            <i aria-hidden="true" class="fa fa-film"></i>
+                                            <a class="detail_link" href="{{ movie.imdb_link }}" id="imdb-link"> <strong> IMDB</strong> </a>
+                                        </div>
+                                        <h1 class="rating-num">
+                                            {{ movie.imdb_rating|floatformat:1 }}</h1>
+                                        <div class="rating">
+                                            {% with rating=movie.imdb_rating|get_no_of_stars  %}
+                                            {% for i in "xxxxx" %}
+                                                {% if forloop.counter <= rating %}
+                                                    <i aria-hidden="true" class="fa fa-star"></i>
+                                                {% else %}
+                                                    <i aria-hidden="true" class="fa fa-star-o"></i>
+                                                {% endif %}
+
+                                            {% endfor %}
+                                            {% endwith %}
+                                        </div>
+                                        <div>
+                                            <i aria-hidden="true" class="fa fa-user"></i>
+                                            {% if movie.imdb_votes == 0 %}
+                                            Not Available
+                                            {% else %}
+                                            {{ movie.imdb_votes|intcomma }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 col-md-6 text-center">
+                                        <div>
+                                            <i aria-hidden="true" class="fa fa-film"></i>
+                                            <a href="{{ movie.rt_link }}" id="rt-link"> <strong> RT</strong> </a>
+                                        </div>
+                                        <h1 class="rating-num">
+                                            {{ movie.rt_rating|floatformat:1 }}</h1>
+                                        <div class="rating">
+                                            {% with rating=movie.rt_rating|get_no_of_stars  %}
+                                            {% for i in "xxxxx" %}
+                                                {% if forloop.counter <= rating %}
+                                                    <i aria-hidden="true" class="fa fa-star"></i>
+                                                {% else %}
+                                                    <i aria-hidden="true" class="fa fa-star-o"></i>
+                                                {% endif %}
+
+                                            {% endfor %}
+                                            {% endwith %}
+                                        </div>
+                                        <div>
+                                            <i aria-hidden="true" class="fa fa-user"></i> {% ifnotequal movie.tomatometer "nan" %} {{movie.tomatometer}} {% else %} Not Available {% endifnotequal %}
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                </div>
+                <a class="mc-btn-action">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <div class="mc-footer">
+                    <h4>
+                        {{ movie.release_name }}
+                    </h4>
+                    <a data-toggle="lightbox" data-gallery="remoteload" href="{{ movie.trailer_link }}" id="trailer-link">
+                                            <i aria-hidden="true" class="fa fa-youtube-play" style="padding-left:13px">
+                                    </i>
+                                        </a>
+                    <a href="{% yts_link movie.name %}" target="_blank" class="livepreview" data-position="top"><i aria-hidden="true" class="fa fa-yahoo" style="padding-left:13px">
+                                    </i></a>
+                    <a href="{% torrentz_link movie.name movie.year|stringformat:"i"%}" target="_blank" class="livepreview" data-position="top"><i aria-hidden="true" class="fa fa-cloud-download" style="padding-left:13px">
+                                    </i></a>
+                    <a class="fa fa-fw fa-info"></a>
+                </div>
+            </article>
+        </div>
+        {% if forloop.counter|divisibleby:3 %}
+                </div>
+                <div class="row">
+                    {% endif %} {% endfor %}
+                </div>
+            </form>
+            <nav aria-label="Page navigation example">
+  {% get_pages %}
+<ul class="pagination">
+{% if pages.paginated %}
+   
+    <li class="page-item">
+    <a class="page-link" style="color:#232323" href="{{ pages.first.path }}" aria-label="First">
+      <span aria-hidden="true">&lt;&lt;</span>
+      <span class="sr-only">First</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" style="color:#232323" href="{{ pages.previous.path }}" aria-label="Previous">
+      <span aria-hidden="true">&lt;</span>
+      <span class="sr-only">Previous</span>
+    </a>
+  </li>
+   
+  {% for page in pages %}
+    {% if page == None %}
+      <li class="page-item disabled">
+        <a class="page-link" style="color:#232323" href="#" aria-label="...">
+          <span aria-hidden="true">...</span>
+          <span class="sr-only">...</span>
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item {% if page.is_current %} active {% endif %}">
+        <a class="page-link" style="color:#232323" href="{{ page.path }}" aria-label="Page {{page.number}}">
+          <span aria-hidden="true">{{ page.label|safe }}</span>
+          <span class="sr-only">Page {{page.number}}</span>
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+   
+      <li class="page-item">
+    <a class="page-link" style="color:#232323" href="{{ pages.next.path }}" aria-label="Next">
+      <span aria-hidden="true">&gt;</span>
+      <span class="sr-only">Next</span>
+    </a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" style="color:#232323" href="{{ pages.last.path }}" aria-label="Last">
+      <span aria-hidden="true">&gt;&gt;</span>
+      <span class="sr-only">Last</span>
+    </a>
+  </li>
+    
+{% endif %}
+</ul>
+</nav>
+    </div>
+
+
+            
+            
+            
+        </main>
+
+    </section>
+
+    <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-l" style="background-color: rgb(50, 50, 50); padding-top: 1.75rem; padding-bottom: 1.75rem;">
+
+        <div class="container">
+            <p class="text-xs-center">Copyright (c) 2017 Manu Joseph.</p>
+        </div>
+    </footer>
+
+
+    <script src="{% static 'assets/web/assets/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/tether/tether.min.js' %}"></script>
+    <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/smooth-scroll/smooth-scroll.js' %}"></script>
+    <script src="{% static 'assets/dropdown/js/script.min.js' %}"></script>
+    <script src="{% static 'assets/touch-swipe/jquery.touch-swipe.min.js' %}"></script>
+    <script src="{% static 'assets/viewport-checker/jquery.viewportchecker.js' %}"></script>
+    <script src="{% static 'assets/jarallax/jarallax.js' %}"></script>
+    <script src="{% static 'assets/theme/js/script.js' %}"></script>
+    <script src="{% static 'assets/formoid/formoid.min.js' %}"></script>
+    <script src="{% static 'assets/theme/js/ajax-script.js' %}"></script>
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.1.1/ekko-lightbox.js"></script>
+
+    <script type="text/javascript">
+                $('#mark_read_form').find("input:checkbox").on('click', function(){
+                console.log("on click!"+ $(this).val() );  // sanity check
+                console.log($(this).prop("checked"));
+                $('#post_id').val($(this).val())
+                if($(this).prop("checked") == true){
+                    $('#checked').val("Y");
+                }
+                else if($(this).prop("checked") == false){
+                    $('#checked').val("N");
+                }
+                $('#mark_read_form').submit()
+            });
+        $('#mark_read_form').on('submit', function(event){
+                console.log("in on submit")
+                event.preventDefault();
+                console.log("form submitted!")  // sanity check
+                mark_read_movies();
+            });
+        
+         $("#clear-filter-btn").on('click', function(){
+                console.log("on click!");  // sanity check
+                $('#min_rating').val(0);
+                $('#min_votes').val(0);
+                $('#toggleButton').removeAttr('checked');
+                $('#filter-movies-form').submit()
+            });
+        $("#reset-filter-btn").on('click', function(e){
+                console.log("on click!");  // sanity check
+            //Ripple Effect    
+            // Remove any old one
+                  $(".ripple").remove();
+
+                  // Setup
+                  var posX = $(this).offset().left,
+                      posY = $(this).offset().top,
+                      buttonWidth = $(this).width(),
+                      buttonHeight =  $(this).height();
+
+                  // Add the element
+                  $(this).prepend("<span class='ripple' style='z-index:2;'></span>");
+
+
+                 // Make it round!
+                  if(buttonWidth >= buttonHeight) {
+                    buttonHeight = buttonWidth;
+                  } else {
+                    buttonWidth = buttonHeight; 
+                  }
+
+                  // Get the center of the element
+                  var x = e.pageX - posX - buttonWidth / 2;
+                  var y = e.pageY - posY - buttonHeight / 2;
+
+
+                  // Add the ripples CSS and start the animation
+                  $(".ripple").css({
+                    width: buttonWidth,
+                    height: buttonHeight,
+                    top: y + 'px',
+                    left: x + 'px'
+                  }).addClass("rippleEffect");
+            
+                $('#min_rating').val(6);
+                $('#min_votes').val(1000);
+                $('#toggleButton').removeAttr('checked');
+//                $('#filter-movies-form').submit()
+            });
+        
+        $("#proxy_toggle").on('change', function(){
+                console.log("on click!");  // sanity check
+                proxy = "https://applove.gadgetnyooz.com/websurf/browse.php?u=";
+                if($(this).prop("checked") == true){
+                    $('.card').find('img').each(function() {
+                        $(this).attr('src',proxy + $(this).attr('src'));
+                    });    
+                    if (typeof(Storage) !== "undefined") {
+                            sessionStorage.setItem("proxy",true)
+                        }
+                } else {
+                    $('.card').find('img').each(function() {
+                        $(this).attr('src',$(this).attr('src').replace(proxy,""));
+                    });
+                    if (typeof(Storage) !== "undefined") {
+                            sessionStorage.setItem("proxy",false)
+                        }
+                }
+                
+            });
+        $(document).ready(function() {
+             if (typeof(Storage) !== "undefined") {
+                     if (sessionStorage.proxy == "true"){
+                        $("#proxy_toggle").prop('checked', true)    
+                     } else if (sessionStorage.proxy == "false"){
+                        $("#proxy_toggle").prop('checked', false) 
+                     }
+             }
+            
+        });
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox({
+                alwaysShowClose: true
+            }
+            );
+        });
+        
+
+        $(function() {
+        $('.material-card > .mc-btn-action').click(function () {
+            var card = $(this).parent('.material-card');
+            var icon = $(this).children('i');
+            icon.addClass('fa-spin-fast');
+
+            if (card.hasClass('mc-active')) {
+                card.removeClass('mc-active');
+
+                window.setTimeout(function() {
+                    icon
+                        .removeClass('fa-arrow-left')
+                        .removeClass('fa-spin-fast')
+                        .addClass('fa-bars');
+
+                }, 800);
+            } else {
+                card.addClass('mc-active');
+
+                window.setTimeout(function() {
+                    icon
+                        .removeClass('fa-bars')
+                        .removeClass('fa-spin-fast')
+                        .addClass('fa-arrow-left');
+
+                }, 800);
+            }
+        });
+    });
+        
+        
+    </script>
+    <input name="animation" type="hidden">
+</body>
+
+</html>

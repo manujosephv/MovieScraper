@@ -95,10 +95,31 @@ def poll_state(request):
     return HttpResponse(json_data, content_type='application/json')
 
 
+color_dict = {1: "Red",
+                2: "Pink",
+                3: "Purple",
+                4: "Deep-Purple",
+                5: "Indigo",
+                6: "Blue",
+                7: "Light-Blue",
+                8: "Cyan",
+                9: "Teal",
+                10: "Green",
+                11: "Light-Green",
+                12: "Lime",
+                13: "Yellow",
+                14: "Amber",
+                15: "Orange",
+                16: "Deep-Orange",
+                17: "Brown",
+                18: "Grey",
+                19: "Blue-Grey"
+}
+
 def view_movies(request):
     movies = Movie.objects.all().order_by('-post_date')
     #print(movies)
-    return render(request, 'movielistview/view_movies.html', {'movies': movies})
+    return render(request, 'movielistview/view_movies_v2.html', {'movies': movies,'color_dict':color_dict})
 #    return render(request, 'movielistview/page1.html', {})
 
 def filter_movies(request):
