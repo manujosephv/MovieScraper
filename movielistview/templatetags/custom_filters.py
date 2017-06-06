@@ -16,6 +16,9 @@ def get_no_of_stars(value):
 def encode_utf(value):
     return (value.encode('ascii','ignore'))
 
+@register.filter(name='key_value')
+def key_value(dict, key):
+    return dict.get(key, '')
 
 # @register.filter(name='get_yts_link')
 # def get_yts_link(value, arg):

@@ -195,10 +195,11 @@
                 <input type="hidden" name="post_id" id="post_id" id="post_id" value=""/>
                 <input type="hidden" name="checked" id="checked" id="checked" value=""/>
     <div class="row active-with-click">
-         {% paginate 9 movies %}
+         {% paginate 18 movies %}
                     {% for movie in movies %}
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <article class="material-card {{ color_dict.2}}" id="{{ forloop.counter }}">
+<!--            color_dict|key_value:forloop.counter-->
+            <article class="material-card {{ color_dict|key_value:forloop.counter}}" id="{{ forloop.counter }}">
                 <h2>
                     <span>{{ movie.name }} ({{ movie.year }})</span>
                     <strong>
@@ -209,6 +210,11 @@
                                             {{ movie.imdb_votes|intcomma }}
                                             {% endif %}) | {% if movie.release_type %} {{ movie.release_type }} {% else %} Not Available {% endif %}
                     </strong>
+                    <div class="date">
+                        <span class="day">12</span>
+                        <span class="month">Aug</span>
+                        <span class="year">2016</span>
+                      </div>
                 </h2>
                 <div class="mc-content">
                     <div class="img-container">
@@ -297,7 +303,7 @@
                                     </i></a>
                     <a href="{% torrentz_link movie.name movie.year|stringformat:"i"%}" target="_blank" class="livepreview" data-position="top"><i aria-hidden="true" class="fa fa-cloud-download" style="padding-left:13px">
                                     </i></a>
-                    <a class="fa fa-fw fa-info"></a>
+                    <a class="fa fa-fw fa-info" href="#"></a>
                 </div>
             </article>
         </div>
@@ -527,8 +533,7 @@
             }
         });
     });
-        
-        
+             
     </script>
     <input name="animation" type="hidden">
 </body>
