@@ -1175,6 +1175,7 @@ box-shadow: 1px 1px 17px -3px rgba(0,0,0,0.75);
   text-decoration: none;
   top: 200px;
   border-radius: 50%;
+    transition: all .2s;
 }
 .material-card .mc-footer a:nth-child(1) {
   -webkit-transition: all 0.5s;
@@ -2440,4 +2441,289 @@ box-shadow: 1px 1px 17px -3px rgba(0,0,0,0.75);
 .material-card h2 .date .month,
 .material-card h2 .date .year {
   font-size: 12px;
+}
+
+
+/* Dev */
+
+/**
+ * Material Modal CSS
+ */
+.modal {
+	will-change: visibility, opacity;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	z-index: 1000;
+	visibility: hidden;
+	opacity: 0;
+	transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+	transition-delay: $modal-delay;
+}
+
+.modal--active {
+	visibility: visible;
+	opacity: 1;
+}
+
+.modal--align-top {
+	align-items: flex-start;
+}
+
+.modal__bg {
+	background: transparent;
+}
+
+.modal__dialog {
+	max-width: 800px;
+	padding: 0;
+    width:100%;
+    max-height:400px;
+    height: 100%;
+}
+
+.modal__content {
+	will-change: transform, opacity;
+	position: relative;
+	padding: 0;
+	background: #ffebee;
+	background-clip: padding-box;
+	box-shadow: 0 12px 15px 0 rgba(0,0,0,0.25);
+	opacity: 0;
+	transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.modal__content--active {
+	opacity: 1;
+}
+
+.modal__close {
+	z-index: 1100;
+	cursor: pointer;
+}
+
+
+.modal__trigger--active {
+	z-index: 500;
+    border-radius: 0;
+}
+
+.modal__trigger:hover {
+	background: #fafafa;
+}
+
+#modal__temp {
+	will-change: transform, opacity;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: #fafafa;
+	transform: none;
+	opacity: 1;
+    border-radius: 50%;
+	transition: opacity 0.1s ease-out, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+/**
+ * Demo specific CSS
+ */
+
+.demo-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 1.2rem;
+	padding: 0.6rem;
+	background: rgba(0,0,0,0.3);
+	border-radius: 50%;
+	transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.demo-close svg {
+	width: 24px;
+	fill: #fff;
+	pointer-events: none;
+	vertical-align: top;
+}
+
+.demo-close:hover {
+	background: rgba(0,0,0,0.6);
+}
+
+
+/*** Info Card Dev **/
+
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+body .card {
+  width: 800px;
+  height: 400px;
+  background: transparent;
+  position: relative;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  box-shadow: 0px 20px 30px 3px rgba(0, 0, 0, 0.55);
+}
+body .card_left {
+  width: 40%;
+  height: 400px;
+  float: left;
+  overflow: hidden;
+  background: transparent;
+}
+body .card_left img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px 0 0 10px;
+  -webkit-border-radius: 10px 0 0 10px;
+  -moz-border-radius: 10px 0 0 10px;
+  position: relative;
+}
+body .card_right {
+  width: 60%;
+  float: left;
+  background: #fafafa;
+  height: 400px;
+  border-radius: 0 10px 10px 0;
+  -webkit-border-radius: 0 10px 10px 0;
+  -moz-border-radius: 0 10px 10px 0;
+}
+body .card_right h1 {
+  color: #000;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  text-align: left;
+  font-size: 30px;
+  margin: 30px 0 0 0;
+  padding: 0 0 0 40px;
+/*  letter-spacing: 1px;*/
+}
+body .card_right__details ul {
+  list-style-type: none;
+  padding: 0 0 0 40px;
+  margin: 10px 0 0 0;
+}
+body .card_right__details ul li {
+  display: inline;
+  color: #000;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 0 40px 0 0;
+}
+body .card_right__rating__stars {
+  position: relative;
+  right: 160px;
+  margin: 10px 0 10px 0;
+  /***** CSS Magic to Highlight Stars on Hover *****/
+  /* hover previous stars in list */
+}
+body .card_right__rating__stars fieldset, body .card_right__rating__stars label {
+  margin: 0;
+  padding: 0;
+}
+body .card_right__rating__stars .rating {
+  border: none;
+}
+body .card_right__rating__stars .rating > input {
+  display: none;
+}
+body .card_right__rating__stars .rating > label:before {
+  margin: 5px;
+  font-size: 1.25em;
+  display: inline-block;
+  content: "\f005";
+  font-family: FontAwesome;
+}
+body .card_right__rating__stars .rating > .half:before {
+  content: "\f089";
+  position: absolute;
+}
+body .card_right__rating__stars .rating > label {
+  color: #ddd;
+  float: right;
+}
+body .card_right__rating__stars .rating > input:checked ~ label,
+body .card_right__rating__stars .rating:not(:checked) > label:hover,
+body .card_right__rating__stars .rating:not(:checked) > label:hover ~ label {
+  color: #FFD700;
+}
+body .card_right__rating__stars .rating > input:checked + label:hover,
+body .card_right__rating__stars .rating > input:checked ~ label:hover,
+body .card_right__rating__stars .rating > label:hover ~ input:checked ~ label,
+body .card_right__rating__stars .rating > input:checked ~ label:hover ~ label {
+  color: #FFED85;
+}
+
+body .card_right__review {
+    height: 100%;
+    overflow: auto;
+    max-height: 300px;
+}
+
+body .card_right__review p {
+  color: #000;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  padding: 0 40px 0 40px;
+  letter-spacing: 1px;
+  margin: 10px 0 10px 0;
+  line-height: 20px;
+}
+body .card_right__review a {
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  padding: 0 0 0 40px;
+  color: #ffda00;
+  margin: 0;
+}
+body .card_right__button {
+  padding: 0 0 0 40px;
+  margin: 30px 0 0 0;
+}
+body .card_right__button a {
+  color: #ffda00;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  border: 2px solid #ffda00;
+  padding: 10px 10px 10px 40px;
+  font-size: 12px;
+  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/343086/COMdoWZ.png);
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+  background-position: 7% 50%;
+  border-radius: 5px;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: .5s;
+  transition-duration: .5s;
+}
+body .card_right__button a:hover {
+  color: #000000;
+  background-color: #ffda00;
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/343086/rFQ5dHA.png);
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+  background-position: 10% 50%;
+  cursor: pointer;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: .5s;
+  transition-duration: .5s;
 }
