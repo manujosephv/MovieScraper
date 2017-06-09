@@ -99,13 +99,82 @@
 
     </section>
 
-    <section class="mbr-cards mbr-section mbr-section-nopadding" id="spotlight" style="background-color: rgb(239, 239, 239);">
-        <h1 class="text-xs-center" style="padding-top: 10px;">Spotlight</h1>
-    <div class="mbr-cards-row row">
-        <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
-            <div class="container">
-            </div>
+    <section class="mbr-cards mbr-section" id="spotlight" style="background-color: rgb(226, 80, 65);">
+                <div class="app">
+  <h2>Spotlight</h2>
+  <section class="movies">
+    <div class="movie">
+      <img src="http://movium.io/data/posters/eqFckcHuFCT1FrzLOAvXBb4jHwq.jpg" alt="" class="poster" />
+      <div class="title">Room</div>
+      <div class="info">
+        <span class="length">117 min</span>
+        <span class="year">2015</span>
+      </div>
+      <div class="desc">
+        Jack is a young boy of 5 years old who has lived all his life in one room. He believes everything within it are the only real things in the world. But what will happen when his Ma suddenly tells him that there are other things outside of Room?
+      </div>
     </div>
+    <div class="movie">
+      <img src="http://movium.io/data/posters/lIv1QinFqz4dlp5U4lQ6HaiskOZ.jpg" alt="" class="poster" />
+      <div class="title">Whiplash</div>
+      <div class="info">
+        <span class="length">167 min</span>
+        <span class="year">2015</span>
+      </div>
+      <div class="desc">
+        Under the direction of a ruthless instructor, a talented young drummer begins to pursue perfection at any cost, even his humanity.
+      </div>
+    </div>
+    <div class="movie">
+      <img src="http://movium.io/data/posters/kqjL17yufvn9OVLyXYpvtyrFfak.jpg" alt="" class="poster" />
+      <div class="title">Mad Max</div>
+      <div class="info">
+        <span class="length">120 min</span>
+        <span class="year">2015</span>
+      </div>
+      <div class="desc">
+        An apocalyptic story set in the furthest reaches of our planet, in a stark desert landscape where humanity is broken, and most everyone is crazed fighting for the necessities of life. Within this world exist two rebels on the run who just might be able to restore order. There's Max, a man of action and a man of few words, who seeks peace of mind following the loss of his wife and child in the aftermath of the chaos.
+      </div>
+    </div>
+    <div class="movie">
+      <img src="http://movium.io/data/posters/5W794ugjRwYx6IdFp1bXJqqMWRg.jpg" alt="" class="poster" />
+      <div class="title">The Revenant</div>
+      <div class="info">
+        <span class="length">156 min</span>
+        <span class="year">2015</span>
+      </div>
+      <div class="desc">
+        In the 1820s, a frontiersman, Hugh Glass, sets out on a path of vengeance against those who left him for dead after a bear mauling.
+      </div>
+    </div>
+  </section>
+  <div class="detail">
+      <i class="fa fa-times close-app"></i>
+<!--
+    <svg class="close-app">
+      <use xlink:href="#close"></use>
+    </svg>
+-->
+    <div class="movie">
+
+      <img src="http://movium.io/data/posters/eqFckcHuFCT1FrzLOAvXBb4jHwq.jpg" alt="" class="poster" />
+      <div class="title">Room</div>
+      <div class="info">
+        <span class="length">117 min</span>
+        <span class="year">2015</span>
+      </div>
+      <div class="desc">
+        Jack is a young boy of 5 years old who has lived all his life in one room. He believes everything within it are the only real things in the world. But what will happen when his Ma suddenly tells him that there are other things outside of Room?
+      </div>
+
+      
+    <button class="play exclude-mbr-animation">
+        <i class="fa fa-play"></i>
+play movie
+      </button>
+    </div>
+  </div>
+</div>
 </section>
     
     
@@ -483,7 +552,80 @@ function isValidEmail(email) {
         });
         
         
-        
+        //Dev Spotlight
+        var $play = $('.play'),
+    $detail  = $('.detail'),
+    $movie = $('.movie', $detail),
+    $close = $('.close-app');
+
+$('.movies .movie').click(function(){
+  $movie.html($(this).html());
+  $play.appendTo($movie);
+
+  $poster = $('.poster', this).addClass('active');
+
+  $('.poster', $detail).css({
+    top: $poster.position().top,
+    left: $poster.position().left,
+    width: $poster.width(),
+    height: $poster.height()
+  }).data({
+    top: $poster.position().top,
+    left: $poster.position().left,
+    width: $poster.width(),
+    height: $poster.height()
+  })
+
+  $detail.show();
+
+  $('.poster', $detail).delay(10).queue(function(next) {
+    $detail.addClass('ready');
+
+    next();
+  }).delay(100).queue(function(next){
+    $(this).css({
+      top: '-10%',
+      left: '-6%',
+      width: 266,
+      height: 400
+    });
+    next();
+  })
+})
+
+
+/*--------------------
+Close
+--------------------*/
+function close(){
+  console.log('asd');
+  $p = $('.detail .poster');
+  console.log($p)
+  $p.css({
+    top: $p.data('top'),
+    left: $p.data('left'),
+    width: $p.data('width'),
+    height: $p.data('height'),
+  })
+  $detail.removeClass('ready').delay(500).queue(function(next){
+    $(this).hide();
+    $poster.removeClass('active');
+    next();
+  });
+}
+
+$close.click(close);
+$('body').click(function(e){
+  $p = $(e.target).parents();
+  if ($p.is('.app')){
+    return false;
+  } else {
+    close();
+  }
+})
+
+
+
         
         
     </script>
