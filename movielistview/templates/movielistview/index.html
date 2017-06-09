@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{% static 'assets/socicon/css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/custom_style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/theme/css/ripple.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/mobirise/css/mbr.additional.css' %}" type="text/css">
 
 
@@ -98,6 +99,16 @@
 
     </section>
 
+    <section class="mbr-cards mbr-section mbr-section-nopadding" id="spotlight" style="background-color: rgb(239, 239, 239);">
+        <h1 class="text-xs-center" style="padding-top: 10px;">Spotlight</h1>
+    <div class="mbr-cards-row row">
+        <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
+            <div class="container">
+            </div>
+    </div>
+</section>
+    
+    
     <section class="mbr-info mbr-section mbr-section-md-padding" id="msg-box2-0" style="background-color: rgb(46, 46, 46); padding-top: 90px; padding-bottom: 90px;">
 
 
@@ -189,51 +200,88 @@
     </section>
     
     <section class="mbr-cards mbr-section mbr-section-nopadding" id="features7-p" style="background-color: rgb(239, 239, 239);">
-
-    
-
+        <h1 class="text-xs-center" style="padding-top: 10px;">Manage Movies</h1>
     <div class="mbr-cards-row row">
-        <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
-            <div class="container">
-                <div class="card cart-block">
-                    <div class="card-img iconbox" id="icon-set">
-                        <a href="https://mobirise.com" class="icon" style="color: rgb(255, 255, 255);">
-                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>
-                        </a>
-                    </div>
-                    <div class="card-block">
-                        <a class="btn btn-primary morph-btn morph-1"  id = "update_ratings">Update Ratings</a>                        
-                        <div class="morph-wrapper morph-1">
-  <div class="hidden">
-    <a href="#" class="morph-close">X</a>
-    <h2 class="padding">Test 1</h2>
-    <p class="padding card-text">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium mollitia eligendi numquam et, maiores unde sed quis error dicta quasi debitis vitae dolorem quaerat consequatur iure corporis pariatur voluptatibus magni! Quis, laborum, beatae. Alias consequatur libero dignissimos earum dolorem debitis perferendis similique ex molestiae quam vitae, quia illo accusantium deserunt non deleniti? Odio ullam eligendi possimus alias temporibus natus ducimus maxime, quaerat consequuntur repellat corrupti molestiae aspernatur corporis aliquam molestias. Quidem, obcaecati, esse. Sequi atque inventore explicabo suscipit eaque quam ut! Qui illum porro, temporibus modi natus architecto consectetur dignissimos molestias quod. Soluta vel perferendis excepturi reiciendis nisi maxime, temporibus.
-    </p>
-    <p class="padding card-text">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium mollitia eligendi numquam et, maiores unde sed quis error dicta quasi debitis vitae dolorem quaerat consequatur iure corporis pariatur voluptatibus magni! Quis, laborum, beatae. Alias consequatur libero dignissimos earum dolorem debitis perferendis similique ex molestiae quam vitae, quia illo accusantium deserunt non deleniti? Odio ullam eligendi possimus alias temporibus natus ducimus maxime, quaerat consequuntur repellat corrupti molestiae aspernatur corporis aliquam molestias. Quidem, obcaecati, esse. Sequi atque inventore explicabo suscipit eaque quam ut! Qui illum porro, temporibus modi natus architecto consectetur dignissimos molestias quod. Soluta vel perferendis excepturi reiciendis nisi maxime, temporibus.
-    </p>
-    <p class="padding card-text">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium mollitia eligendi numquam et, maiores unde sed quis error dicta quasi debitis vitae dolorem quaerat consequatur iure corporis pariatur voluptatibus magni! Quis, laborum, beatae. Alias consequatur libero dignissimos earum dolorem debitis perferendis similique ex molestiae quam vitae, quia illo accusantium deserunt non deleniti? Odio ullam eligendi possimus alias temporibus natus ducimus maxime, quaerat consequuntur repellat corrupti molestiae aspernatur corporis aliquam molestias. Quidem, obcaecati, esse. Sequi atque inventore explicabo suscipit eaque quam ut! Qui illum porro, temporibus modi natus architecto consectetur dignissimos molestias quod. Soluta vel perferendis excepturi reiciendis nisi maxime, temporibus.
-    </p>
+            <div class="form-overlay"></div>
+        <!--Update Rating -->
+<div class="icon-expanding fa fa-star form-container relevant-icon ripple" id="left">
+  <span class="icon-expanding fa fa-close" id="form-close"></span>
+</div>
+    
+    <!--Delete Movies -->
+<div class="icon-expanding fa fa-minus-circle form-container relevant-icon form-container-expandable" id="middle1">
+  <span class="icon-expanding fa fa-close" id="form-close"></span>
+  <div id="form-content">
+    <div id="form-head">
+      <h1 class="pre">Get in touch</h1>
+    </div>
+    <form>
+      <input class="input name" name="user_name" placeholder="Your name please" type="text"></input>
+      <input class="input email" name="user_email" placeholder="A contact email" type="text"></input>
+      <select class="input select" name="subject">
+        <option>What shall we talk about?</option>
+        <option>About a new project</option>
+        <option>About a job opportunity</option>
+        <option>Let's do this over a coffee</option>
+      </select>
+      <textarea class="input message" placeholder="How can I help?"></textarea>
+      <input class="input submit" type="submit" value="Send Message"></input>
+    </form>
   </div>
 </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--Remove Duplicates -->
+<div class="icon-expanding fa fa-files-o form-container relevant-icon form-container-expandable" id="middle2">
+  <span class="icon-expanding fa fa-close" id="form-close"></span>
+  <div id="form-content">
+    <div id="form-head">
+      <h1 class="pre">Get in touch</h1>
+    </div>
+    <form>
+      <input class="input name" name="user_name" placeholder="Your name please" type="text"></input>
+      <input class="input email" name="user_email" placeholder="A contact email" type="text"></input>
+      <select class="input select" name="subject">
+        <option>What shall we talk about?</option>
+        <option>About a new project</option>
+        <option>About a job opportunity</option>
+        <option>Let's do this over a coffee</option>
+      </select>
+      <textarea class="input message" placeholder="How can I help?"></textarea>
+      <input class="input submit" type="submit" value="Send Message"></input>
+    </form>
+  </div>
+</div>
+<!--Mark Read -->
+<div class="icon-expanding fa fa-check-circle form-container relevant-icon form-container-expandable" id="right">
+  <span class="icon-expanding fa fa-close" id="form-close"></span>
+  <div id="form-content">
+    <div id="form-head">
+      <h1 class="pre">Get in touch</h1>
+    </div>
+    <form>
+      <input class="input name" name="user_name" placeholder="Your name please" type="text"></input>
+      <input class="input email" name="user_email" placeholder="A contact email" type="text"></input>
+      <select class="input select" name="subject">
+        <option>What shall we talk about?</option>
+        <option>About a new project</option>
+        <option>About a job opportunity</option>
+        <option>Let's do this over a coffee</option>
+      </select>
+      <textarea class="input message" placeholder="How can I help?"></textarea>
+      <input class="input submit" type="submit" value="Send Message"></input>
+    </form>
+  </div>
+</div>
         <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
             <div class="container">
                 <div class="card cart-block">
-                    <div class="card-img iconbox">
+                    <div class="card-img iconbox" style="visibility:hidden;">
                         <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
-                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>
+<!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
                         </a>
                     </div>
                     <div class="card-block">
-                        <a class="btn btn-primary" id = "update_ratings">Delete Movies</a>
+                        <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id = "update_ratings">Update Ratings</a>
                         
-                        <p class="card-text">One of Bootstrap 4's big points is responsiveness and Mobirise makes effective use of this by generating highly responsive website for you.</p>
                         
                     </div>
                 </div>
@@ -242,15 +290,30 @@
         <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
             <div class="container">
                 <div class="card cart-block">
-                    <div class="card-img iconbox">
+                    <div class="card-img iconbox" style="visibility:hidden;">
                         <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
-                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>
+<!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
                         </a>
                     </div>
                     <div class="card-block">
-                        <a class="btn btn-primary" id = "update_ratings">Remove Duplicates</a>
+                        <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id = "update_ratings">Delete Movies</a>
                         
-                        <p class="card-text">Google has a highly exhaustive list of fonts compiled into its web font platform and Mobirise makes it easy for you to use them on your website easily and freely.</p>
+                        
+                    </div>
+                </div>
+          </div>
+        </div>
+        <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
+            <div class="container">
+                <div class="card cart-block">
+                    <div class="card-img iconbox" style="visibility:hidden;">
+                        <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
+<!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
+                        </a>
+                    </div>
+                    <div class="card-block">
+                        <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id = "update_ratings">Remove Duplicates</a>
+                        
                         
                     </div>
                 </div>
@@ -259,22 +322,20 @@
         <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
             <div class="container">
                 <div class="card cart-block">
-                    <div class="card-img iconbox">
+                    <div class="card-img iconbox"  style="visibility:hidden;">
                         <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
-                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>
+<!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
                         </a>
                     </div>
                     <div class="card-block">
-                        <a class="btn btn-primary" id = "update_ratings">Mark Read</a>
+                        <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id = "update_ratings">Mark Read</a>
                         
-                        <p class="card-text">Mobirise gives you the freedom to develop as many websites as you like given the fact that it is a desktop app.</p>
                         
                     </div>
                 </div>
+
             </div>
         </div>
-        
-        
     </div>
 </section>
 
@@ -300,6 +361,99 @@
     
     <script type="text/javascript">
 
+//        var formContainer = $('.form-container');
+
+bindFormClickInit();
+//init the form
+function bindFormClickInit(){  
+  $('.form-container-expandable').on('click', function(e) {
+    e.preventDefault();
+    var id = $(this).prop('id');
+      $("#"+id+".form-container-expandable").attr('style','z-index:1002;');
+    toggleForm(id);
+    //Ensure container doesn't togleForm when open
+//    $(this).off();
+      $("#"+id+".form-container-expandable").off();
+  });
+}
+
+//Opening the form
+function bindFormClick(id){
+  $("#"+id+".form-container-expandable").on('click', function(e) {
+    e.preventDefault();
+    var id = $(this).prop('id');
+    $("#"+id+".form-container-expandable").attr('style','z-index:1002;');
+    toggleForm(id);
+      
+    //Ensure container doesn't togleForm when open
+//    $(this).off();
+      $("#"+id+".form-container-expandable").off();
+  });
+}
+
+//Closing the form
+$('#form-close, .form-overlay').click(function(e) {
+  e.stopPropagation();
+  e.preventDefault();
+  var id = $(this).closest("div").prop("id");
+    toggleForm(id);
+    setTimeout(
+  function() 
+  {
+    //do something special
+      $("#"+id+".form-container-expandable").attr('style','z-index:1000;');
+  }, 500);
+    
+  bindFormClick(id);
+});
+
+function toggleForm(id){
+  $("#"+id+".form-container-expandable").toggleClass('expand');
+  $("#"+id+".form-container-expandable").children().toggleClass('expand');
+  $('body').toggleClass('show-form-overlay');
+  $('.form-submitted').removeClass('form-submitted');
+}
+
+//Form validation
+$('form').submit(function() {
+  var form = $(this);
+  form.find('.form-error').removeClass('form-error');
+  var formError = false;
+  
+  form.find('.input').each(function() {
+    if ($(this).val() == '') {
+      $(this).addClass('form-error');
+      $(this).select();
+      formError = true;
+      return false;
+    }
+    else if ($(this).hasClass('email') && !isValidEmail($(this).val())) {
+      $(this).addClass('form-error');
+      $(this).select();
+      formError = true;
+      return false;
+    }
+  });
+  
+  if (!formError) {
+    $('body').addClass('form-submitted');
+    $('#form-head').addClass('form-submitted'); 
+    setTimeout(function(){
+      $(form).trigger("reset");
+    }, 1000);
+  }
+  return false;
+});
+
+function isValidEmail(email) {
+    var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+    return pattern.test(email);
+};
+
+        
+        
+        
+        
         $(document).ready(function() {
           $('#scrap_button').click(function(e) {
               $('#scrap_button').addClass('disabled')

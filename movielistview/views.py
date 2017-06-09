@@ -107,13 +107,13 @@ color_dict = {1: "Red",
                 10: "Green",
                 11: "Light-Green",
                 12: "Lime",
-                13: "Yellow",
-                14: "Amber",
-                15: "Orange",
-                16: "Deep-Orange",
-                17: "Brown",
-                18: "Grey",
-                19: "Blue-Grey"
+                # 13: "Yellow",
+                # 14: "Amber",
+                # 15: "Orange",
+                13: "Deep-Orange",
+                14: "Brown",
+                15: "Grey",
+                16: "Blue-Grey"
 }
 
 def view_movies(request):

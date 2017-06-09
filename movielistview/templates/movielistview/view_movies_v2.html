@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="{% static 'assets/socicon/css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/custom_style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/theme/css/ripple.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/mobirise/css/mbr.additional.css' %}" type="text/css">
     
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
@@ -144,7 +145,7 @@
                             <div class="col-md-2"  style="padding:0.5em 0.5em 0 0.5em">
                                 <div class="round-buttons">
                                     <div>
-                                      <a id = "reset-filter-btn">
+                                      <a id = "reset-filter-btn" class="ripple">
                                         <span class="label">Reset</span>
                                         <span class="inner"></span>
                                         <i class="fa fa-refresh" style="font-size:x-large;"></i>
@@ -197,7 +198,7 @@
                 <input type="hidden" name="post_id" id="post_id" id="post_id" value=""/>
                 <input type="hidden" name="checked" id="checked" id="checked" value=""/>
     <div class="row active-with-click">
-         {% paginate 18 movies %}
+         {% paginate 15 movies %}
                     {% for movie in movies %}
         <div class="col-md-4 col-sm-6 col-xs-12">
 <!--            color_dict|key_value:forloop.counter-->
@@ -312,13 +313,41 @@
 	<div id="modal{{ forloop.counter }}" class="modal modal__bg" role="dialog" aria-hidden="true">
 		<div class="modal__dialog">
 			<div class="modal__content">
-				<div class="card">
+				<div class="card-info">
   <div class="card_left">
-    <img src="{{ movie.thumbnail_link }}"/>
+    <img src="{% if proxy %}
+                                                  https://applove.gadgetnyooz.com/websurf/browse.php?u={{ movie.thumbnail_link }}
+                                                  {% else %}
+                                                  {{ movie.thumbnail_link }}
+                                                  {% endif %}"/>
   </div>
   <div class="card_right">
     <h1>{{ movie.name }}</h1>
     <div class="card_right__details">
+        <div class="card_right__rating">
+        <div class="card_right__rating__stars">
+          {% with rating=movie.imdb_rating|get_no_of_stars  %}
+            {% for i in "xxxxx" %}
+                {% if forloop.counter <= rating %}
+                    <i aria-hidden="true" class="fa fa-star"></i>
+                {% else %}
+                    <i aria-hidden="true" class="fa fa-star-o"></i>
+                {% endif %}
+
+            {% endfor %}
+            {% endwith %}
+            
+             <i aria-hidden="true" class="fa fa-user" style="margin-left:5px;"></i>
+                                            {% if movie.imdb_votes == 0 %}
+                                            Not Available
+                                            {% else %}
+                                            {{ movie.imdb_votes|intcomma }}
+                                            {% endif %}
+        </div>
+        
+                                           
+                                        
+      </div>
       <ul>
         <li>{{ movie.year }}</li>
         <li>{{ movie.genre }}</li>
@@ -327,11 +356,20 @@
       
       <div class="card_right__review">
         <p>{{movie.plot|encode_utf}}</p>
-          <p>Starring : {{ movie.starring }}</p>
-          <p>Directed by: {{ movie.director }}</p>
+          <p><strong>Starring :</strong> {{ movie.starring }}</p>
+          <p><strong>Directed by:</strong> {{ movie.director }}</p>
         <a href="{{ movie.post_link }}" target="_blank">Read more at Sceper</a>
       </div>
       <div class="card_right__button">
+          <ul>
+        <li><a data-toggle="lightbox" data-gallery="remoteload" href="{{ movie.trailer_link }}" id="trailer-link">
+                                            Trailer
+                                    
+                                        </a></li>
+        <li><a href="{% yts_link movie.name %}" target="_blank" class="livepreview" data-position="top">Yts.ag
+                                    </a></li>
+        <li><a href="{% torrentz_link movie.name movie.year|stringformat:"i"%}" target="_blank" class="livepreview" data-position="top">Torrentz </a></li>
+      </ul>
 <!--        <a href="https://www.youtube.com/watch?v=ot6C1ZKyiME" target="_blank">WATCH TRAILER</a>-->
       </div>
     </div>
@@ -449,7 +487,7 @@
   var closers = $qsa('.modal__close'); // an element used to close the modal
   var w = window;
   var isOpen = false;
-	var contentDelay = 400; // duration after you click the button and wait for the content to show
+	var contentDelay = 600; // duration after you click the button and wait for the content to show
   var len = trigger.length;
 
   // make it easier for yourself by not having to type as much to select an element
@@ -505,8 +543,8 @@
     scaleX = mProps.width / trigProps.width;
     scaleY = mProps.height / trigProps.height;
 
-    scaleX = scaleX.toFixed(3); // round to 3 decimal places
-    scaleY = scaleY.toFixed(3);
+//    scaleX = scaleX.toFixed(3); // round to 3 decimal places
+//    scaleY = scaleY.toFixed(3);
 
 
     // these values are used to move the button to the center of the window
@@ -525,7 +563,7 @@
 		// expand temporary div to the same size as the modal
 		div.style.transform = 'scale(' + scaleX + ',' + scaleY + ')';
 		div.style.webkitTransform = 'scale(' + scaleX + ',' + scaleY + ')';
-//        div.style.borderRadius = 0 //dev
+        div.style.borderRadius = "1px" //dev
 
 		window.setTimeout(function() {
 			window.requestAnimationFrame(function() {
@@ -664,39 +702,39 @@ Modal.init();
             });
         $("#reset-filter-btn").on('click', function(e){
                 console.log("on click!");  // sanity check
-            //Ripple Effect    
-            // Remove any old one
-                  $(".ripple").remove();
-
-                  // Setup
-                  var posX = $(this).offset().left,
-                      posY = $(this).offset().top,
-                      buttonWidth = $(this).width(),
-                      buttonHeight =  $(this).height();
-
-                  // Add the element
-                  $(this).prepend("<span class='ripple' style='z-index:2;'></span>");
-
-
-                 // Make it round!
-                  if(buttonWidth >= buttonHeight) {
-                    buttonHeight = buttonWidth;
-                  } else {
-                    buttonWidth = buttonHeight; 
-                  }
-
-                  // Get the center of the element
-                  var x = e.pageX - posX - buttonWidth / 2;
-                  var y = e.pageY - posY - buttonHeight / 2;
-
-
-                  // Add the ripples CSS and start the animation
-                  $(".ripple").css({
-                    width: buttonWidth,
-                    height: buttonHeight,
-                    top: y + 'px',
-                    left: x + 'px'
-                  }).addClass("rippleEffect");
+//            //Ripple Effect    
+//            // Remove any old one
+//                  $(".ripple").remove();
+//
+//                  // Setup
+//                  var posX = $(this).offset().left,
+//                      posY = $(this).offset().top,
+//                      buttonWidth = $(this).width(),
+//                      buttonHeight =  $(this).height();
+//
+//                  // Add the element
+//                  $(this).prepend("<span class='ripple' style='z-index:2;'></span>");
+//
+//
+//                 // Make it round!
+//                  if(buttonWidth >= buttonHeight) {
+//                    buttonHeight = buttonWidth;
+//                  } else {
+//                    buttonWidth = buttonHeight; 
+//                  }
+//
+//                  // Get the center of the element
+//                  var x = e.pageX - posX - buttonWidth / 2;
+//                  var y = e.pageY - posY - buttonHeight / 2;
+//
+//
+//                  // Add the ripples CSS and start the animation
+//                  $(".ripple").css({
+//                    width: buttonWidth,
+//                    height: buttonHeight,
+//                    top: y + 'px',
+//                    left: x + 'px'
+//                  }).addClass("rippleEffect");
             
                 $('#min_rating').val(6);
                 $('#min_votes').val(1000);
@@ -710,7 +748,7 @@ Modal.init();
                 if($(this).prop("checked") == true){
                     $('.card').find('img').each(function() {
                         $(this).attr('src',proxy + $(this).attr('src'));
-                    });    
+                    });
                     if (typeof(Storage) !== "undefined") {
                             sessionStorage.setItem("proxy",true)
                         }
