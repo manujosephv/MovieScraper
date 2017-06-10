@@ -14,14 +14,6 @@ function scrape_movies() {
         success : function(json) {
             frm[0].reset(); // remove the value from the input
             console.log(json); // log the returned json to the console
-            //frm.LoadingOverlay("hide", true);
-            
-            // frm_results_title.html("<span>Scrape Complete</span>");
-            // frm_results_text.html("<span>" + json.movie_count_added +" movies added</span><br><a style='color:#fff;font-size:small;' href = '/view_movies/'> View Them Now </a>");
-            // $('#popup-box').css('background-color', '#16b766');
-            // $('.popup-wrap').fadeIn(250);
-            // $('.popup-box').removeClass('transform-out').addClass('transform-in');
-            // $('#last_scrap_time').html("Last scrape done on " + humanizeDate(json.last_scrap_time))
             console.log("started");
             show_notifications('notification_scrape_start',3000) // another sanity check
             var poll_xhr;
@@ -29,14 +21,14 @@ function scrape_movies() {
             (function(){
                 var poll = function(){
                   var json_dump = json.data;
-                  var task_id = json.task_id;
+                  var task_id_scrape = json.task_id_scrape;
 
-                  console.log(task_id);
+                  console.log(task_id_scrape);
                   poll_xhr = $.ajax({
-                    url:'/poll_state/',
+                    url:'/poll_state_scrape/',
                     type: 'POST',
                     data: {
-                        task_id: task_id,
+                        task_id_scrape: task_id_scrape,
 
                     },
                     success: function(response) {
@@ -47,13 +39,6 @@ function scrape_movies() {
                                     $('#last_scrape_time').html("Last scrape done on " + humanizeDate(response.last_scrape_time))
                                     show_notifications('notification_scrape_result', 5000)
                                     $('#scrap_button').removeClass('disabled')
-                                    // $('#notification_scrape_result').toggleClass('hide')
-                                    // setTimeout(function() {
-                                    //  $('#notification_scrape_result').animate({
-                                    //     top: "60%",
-                                    //     opacity: 0
-                                    //  }, "fast")
-                                    // }, 5000);
                                 }
                                 }
                   });
@@ -75,15 +60,11 @@ function scrape_movies() {
 
         // handle a non-successful response
         error : function(xhr,errmsg,err) {
-            //$('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-              //  " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-            //frm.LoadingOverlay("hide");
             $('#scrap_button').removeClass('disabled')
             frm_results_title.html("Scrape Cancelled");
             frm_results_text.html("<span>Something went wrong. Please try again.");
             $('#popup-box').css('background-color', '#ba2b1c');
-            // frm_results_text.css('color','ffffff')
             $('.popup-wrap').fadeIn(250);
             $('.popup-box').removeClass('transform-out').addClass('transform-in');
         }

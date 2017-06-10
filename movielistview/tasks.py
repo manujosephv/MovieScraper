@@ -26,7 +26,7 @@ def scrape_movies_task():
 @task(name='tasks.update_ratings_task')
 def update_ratings_task():
 
-    print "Update Ratings TaskA"
+    print "Update Ratings Task"
     utils = Utils()
     no_of_rows_updated = utils.update_all_ratings()
     print "Task finished successfully"

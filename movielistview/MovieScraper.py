@@ -111,8 +111,8 @@ class MovieScraper:
                 if match is not None:
                     link_div = div.findNext("p")
        
-            release_info = release_info.decode('unicode_escape').encode('ascii','ignore')
-            release_desc = release_desc.decode('unicode_escape').encode('ascii','ignore')
+            # release_info = release_info.decode('unicode_escape').encode('ascii','ignore')
+            # release_desc = release_desc.decode('unicode_escape').encode('ascii','ignore')
             entry_dict['Plot'] = release_desc
             items = re.split(r'\s*\n\s*', release_info)
             for item in items:

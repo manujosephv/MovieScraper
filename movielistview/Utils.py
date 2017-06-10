@@ -4,17 +4,11 @@ Created on Fri May 19 07:24:06 2017
 
 @author: manuj
 """
-
-
-
-
 import datetime
 from django.utils import timezone
 from dateutil.parser import parse
 import datefinder
 import difflib
-
-# from datetime import datetime, timedelta
 
 import time
 import numpy as np

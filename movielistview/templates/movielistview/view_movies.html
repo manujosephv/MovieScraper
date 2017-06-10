@@ -1,8 +1,4 @@
-<!DOCTYPE html> 
-{% load staticfiles %} 
-{% load humanize %}
-{% load custom_filters %}
-{% load el_pagination_tags %}
+<!DOCTYPE html> {% load staticfiles %} {% load humanize %} {% load custom_filters %} {% load el_pagination_tags %}
 <html>
 
 <head>
@@ -11,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="generator" content="Mobirise v3.12.1, mobirise.com">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" /> 
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
     <title>ScrapSwag - Movies</title>
     <meta name="description" content="">
@@ -30,9 +26,11 @@
     <link rel="stylesheet" href="{% static 'assets/socicon/css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/custom_style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/theme/css/material-card.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/theme/css/material-modal.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/ripple.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/mobirise/css/mbr.additional.css' %}" type="text/css">
-    
+
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
 
 </head>
@@ -47,7 +45,7 @@
                     <div class="mbr-table-cell">
 
                         <div class="navbar-brand">
-                            <a href="/" class="class="socicon socicon-odnoklassniki mbr-iconfont mbr-iconfont-menu navbar-logo""></a>
+                            <a href="/" class="class=" socicon socicon-odnoklassniki mbr-iconfont mbr-iconfont-menu navbar-logo ""></a>
                             <a class="navbar-caption" href="/">SCRAPSWAG</a>
                         </div>
 
@@ -59,8 +57,9 @@
                         </button>
                         <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
                             <li class="nav-item"><a class="nav-link link" href="/">Home</a></li>
-                            <li class="nav-item"><a class="nav-link link" href="#spotlight">Spotlight</a></li>
-                            <li class="nav-item"><a class="nav-link link" href="#manage">Manage</a></li>
+                            <li class="nav-item"><a class="nav-link link" href="/#spotlight">Spotlight</a></li>
+                            <li class="nav-item"><a class="nav-link link" href="#">Review</a></li>
+                            <li class="nav-item"><a class="nav-link link" href="/#manage">Manage</a></li>
                         </ul>
                         <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
                             <div class="close-icon"></div>
@@ -94,35 +93,35 @@
     </section>
     <section class="mbr-section mbr-section__container" id="review" style="background-color:rgb(46,46,46); padding-top:30px; padding-bottom:20px;">
         <div class="container">
-                <div class="row">
+            <div class="row">
                 <form action="/filter_movies/" method="post" id="filter-movies-form">
-                {% csrf_token %}
-                <div class="mbr-table-md-up">
-                    <div class="mbr-table-cell mbr-right-padding-md-up col-md-8 text-xs-center text-md-left">                        
-                        <div class="row">
-                        <div class="container-pill">
-                          <div class="box box-input" style="margin-top: .4em; background:transparent;">
-                            <blockquote><span class="bqstart">“</span>
-                            <span class="quote-text">Any movie worth it's salt has </span>
-                            <span class="number-container">
+                    {% csrf_token %}
+                    <div class="mbr-table-md-up">
+                        <div class="mbr-table-cell mbr-right-padding-md-up col-md-8 text-xs-center text-md-left">
+                            <div class="row">
+                                <div class="container-pill">
+                                    <div class="box box-input" style="margin-top: .4em; background:transparent;">
+                                        <blockquote><span class="bqstart">“</span>
+                                            <span class="quote-text">Any movie worth it's salt has </span>
+                                            <span class="number-container">
                             <input id="min_rating" name="min_rating" type="number" min="0" max="10" step=".1" placeholder="6" value="{% if min_rating == 0 %}0{%else%}{{ min_rating|default:"6" }}{%endif%}" class="number-input" style="width:2.2em;"/>
                             <span class="fa fa-star fa-lg"></span>
-                            </span>
-                            <span class="quote-text"> with</span>
-                              <span class="number-container">
+                                            </span>
+                                            <span class="quote-text"> with</span>
+                                            <span class="number-container">
                             <input id="min_votes" name="min_votes" type="number" min="0" max="50000" step="500" placeholder="1000" value="{% if min_votes == 0 %}0{%else%}{{ min_votes|default:"1000" }}{%endif%}" class="number-input" style="width:3.6em;"/>
                             </span>
-                              <span class="quote-text">votes</span>
-                            <span class="bqend">”</span></blockquote> 
+                                            <span class="quote-text">votes</span>
+                                            <span class="bqend">”</span></blockquote>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                            </div>
-                        <div class="row row-eq-height">
-                            <div class="col-md-3" style="padding:.7em 0 0 0;">
-                                <span class="align-middle" style="color:white;"> Show Read Movies?</span>
-                            </div>
-                            <div class="col-md-3 pull-left" style="padding:0 0 0 0.5em;">
-<!--
+                            <div class="row row-eq-height">
+                                <div class="col-md-3" style="padding:.7em 0 0 0;">
+                                    <span class="align-middle" style="color:white;"> Show Read Movies?</span>
+                                </div>
+                                <div class="col-md-3 pull-left" style="padding:0 0 0 0.5em;">
+                                    <!--
                                 <div class="toggle-button toggle-button--aava">
                                 <input name="show_read" id="toggleButton" type="checkbox" value="Yes" 
                                        {% if show_read %}
@@ -133,31 +132,27 @@
                                 <div class="toggle-button__icon"></div>
                                 </div>
 -->
-                                <div class="tg-list">
-                                  <div class="tg-list-item">
-                                    <input name = "show_read" id="toggleButton" type="checkbox" class="tgl tgl-flip" value="Yes"
-                                           {% if show_read %}
-                                       checked
-                                        {% endif %}
-                                       />
-                                    <label data-tg-off="Nope" data-tg-on="Yeah!" for="toggleButton" class="tgl-btn"></label>
-                                  </div>
+                                    <div class="tg-list">
+                                        <div class="tg-list-item">
+                                            <input name="show_read" id="toggleButton" type="checkbox" class="tgl tgl-flip" value="Yes" {% if show_read %} checked {% endif %} />
+                                            <label data-tg-off="Nope" data-tg-on="Yeah!" for="toggleButton" class="tgl-btn"></label>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                
-                            </div>
-                            <div class="col-md-2"  style="padding:0.5em 0.5em 0 0.5em">
-                                <div class="round-buttons">
-                                    <div>
-                                      <a id = "reset-filter-btn" class="ripple">
-                                        <span class="label">Reset</span>
-                                        <span class="inner"></span>
-                                        <i class="fa fa-refresh" style="font-size:x-large;"></i>
-                                      </a>
+                                <div class="col-md-2" style="padding:0.5em 0.5em 0 0.5em">
+                                    <div class="round-buttons">
+                                        <div>
+                                            <a id="reset-filter-btn" class="ripple">
+                                                <span class="label">Reset</span>
+                                                <span class="inner"></span>
+                                                <i class="fa fa-refresh" style="font-size:x-large;"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4" style="padding:0.9em .5em 0 .5em;">
-                                <label class="toggleSwitch" onclick="">
+                                <div class="col-md-4" style="padding:0.9em .5em 0 .5em;">
+                                    <label class="toggleSwitch" onclick="">
                                 <input id = "proxy_toggle" type="checkbox" style="display:none;" value="Yes"/>
                                 <span style="color:azure;">
                                     <span>OFF</span>
@@ -166,16 +161,16 @@
                                 </span>
                                 <a style="bottom:6%;"></a>
                                 </label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mbr-table-cell col-md-4">
-                        <div class="text-xs-center">
-                            <div class="row">
-                            <button type="submit" class="btn btn-primary btn-lg" id="filter_btn" >YEAH, I AGREE</button>
-                            </div>
-                            <div class = "row">
-<!--
+                        <div class="mbr-table-cell col-md-4">
+                            <div class="text-xs-center">
+                                <div class="row">
+                                    <button type="submit" class="btn btn-primary btn-lg" id="filter_btn">YEAH, I AGREE</button>
+                                </div>
+                                <div class="row">
+                                    <!--
                                 <div class="col-md-6">
                                     <a class="btn btn-primary" id = "clear-filter-btn">SHOW ALL</a>
                                 </div>
@@ -183,11 +178,11 @@
                                     <a class="btn btn-primary" id = "reset-filter-btn">RESET</a>
                                 </div>
 -->
-                                <a class="btn btn-primary" id = "clear-filter-btn">NAH! SHOW EVERYTHING</a>
+                                    <a class="btn btn-primary" id="clear-filter-btn">NAH! SHOW EVERYTHING</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </form>
             </div>
         </div>
@@ -195,20 +190,19 @@
     <section class="content">
         <main>
             <div id="card-append" class="container">
-<hr class="extra-margins"></hr>
+                <hr class="extra-margins"></hr>
                 <form action="/mark_read_movies/" method="post" id="mark_read_form">
-                {% csrf_token %}
-                <input type="hidden" name="post_id" id="post_id" id="post_id" value=""/>
-                <input type="hidden" name="checked" id="checked" id="checked" value=""/>
-    <div class="row active-with-click">
-         {% paginate 15 movies %}
-                    {% for movie in movies %}
-        <div class="col-md-4 col-sm-6 col-xs-12">
-<!--            color_dict|key_value:forloop.counter-->
-            <article class="material-card {{ color_dict|key_value:forloop.counter}}" id="{{ forloop.counter }}">
-                <h2>
-                    <span>{{ movie.name }} ({{ movie.year }})</span>
-                    <strong>
+                    {% csrf_token %}
+                    <input type="hidden" name="post_id" id="post_id" id="post_id" value="" />
+                    <input type="hidden" name="checked" id="checked" id="checked" value="" />
+                    <div class="row active-with-click">
+                        {% paginate 15 movies %} {% for movie in movies %}
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <!--            color_dict|key_value:forloop.counter-->
+                            <article class="material-card {{ color_dict|key_value:forloop.counter}}" id="{{ forloop.counter }}">
+                                <h2>
+                                    <span>{{ movie.name }} ({{ movie.year }})</span>
+                                    <strong>
                         <i class="fa fa-fw fa-star"></i>
                         {{ movie.imdb_rating|floatformat:1 }} ({% if movie.imdb_votes == 0 %}
                                             Not Available
@@ -216,244 +210,229 @@
                                             {{ movie.imdb_votes|intcomma }}
                                             {% endif %}) | {% if movie.release_type %} {{ movie.release_type }} {% else %} Not Available {% endif %}
                     </strong>
-                    <div class="date">
-                        <span class="day">12</span>
-                        <span class="month">Aug</span>
-                        <span class="year">2016</span>
-                      </div>
-                </h2>
-                <div class="mc-content">
-                    <div class="img-container">
-                        <img class="img-responsive" src=" {% if proxy %}
+                                    <div class="date">
+                                        <span class="day">12</span>
+                                        <span class="month">Aug</span>
+                                        <span class="year">2016</span>
+                                    </div>
+                                </h2>
+                                <div class="mc-content">
+                                    <div class="img-container">
+                                        <img class="img-responsive" src=" {% if proxy %}
                                                   https://applove.gadgetnyooz.com/websurf/browse.php?u={{ movie.thumbnail_link }}
                                                   {% else %}
                                                   {{ movie.thumbnail_link }}
                                                   {% endif %}
                                                   ">
-                                <div class="checkbox close">
+                                        <div class="checkbox close">
                                             <label>
                                                 <input type="checkbox" name="post_id_check" id="post_id_check" value="{{ movie.id }}" 
                                                        {% if movie.movie_read %} checked {% endif %} />
                                                 <span class="cr" style="margin-right:0px;background-color:white; font-size:medium"><i class="cr-icon fa fa-suitcase"></i></span>
                                             </label>
                                         </div>
-                    </div>
-                    <div class="mc-description">
-                        <div class="row">
-                                    <div class="col-xs-6 col-md-6 text-center">
-                                        <div>
-                                            <i aria-hidden="true" class="fa fa-film"></i>
-                                            <a class="detail_link" href="{{ movie.imdb_link }}" id="imdb-link"> <strong> IMDB</strong> </a>
-                                        </div>
-                                        <h1 class="rating-num">
-                                            {{ movie.imdb_rating|floatformat:1 }}</h1>
-                                        <div class="rating">
-                                            {% with rating=movie.imdb_rating|get_no_of_stars  %}
-                                            {% for i in "xxxxx" %}
-                                                {% if forloop.counter <= rating %}
-                                                    <i aria-hidden="true" class="fa fa-star"></i>
-                                                {% else %}
-                                                    <i aria-hidden="true" class="fa fa-star-o"></i>
-                                                {% endif %}
-
-                                            {% endfor %}
-                                            {% endwith %}
-                                        </div>
-                                        <div>
-                                            <i aria-hidden="true" class="fa fa-user"></i>
-                                            {% if movie.imdb_votes == 0 %}
-                                            Not Available
-                                            {% else %}
-                                            {{ movie.imdb_votes|intcomma }}
-                                            {% endif %}
-                                        </div>
                                     </div>
-                                    <div class="col-xs-6 col-md-6 text-center">
-                                        <div>
-                                            <i aria-hidden="true" class="fa fa-film"></i>
-                                            <a href="{{ movie.rt_link }}" id="rt-link"> <strong> RT</strong> </a>
-                                        </div>
-                                        <h1 class="rating-num">
-                                            {{ movie.rt_rating|floatformat:1 }}</h1>
-                                        <div class="rating">
-                                            {% with rating=movie.rt_rating|get_no_of_stars  %}
-                                            {% for i in "xxxxx" %}
-                                                {% if forloop.counter <= rating %}
+                                    <div class="mc-description">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-6 text-center">
+                                                <div>
+                                                    <i aria-hidden="true" class="fa fa-film"></i>
+                                                    <a class="detail_link" href="{{ movie.imdb_link }}" id="imdb-link"> <strong> IMDB</strong> </a>
+                                                </div>
+                                                <h1 class="rating-num">
+                                                    {{ movie.imdb_rating|floatformat:1 }}</h1>
+                                                <div class="rating">
+                                                    {% with rating=movie.imdb_rating|get_no_of_stars %} 
+                                                    {% for i in "xxxxx" %} 
+                                                    {% if forloop.counter <= rating %} 
                                                     <i aria-hidden="true" class="fa fa-star"></i>
-                                                {% else %}
-                                                    <i aria-hidden="true" class="fa fa-star-o"></i>
-                                                {% endif %}
-
-                                            {% endfor %}
-                                            {% endwith %}
-                                        </div>
-                                        <div>
-                                            <i aria-hidden="true" class="fa fa-user"></i> {% ifnotequal movie.tomatometer "nan" %} {{movie.tomatometer}} {% else %} Not Available {% endifnotequal %}
+                                                    {% else %}
+                                                    <i aria-hidden="true" class="fa fa-star-o"></i> 
+                                                    {% endif %} 
+                                                    {% endfor %} 
+                                                    {% endwith %}
+                                                </div>
+                                                <div>
+                                                    <i aria-hidden="true" class="fa fa-user"></i> {% if movie.imdb_votes == 0 %} Not Available {% else %} {{ movie.imdb_votes|intcomma }} {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6 col-md-6 text-center">
+                                                <div>
+                                                    <i aria-hidden="true" class="fa fa-film"></i>
+                                                    <a href="{{ movie.rt_link }}" id="rt-link"> <strong> RT</strong> </a>
+                                                </div>
+                                                <h1 class="rating-num">
+                                                    {{ movie.rt_rating|floatformat:1 }}</h1>
+                                                <div class="rating">
+                                                    {% with rating=movie.rt_rating|get_no_of_stars %} 
+                                                    {% for i in "xxxxx" %} 
+                                                    {% if forloop.counter <= rating %} 
+                                                    <i aria-hidden="true" class="fa fa-heart"></i>
+                                                    {% else %}
+                                                    <i aria-hidden="true" class="fa fa-heart-o"></i> 
+                                                    {% endif %} 
+                                                    {% endfor %} 
+                                                    {% endwith %}
+                                                </div>
+                                                <div>
+                                                    <i aria-hidden="true" class="fa fa-user"></i> {% ifnotequal movie.tomatometer "nan" %} {{movie.tomatometer}} {% else %} Not Available {% endifnotequal %}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                    </div>
-                </div>
-                <a class="mc-btn-action">
-                    <i class="fa fa-bars"></i>
-                </a>
-                <div class="mc-footer">
-                    <h4>
-                        {{ movie.release_name }}
-                    </h4>
-                    <a data-toggle="lightbox" data-gallery="remoteload" href="{{ movie.trailer_link }}" id="trailer-link">
-                                            <i aria-hidden="true" class="fa fa-youtube-play" style="padding-left:13px">
+                                <a class="mc-btn-action">
+                                    <i class="fa fa-bars"></i>
+                                </a>
+                                <div class="mc-footer">
+                                    <h4>
+                                        {{ movie.release_name }}
+                                    </h4>
+                                    <a data-toggle="lightbox" data-gallery="remoteload" href="{{ movie.trailer_link }}" id="trailer-link">
+                                        <i aria-hidden="true" class="fa fa-youtube-play" style="padding-left:13px">
                                     </i>
-                                        </a>
-                    <a href="{% yts_link movie.name %}" target="_blank" class="livepreview" data-position="top"><i aria-hidden="true" class="fa fa-yahoo" style="padding-left:13px">
+                                    </a>
+                                    <a href="{% yts_link movie.name %}" target="_blank" class="livepreview" data-position="top"><i aria-hidden="true" class="fa fa-yahoo" style="padding-left:13px">
                                     </i></a>
-                    <a href="{% torrentz_link movie.name movie.year|stringformat:"i"%}" target="_blank" class="livepreview" data-position="top"><i aria-hidden="true" class="fa fa-cloud-download" style="padding-left:13px">
+                                    <a href="{% torrentz_link movie.name movie.year|stringformat:" i "%}" target="_blank" class="livepreview" data-position="top"><i aria-hidden="true" class="fa fa-cloud-download" style="padding-left:13px">
                                     </i></a>
-                    <a class="fa fa-fw fa-info modal__trigger" href="" data-modal="#modal{{ forloop.counter }}" ></a>
-                </div>
-        
-        <!-- Modal -->
-	<div id="modal{{ forloop.counter }}" class="modal modal__bg" role="dialog" aria-hidden="true">
-		<div class="modal__dialog">
-			<div class="modal__content">
-				<div class="card-info">
-  <div class="card_left">
-    <img src="{% if proxy %}
+                                    <a class="fa fa-fw fa-info modal__trigger" href="" data-modal="#modal{{ forloop.counter }}"></a>
+                                </div>
+
+                                <!-- Modal -->
+                                <div id="modal{{ forloop.counter }}" class="modal_mat modal__bg" role="dialog" aria-hidden="true">
+                                    <div class="modal__dialog">
+                                        <div class="modal__content">
+                                            <div class="card-info">
+                                                <div class="card_left">
+                                                    <img src="{% if proxy %}
                                                   https://applove.gadgetnyooz.com/websurf/browse.php?u={{ movie.thumbnail_link }}
                                                   {% else %}
                                                   {{ movie.thumbnail_link }}
-                                                  {% endif %}"/>
-  </div>
-  <div class="card_right">
-    <h1>{{ movie.name }}</h1>
-    <div class="card_right__details">
-        <div class="card_right__rating">
-        <div class="card_right__rating__stars">
-          {% with rating=movie.imdb_rating|get_no_of_stars  %}
-            {% for i in "xxxxx" %}
-                {% if forloop.counter <= rating %}
-                    <i aria-hidden="true" class="fa fa-star"></i>
-                {% else %}
-                    <i aria-hidden="true" class="fa fa-star-o"></i>
-                {% endif %}
+                                                  {% endif %}" />
+                                                </div>
+                                                <div class="card_right">
+                                                    <h1>{{ movie.name }}</h1>
+                                                    <div class="card_right__details">
+                                                        <div class="card_right__rating">
+                                                            <div class="card_right__rating__stars">
+                                                                {% with rating=movie.imdb_rating|get_no_of_stars %} 
+                                                                {% for i in "xxxxx" %} 
+                                                                {% if forloop.counter <= rating %} 
+                                                                <i aria-hidden="true" class="fa fa-star"></i>
+                                                                {% else %}
+                                                                <i aria-hidden="true" class="fa fa-star-o"></i> 
+                                                                {% endif %} 
+                                                                {% endfor %} 
+                                                                {% endwith %}
 
-            {% endfor %}
-            {% endwith %}
-            
-             <i aria-hidden="true" class="fa fa-user" style="margin-left:5px;"></i>
-                                            {% if movie.imdb_votes == 0 %}
-                                            Not Available
-                                            {% else %}
-                                            {{ movie.imdb_votes|intcomma }}
-                                            {% endif %}
-        </div>
-        
-                                           
-                                        
-      </div>
-      <ul>
-        <li>{{ movie.year }}</li>
-        <li>{{ movie.genre }}</li>
-<!--        <li>Action</li>-->
-      </ul>
-      
-      <div class="card_right__review">
-        <p>{{movie.plot|encode_utf}}</p>
-          <p><strong>Starring :</strong> {{ movie.starring }}</p>
-          <p><strong>Directed by:</strong> {{ movie.director }}</p>
-        <a href="{{ movie.post_link }}" target="_blank">Read more at Sceper</a>
-      </div>
-      <div class="card_right__button">
-          <ul>
-        <li><a data-toggle="lightbox" data-gallery="remoteload" href="{{ movie.trailer_link }}" id="trailer-link">
+                                                                    <i aria-hidden="true" class="fa fa-user" style="margin-left:5px;"></i> {% if movie.imdb_votes == 0 %} Not Available {% else %} {{ movie.imdb_votes|intcomma }} {% endif %}
+                                                            </div>
+
+
+
+                                                        </div>
+                                                        <ul>
+                                                            <li>{{ movie.year }}</li>
+                                                            <li>{{ movie.genre }}</li>
+                                                            <!--        <li>Action</li>-->
+                                                        </ul>
+
+                                                        <div class="card_right__review">
+                                                            <p>{{movie.plot|encode_utf}}</p>
+                                                            <p><strong>Starring :</strong> {{ movie.starring }}</p>
+                                                            <p><strong>Directed by:</strong> {{ movie.director }}</p>
+                                                            <a href="{{ movie.post_link }}" target="_blank">Read more at Sceper</a>
+                                                        </div>
+                                                        <div class="card_right__button">
+                                                            <ul>
+                                                                <li><a data-toggle="lightbox" data-gallery="remoteload" href="{{ movie.trailer_link }}" id="trailer-link">
                                             Trailer
                                     
                                         </a></li>
-        <li><a href="{% yts_link movie.name %}" target="_blank" >Yts.ag
+                                                                <li><a href="{% yts_link movie.name %}" target="_blank">Yts.ag
                                     </a></li>
-        <li><a href="{% torrentz_link movie.name movie.year|stringformat:"i"%}" target="_blank" >Torrentz </a></li>
-      </ul>
-<!--        <a href="https://www.youtube.com/watch?v=ot6C1ZKyiME" target="_blank">WATCH TRAILER</a>-->
-      </div>
-    </div>
-  </div>
-</div>
-				
-				<!-- modal close button -->
-				<a href="" class="modal__close demo-close">
-					<svg class="" viewBox="0 0 24 24"><path d="M19 6.41l-1.41-1.41-5.59 5.59-5.59-5.59-1.41 1.41 5.59 5.59-5.59 5.59 1.41 1.41 5.59-5.59 5.59 5.59 1.41-1.41-5.59-5.59z"/><path d="M0 0h24v24h-24z" fill="none"/></svg>
-				</a>
-			</div>
-		</div>
-	</div>
-        
-        
-            </article>
-        </div>
-        {% if forloop.counter|divisibleby:3 %}
-                </div>
-                <div class="row">
-                    {% endif %} {% endfor %}
-                </div>
-            </form>
-            <nav aria-label="Page navigation example">
-  {% get_pages %}
-<ul class="pagination">
-{% if pages.paginated %}
-   
-    <li class="page-item">
-    <a class="page-link" style="color:#232323" href="{{ pages.first.path }}" aria-label="First">
-      <span aria-hidden="true">&lt;&lt;</span>
-      <span class="sr-only">First</span>
-    </a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" style="color:#232323" href="{{ pages.previous.path }}" aria-label="Previous">
-      <span aria-hidden="true">&lt;</span>
-      <span class="sr-only">Previous</span>
-    </a>
-  </li>
-   
-  {% for page in pages %}
-    {% if page == None %}
-      <li class="page-item disabled">
-        <a class="page-link" style="color:#232323" href="#" aria-label="...">
-          <span aria-hidden="true">...</span>
-          <span class="sr-only">...</span>
-        </a>
-      </li>
-    {% else %}
-      <li class="page-item {% if page.is_current %} active {% endif %}">
-        <a class="page-link" style="color:#232323" href="{{ page.path }}" aria-label="Page {{page.number}}">
-          <span aria-hidden="true">{{ page.label|safe }}</span>
-          <span class="sr-only">Page {{page.number}}</span>
-        </a>
-      </li>
-    {% endif %}
-  {% endfor %}
-   
-      <li class="page-item">
-    <a class="page-link" style="color:#232323" href="{{ pages.next.path }}" aria-label="Next">
-      <span aria-hidden="true">&gt;</span>
-      <span class="sr-only">Next</span>
-    </a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" style="color:#232323" href="{{ pages.last.path }}" aria-label="Last">
-      <span aria-hidden="true">&gt;&gt;</span>
-      <span class="sr-only">Last</span>
-    </a>
-  </li>
-    
-{% endif %}
-</ul>
-</nav>
-    </div>
+                                                                <li><a href="{% torrentz_link movie.name movie.year|stringformat:" i "%}" target="_blank">Torrentz </a></li>
+                                                            </ul>
+                                                            <!--        <a href="https://www.youtube.com/watch?v=ot6C1ZKyiME" target="_blank">WATCH TRAILER</a>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- modal close button -->
+                                            <a href="" class="modal__close demo-close">
+                                                <svg class="" viewBox="0 0 24 24"><path d="M19 6.41l-1.41-1.41-5.59 5.59-5.59-5.59-1.41 1.41 5.59 5.59-5.59 5.59 1.41 1.41 5.59-5.59 5.59 5.59 1.41-1.41-5.59-5.59z"/><path d="M0 0h24v24h-24z" fill="none"/></svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
 
 
-            
-            
-            
+                            </article>
+                        </div>
+                        {% if forloop.counter|divisibleby:3 %}
+                    </div>
+                    <div class="row">
+                        {% endif %} {% endfor %}
+                    </div>
+                </form>
+                <nav aria-label="Page navigation example">
+                    {% get_pages %}
+                    <ul class="pagination">
+                        {% if pages.paginated %}
+
+                        <li class="page-item">
+                            <a class="page-link" style="color:#232323" href="{{ pages.first.path }}" aria-label="First">
+                                <span aria-hidden="true">&lt;&lt;</span>
+                                <span class="sr-only">First</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" style="color:#232323" href="{{ pages.previous.path }}" aria-label="Previous">
+                                <span aria-hidden="true">&lt;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+
+                        {% for page in pages %} {% if page == None %}
+                        <li class="page-item disabled">
+                            <a class="page-link" style="color:#232323" href="#" aria-label="...">
+                                <span aria-hidden="true">...</span>
+                                <span class="sr-only">...</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item {% if page.is_current %} active {% endif %}">
+                            <a class="page-link" style="color:#232323" href="{{ page.path }}" aria-label="Page {{page.number}}">
+                                <span aria-hidden="true">{{ page.label|safe }}</span>
+                                <span class="sr-only">Page {{page.number}}</span>
+                            </a>
+                        </li>
+                        {% endif %} {% endfor %}
+
+                        <li class="page-item">
+                            <a class="page-link" style="color:#232323" href="{{ pages.next.path }}" aria-label="Next">
+                                <span aria-hidden="true">&gt;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" style="color:#232323" href="{{ pages.last.path }}" aria-label="Last">
+                                <span aria-hidden="true">&gt;&gt;</span>
+                                <span class="sr-only">Last</span>
+                            </a>
+                        </li>
+
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+
+
+
+
+
         </main>
     </section>
 
@@ -475,313 +454,85 @@
     <script src="{% static 'assets/jarallax/jarallax.js' %}"></script>
     <script src="{% static 'assets/theme/js/script.js' %}"></script>
     <script src="{% static 'assets/formoid/formoid.min.js' %}"></script>
+
     <script src="{% static 'assets/theme/js/ajax-script.js' %}"></script>
-    <script src ="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.1.1/ekko-lightbox.js"></script>
+    <script src="{% static 'assets/theme/js/material-modal.js' %}"></script>
+    <script src="{% static 'assets/theme/js/material-card.js' %}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.1.1/ekko-lightbox.js"></script>
 
     <script type="text/javascript">
-        
-        //Modal Dev
-    var Modal = (function() {
-
-  var trigger = $qsa('.modal__trigger'); // what you click to activate the modal
-  var modals = $qsa('.modal'); // the entire modal (takes up entire window)
-  var modalsbg = $qsa('.modal__bg'); // the entire modal (takes up entire window)
-  var content = $qsa('.modal__content'); // the inner content of the modal
-  var closers = $qsa('.modal__close'); // an element used to close the modal
-  var w = window;
-  var isOpen = false;
-	var contentDelay = 600; // duration after you click the button and wait for the content to show
-  var len = trigger.length;
-
-  // make it easier for yourself by not having to type as much to select an element
-  function $qsa(el) {
-    return document.querySelectorAll(el);
-  }
-
-  var getId = function(event) {
-
-    event.preventDefault();
-    var self = this;
-    // get the value of the data-modal attribute from the button
-    var modalId = self.dataset.modal;
-    var len = modalId.length;
-    // remove the '#' from the string
-    var modalIdTrimmed = modalId.substring(1, len);
-    // select the modal we want to activate
-    var modal = document.getElementById(modalIdTrimmed);
-    // execute function that creates the temporary expanding div
-    makeDiv(self, modal);
-  };
-
-  var makeDiv = function(self, modal) {
-
-    var fakediv = document.getElementById('modal__temp');
-
-    /**
-     * if there isn't a 'fakediv', create one and append it to the button that was
-     * clicked. after that execute the function 'moveTrig' which handles the animations.
-     */
-
-    if (fakediv === null) {
-      var div = document.createElement('div');
-      div.style.borderRadius = 0 //dev
-      div.id = 'modal__temp';
-      self.appendChild(div);
-      moveTrig(self, modal, div);
-    }
-  };
-
-  var moveTrig = function(trig, modal, div) {
-    var trigProps = trig.getBoundingClientRect();
-    var m = modal;
-    var mProps = m.querySelector('.modal__content').getBoundingClientRect();
-    var transX, transY, scaleX, scaleY;
-    var xc = w.innerWidth / 2;
-    var yc = w.innerHeight / 2;
-
-    // this class increases z-index value so the button goes overtop the other buttons
-    trig.classList.add('modal__trigger--active');
-
-    // these values are used for scale the temporary div to the same size as the modal
-    scaleX = mProps.width / trigProps.width;
-    scaleY = mProps.height / trigProps.height;
-
-//    scaleX = scaleX.toFixed(3); // round to 3 decimal places
-//    scaleY = scaleY.toFixed(3);
-
-
-    // these values are used to move the button to the center of the window
-    transX = Math.round(xc - trigProps.left - trigProps.width / 2);
-    transY = Math.round(yc - trigProps.top - trigProps.height / 2);
-
-		// if the modal is aligned to the top then move the button to the center-y of the modal instead of the window
-    if (m.classList.contains('modal--align-top')) {
-      transY = Math.round(mProps.height / 2 + mProps.top - trigProps.top - trigProps.height / 2);
-    }
-
-
-		// translate button to center of screen
-		trig.style.transform = 'translate(' + transX + 'px, ' + transY + 'px)';
-		trig.style.webkitTransform = 'translate(' + transX + 'px, ' + transY + 'px)';
-		// expand temporary div to the same size as the modal
-		div.style.transform = 'scale(' + scaleX + ',' + scaleY + ')';
-		div.style.webkitTransform = 'scale(' + scaleX + ',' + scaleY + ')';
-        div.style.borderRadius = "1px" //dev
-
-		window.setTimeout(function() {
-			window.requestAnimationFrame(function() {
-				open(m, div);
-			});
-		}, contentDelay);
-
-  };
-
-  var open = function(m, div) {
-
-    if (!isOpen) {
-      // select the content inside the modal
-      var content = m.querySelector('.modal__content');
-      // reveal the modal
-      m.classList.add('modal--active');
-      // reveal the modal content
-      content.classList.add('modal__content--active');
-
-      /**
-       * when the modal content is finished transitioning, fadeout the temporary
-       * expanding div so when the window resizes it isn't visible ( it doesn't
-       * move with the window).
-       */
-
-      content.addEventListener('transitionend', hideDiv, false);
-
-      isOpen = true;
-    }
-
-    function hideDiv() {
-      // fadeout div so that it can't be seen when the window is resized
-      div.style.opacity = '0';
-      content.removeEventListener('transitionend', hideDiv, false);
-    }
-  };
-
-  var close = function(event) {
-
-		event.preventDefault();
-    event.stopImmediatePropagation();
-
-    var target = event.target;
-    var div = document.getElementById('modal__temp');
-
-    /**
-     * make sure the modal__bg or modal__close was clicked, we don't want to be able to click
-     * inside the modal and have it close.
-     */
-
-    if (isOpen && target.classList.contains('modal__bg') || target.classList.contains('modal__close')) {
-
-      // make the hidden div visible again and remove the transforms so it scales back to its original size
-      div.style.opacity = '1';
-      div.removeAttribute('style');
-
-			/**
-			* iterate through the modals and modal contents and triggers to remove their active classes.
-      * remove the inline css from the trigger to move it back into its original position.
-			*/
-
-			for (var i = 0; i < len; i++) {
-				modals[i].classList.remove('modal--active');
-				content[i].classList.remove('modal__content--active');
-				trigger[i].style.transform = 'none';
-        trigger[i].style.webkitTransform = 'none';
-				trigger[i].classList.remove('modal__trigger--active');
-			}
-
-      // when the temporary div is opacity:1 again, we want to remove it from the dom
-			div.addEventListener('transitionend', removeDiv, false);
-
-      isOpen = false;
-
-    }
-
-    function removeDiv() {
-      setTimeout(function() {
-        window.requestAnimationFrame(function() {
-          // remove the temp div from the dom with a slight delay so the animation looks good
-          div.remove();
+        $('#mark_read_form').find("input:checkbox").on('click', function() {
+            console.log("on click!" + $(this).val()); // sanity check
+            console.log($(this).prop("checked"));
+            $('#post_id').val($(this).val())
+            if ($(this).prop("checked") == true) {
+                $('#checked').val("Y");
+            } else if ($(this).prop("checked") == false) {
+                $('#checked').val("N");
+            }
+            $('#mark_read_form').submit()
         });
-      }, contentDelay - 50);
-    }
+        $('#mark_read_form').on('submit', function(event) {
+            console.log("in on submit")
+            event.preventDefault();
+            console.log("form submitted!") // sanity check
+            mark_read_movies();
+        });
 
-  };
+        $("#clear-filter-btn").on('click', function() {
+            console.log("on click!"); // sanity check
+            $('#min_rating').val(0);
+            $('#min_votes').val(0);
+            $('#toggleButton').removeAttr('checked');
+            $('#filter-movies-form').submit()
+        });
+        $("#reset-filter-btn").on('click', function(e) {
+            console.log("on click!"); // sanity check            
+            $('#min_rating').val(6.0);
+            $('#min_votes').val(1000);
+            $('#toggleButton').removeAttr('checked');
+            //                $('#filter-movies-form').submit()
+        });
 
-  var bindActions = function() {
-    for (var i = 0; i < len; i++) {
-      trigger[i].addEventListener('click', getId, false);
-      closers[i].addEventListener('click', close, false);
-      modalsbg[i].addEventListener('click', close, false);
-    }
-  };
-
-  var init = function() {
-    bindActions();
-  };
-
-  return {
-    init: init
-  };
-
-}());
-
-Modal.init();
-        
-        
-        
-        
-                $('#mark_read_form').find("input:checkbox").on('click', function(){
-                console.log("on click!"+ $(this).val() );  // sanity check
-                console.log($(this).prop("checked"));
-                $('#post_id').val($(this).val())
-                if($(this).prop("checked") == true){
-                    $('#checked').val("Y");
+        $("#proxy_toggle").on('change', function() {
+            console.log("on click!"); // sanity check
+            proxy = "https://applove.gadgetnyooz.com/websurf/browse.php?u=";
+            if ($(this).prop("checked") == true) {
+                $('.card').find('img').each(function() {
+                    $(this).attr('src', proxy + $(this).attr('src'));
+                });
+                if (typeof(Storage) !== "undefined") {
+                    sessionStorage.setItem("proxy", true)
                 }
-                else if($(this).prop("checked") == false){
-                    $('#checked').val("N");
+            } else {
+                $('.card').find('img').each(function() {
+                    $(this).attr('src', $(this).attr('src').replace(proxy, ""));
+                });
+                if (typeof(Storage) !== "undefined") {
+                    sessionStorage.setItem("proxy", false)
                 }
-                $('#mark_read_form').submit()
-            });
-        $('#mark_read_form').on('submit', function(event){
-                console.log("in on submit")
-                event.preventDefault();
-                console.log("form submitted!")  // sanity check
-                mark_read_movies();
-            });
-        
-         $("#clear-filter-btn").on('click', function(){
-                console.log("on click!");  // sanity check
-                $('#min_rating').val(0);
-                $('#min_votes').val(0);
-                $('#toggleButton').removeAttr('checked');
-                $('#filter-movies-form').submit()
-            });
-        $("#reset-filter-btn").on('click', function(e){
-                console.log("on click!");  // sanity check            
-                $('#min_rating').val(6.0);
-                $('#min_votes').val(1000);
-                $('#toggleButton').removeAttr('checked');
-//                $('#filter-movies-form').submit()
-            });
-        
-        $("#proxy_toggle").on('change', function(){
-                console.log("on click!");  // sanity check
-                proxy = "https://applove.gadgetnyooz.com/websurf/browse.php?u=";
-                if($(this).prop("checked") == true){
-                    $('.card').find('img').each(function() {
-                        $(this).attr('src',proxy + $(this).attr('src'));
-                    });
-                    if (typeof(Storage) !== "undefined") {
-                            sessionStorage.setItem("proxy",true)
-                        }
-                } else {
-                    $('.card').find('img').each(function() {
-                        $(this).attr('src',$(this).attr('src').replace(proxy,""));
-                    });
-                    if (typeof(Storage) !== "undefined") {
-                            sessionStorage.setItem("proxy",false)
-                        }
-                }
-                
-            });
+            }
+
+        });
         $(document).ready(function() {
-             if (typeof(Storage) !== "undefined") {
-                     if (sessionStorage.proxy == "true"){
-                        $("#proxy_toggle").prop('checked', true)    
-                     } else if (sessionStorage.proxy == "false"){
-                        $("#proxy_toggle").prop('checked', false) 
-                     }
-             }
-            
+            if (typeof(Storage) !== "undefined") {
+                if (sessionStorage.proxy == "true") {
+                    $("#proxy_toggle").prop('checked', true)
+                } else if (sessionStorage.proxy == "false") {
+                    $("#proxy_toggle").prop('checked', false)
+                }
+            }
+
         });
         $(document).on('click', '[data-toggle="lightbox"]', function(event) {
             event.preventDefault();
             $(this).ekkoLightbox({
                 alwaysShowClose: true
-            }
-            );
+            });
         });
-        
-
-        $(function() {
-        $('.material-card > .mc-btn-action').click(function () {
-            var card = $(this).parent('.material-card');
-            var icon = $(this).children('i');
-            icon.addClass('fa-spin-fast');
-
-            if (card.hasClass('mc-active')) {
-                card.removeClass('mc-active');
-
-                window.setTimeout(function() {
-                    icon
-                        .removeClass('fa-arrow-left')
-                        .removeClass('fa-spin-fast')
-                        .addClass('fa-bars');
-
-                }, 800);
-            } else {
-                card.addClass('mc-active');
-
-                window.setTimeout(function() {
-                    icon
-                        .removeClass('fa-bars')
-                        .removeClass('fa-spin-fast')
-                        .addClass('fa-arrow-left');
-
-                }, 800);
-            }
-        });
-    });
-             
     </script>
-<!--    <input name="animation" type="hidden">-->
+    <!--    <input name="animation" type="hidden">-->
 </body>
 
 </html>

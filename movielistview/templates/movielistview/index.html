@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-{% load staticfiles %}
-{% load humanize %}
-{% load custom_filters %}
+<!DOCTYPE html> {% load staticfiles %} {% load humanize %} {% load custom_filters %}
 <html>
+
 <head>
     <!-- Site made with Mobirise Website Builder v3.12.1, https://mobirise.com -->
     <meta charset="UTF-8">
@@ -12,7 +10,7 @@
     <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
     <title>ScrapSwag</title>
     <meta name="description" content="">
-    
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;subset=latin">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
@@ -27,6 +25,8 @@
     <link rel="stylesheet" href="{% static 'assets/theme/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/custom_style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/ripple.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/theme/css/expanding-form.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/theme/css/spotlight.css' %}">
     <link rel="stylesheet" href="{% static 'assets/mobirise/css/mbr.additional.css' %}" type="text/css">
 
 
@@ -57,10 +57,10 @@
                         <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
                             <li class="nav-item"><a class="nav-link link" href="#">Home</a></li>
                             <li class="nav-item"><a class="nav-link link" href="#spotlight">Spotlight</a></li>
-                            <li class="nav-item"><a class="nav-link link" href="#review">Reviewer</a></li>
+                            <li class="nav-item"><a class="nav-link link" href="#review">Review</a></li>
                             <li class="nav-item"><a class="nav-link link" href="#manage">Manage</a></li>
                         </ul>
-                        
+
                         <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
                             <div class="close-icon"></div>
                         </button>
@@ -77,28 +77,28 @@
     <section class="mbr-section mbr-section-hero mbr-section-full mbr-parallax-background mbr-section-with-arrow" id="header" style="background-image: url(static/assets/images/mbr-2-2000x1333.jpg);">
 
         <div class="mbr-table-cell">
-            
-            <div class="container">
-                 <form action="/scrape_movies/" method="post" id="scrape_movies_form" data-form-title="SCRAPE MOVIES">
-                  {% csrf_token %}
-                <div class="row">
-                    <div class="mbr-section col-md-10 col-md-offset-1 text-xs-center">
 
-                        <h1 class="mbr-section-title display-1">SCRAP SWAG</h1>
-                        <p class="mbr-section-lead lead">No more trolling the depths of the internet to find out the movies to download</p>
-                        <p class="mbr-section-lead lead" id="last_scrape_time" style="font-size:small !important; margin-bottom:1rem">Last scrape done on {{ last_scrape_time }}</p>
-                        <div class="mbr-section-btn"><a class="btn btn-lg btn-primary" id="scrap_button" href="#">SCRAPE NOW</a> <a class="btn btn-lg btn-white btn-white-outline" href="#msg-box2-0">REVIEW</a></div>
+            <div class="container">
+                <form action="/scrape_movies/" method="post" id="scrape_movies_form" data-form-title="SCRAPE MOVIES">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="mbr-section col-md-10 col-md-offset-1 text-xs-center">
+
+                            <h1 class="mbr-section-title display-1">SCRAP SWAG</h1>
+                            <p class="mbr-section-lead lead">No more trolling the depths of the internet to find out the movies to download</p>
+                            <p class="mbr-section-lead lead" id="last_scrape_time" style="font-size:small !important; margin-bottom:1rem">Last scrape done on {{ last_scrape_time }}</p>
+                            <div class="mbr-section-btn"><a class="btn btn-lg btn-primary" id="scrap_button" href="#">SCRAPE NOW</a> <a class="btn btn-lg btn-white btn-white-outline" href="#msg-box2-0">REVIEW</a></div>
+                        </div>
                     </div>
-                </div>
                 </form>
             </div>
             <div class="popup-wrap">
-            <div class="popup-box" id="popup-box">
-              <h2 id="form-results-title" style="font-size:x-large;">Scrape Complete</h2>
-              <h3 id="form-results-text" style="font-size:medium;">A sub-heading for the popup with a little description.</h3>
-              <a class="close-btn popup-close" href="#">x</a>
+                <div class="popup-box" id="popup-box">
+                    <h2 id="form-results-title" style="font-size:x-large;">Scrape Complete</h2>
+                    <h3 id="form-results-text" style="font-size:medium;">A sub-heading for the popup with a little description.</h3>
+                    <a class="close-btn popup-close" href="#">x</a>
+                </div>
             </div>
-          </div>
         </div>
 
         <div class="mbr-arrow mbr-arrow-floating" aria-hidden="true"><a href="#spotlight"><i class="mbr-arrow-icon"></i></a></div>
@@ -106,310 +106,306 @@
     </section>
 
     <section class="mbr-cards mbr-section" id="spotlight" style="background-color: rgb(226, 80, 65);">
-                <div class="app">
-  <h2>Spotlight</h2>
-  <section class="movies">
-      {% for movie in spotlight %}
-    <div class="movie">
-        <div class = "poster img-responsive" style="background-image:url('{{ movie.thumbnail_link }}');">
-<!--      <img src="{{ movie.thumbnail_link }}" alt="" class="poster img-responsive" />-->
-        </div>
-      <div class="title resize">{{ movie.name }}</div>
-      <div class="info">
-        <span class="year">{{ movie.year }}</span>
-        <span class="length"><i class="fa fa-star"></i> {{ movie.imdb_rating|floatformat:1 }} ({% if movie.imdb_votes == 0 %}
+        <div class="app">
+            <h2>Spotlight</h2>
+            <section class="movies">
+                {% for movie in spotlight %}
+                <div class="movie">
+                    <div class="poster img-responsive" style="background-image:url('{{ movie.thumbnail_link }}');">
+                        <!--      <img src="{{ movie.thumbnail_link }}" alt="" class="poster img-responsive" />-->
+                    </div>
+                    <div class="title resize">{{ movie.name }}</div>
+                    <div class="info">
+                        <span class="year">{{ movie.year }}</span>
+                        <span class="length"><i class="fa fa-star"></i> {{ movie.imdb_rating|floatformat:1 }} ({% if movie.imdb_votes == 0 %}
                                             N/A
                                             {% else %}
                                             {{ movie.imdb_votes|intcomma }}
                                             {% endif %})</span>
-          <span class="release"><i class="fa fa-film"></i> {% if movie.release_type %} {{ movie.release_type }} {% else %} N/A {% endif %}</span>
-      </div>
-      <div class="desc">
-        {{movie.plot}}
-      </div>
-    <div class="exclude-mbr-animation">
-    <button class="play exclude-mbr-animation">
+                        <span class="release"><i class="fa fa-film"></i> {% if movie.release_type %} {{ movie.release_type }} {% else %} N/A {% endif %}</span>
+                    </div>
+                    <div class="desc">
+                        {{movie.plot|encode_utf}}
+                    </div>
+                    <div class="exclude-mbr-animation">
+                        <button class="play exclude-mbr-animation">
         <a href="{{ movie.trailer_link }}" target="_blank">
         <i class="fa fa-play"></i> 
 Trailer </a>
       </button>
-        <button class="play exclude-mbr-animation">
+                        <button class="play exclude-mbr-animation">
             <a href="{% yts_link movie.name %}" target="_blank" >
         <i class="fa fa-cloud-download"></i>
 yts.ag </a>
       </button>
-        <button class="play exclude-mbr-animation">
+                        <button class="play exclude-mbr-animation">
             <a href="{% torrentz_link movie.name movie.year|stringformat:"i"%}" target="_blank" >
         <i class="fa fa-cloud-download"></i>
 torrentz </a>
       </button>
-        </div>
-    </div>
-      {% endfor %}
-  </section>
-  <div class="detail">
-      <i class="fa fa-times close-app"></i>
-    <div class="movie">
+                    </div>
+                </div>
+                {% endfor %}
+            </section>
+            <div class="detail">
+                <i class="fa fa-times close-app"></i>
+                <div class="movie">
 
-      <img src="http://img.sceper.ws/images/Ge53d.jpg" alt="" class="poster" />
-      <div class="title">Room</div>
-      <div class="info">
-        <span class="length">117 min</span>
-        <span class="year">2015</span>
-      </div>
-      <div class="desc">
-        Jack is a young boy of 5 years old who has lived all his life in one room. He believes everything within it are the only real things in the world. But what will happen when his Ma suddenly tells him that there are other things outside of Room?
-      </div>
+                    <img src="http://img.sceper.ws/images/Ge53d.jpg" alt="" class="poster" />
+                    <div class="title">Room</div>
+                    <div class="info">
+                        <span class="length">117 min</span>
+                        <span class="year">2015</span>
+                    </div>
+                    <div class="desc">
+                        Jack is a young boy of 5 years old who has lived all his life in one room. He believes everything within it are the only real things in the world. But what will happen when his Ma suddenly tells him that there are other things outside of Room?
+                    </div>
 
-    <div class="exclude-mbr-animation">
-    <button data-toggle="lightbox" data-gallery="remoteload" class="play exclude-mbr-animation">
+                    <div class="exclude-mbr-animation">
+                        <button data-toggle="lightbox" data-gallery="remoteload" class="play exclude-mbr-animation">
         <i class="fa fa-play"></i>
 Trailer
       </button>
-        <button class="play exclude-mbr-animation">
+                        <button class="play exclude-mbr-animation">
         <i class="fa fa-cloud-download"></i>
 yts.ag
       </button>
-        <button class="play exclude-mbr-animation">
+                        <button class="play exclude-mbr-animation">
         <i class="fa fa-cloud-download"></i>
 torrentz
       </button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-  </div>
-</div>
-</section>
-    
-    
+    </section>
+
+
     <section class="mbr-info mbr-section mbr-section-md-padding" id="review" style="background-color: rgb(46, 46, 46); padding-top: 90px; padding-bottom: 90px;">
 
 
         <div class="container">
             <div class="row">
                 <form action="/filter_movies/" method="post" id="filter-movies-form">
-                {% csrf_token %}
-                <div class="mbr-table-md-up">
-                    <div class="mbr-table-cell mbr-right-padding-md-up col-md-8 text-xs-center text-md-left">
-                        <div class="row">
-                        <div class="container-pill">
-                          <div class="box box-input" style="margin-top: .4em; background:transparent;">
-                            <blockquote><span class="bqstart">“</span>
-                            <span class="quote-text">Any movie worth it's salt has </span>
-                            <span class="number-container">
+                    {% csrf_token %}
+                    <div class="mbr-table-md-up">
+                        <div class="mbr-table-cell mbr-right-padding-md-up col-md-8 text-xs-center text-md-left">
+                            <div class="row">
+                                <div class="container-pill">
+                                    <div class="box box-input" style="margin-top: .4em; background:transparent;">
+                                        <blockquote><span class="bqstart">“</span>
+                                            <span class="quote-text">Any movie worth it's salt has </span>
+                                            <span class="number-container">
                             <input id="min_rating" name="min_rating" type="number" min="1" max="10" step=".1" placeholder="6" value="6.0" class="number-input" style="width:2.2em;"/>
                             <span class="fa fa-star fa-lg"></span>
-                            </span>
-                            <span class="quote-text"> with</span>
-                              <span class="number-container">
+                                            </span>
+                                            <span class="quote-text"> with</span>
+                                            <span class="number-container">
                             <input id="min_votes" name="min_votes" type="number" min="1000" max="50000" step="500" placeholder="1000" value="1000" class="number-input" style="width:3.6em;"/>
                             </span>
-                              <span class="quote-text">votes</span>
-                            <span class="bqend">”</span></blockquote> 
-                            </div>
-                        </div>
-                            </div>
-                        <div class="row row-eq-height">
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-3" style="padding:.7em 0 0 0;">
-                                <span class="align-middle" style="color:white;"> Show Read Movies?</span>
-                            </div>
-                            <div class="col-md-3 pull-left" style="padding:0 0 0 0.5em;">
-                                <div class="tg-list">
-                                  <div class="tg-list-item">
-                                     <input name = "show_read" id="toggleButton" type="checkbox" class="tgl tgl-flip" value="Yes"
-                                           {% if show_read %}
-                                       checked
-                                        {% endif %}
-                                       />
-                                    <label data-tg-off="Nope" data-tg-on="Yeah!" for="toggleButton" class="tgl-btn"></label>
-                                  </div>
+                                            <span class="quote-text">votes</span>
+                                            <span class="bqend">”</span></blockquote>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="row row-eq-height">
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-3" style="padding:.7em 0 0 0;">
+                                    <span class="align-middle" style="color:white;"> Show Read Movies?</span>
+                                </div>
+                                <div class="col-md-3 pull-left" style="padding:0 0 0 0.5em;">
+                                    <div class="tg-list">
+                                        <div class="tg-list-item">
+                                            <input name="show_read" id="toggleButton" type="checkbox" class="tgl tgl-flip" value="Yes" {% if show_read %} checked {% endif %} />
+                                            <label data-tg-off="Nope" data-tg-on="Yeah!" for="toggleButton" class="tgl-btn"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="mbr-table-cell col-md-4">
+                            <div class="text-xs-center">
+                                <div class="row">
+                                    <button type="submit" class="btn btn-primary btn-lg" id="filter_btn">YEAH, I AGREE</button>
+                                </div>
+
+                                <div class="row">
+                                    <a class="btn btn-primary" id="clear-filter-btn">NAH! SHOW EVERYTHING</a>
+                                </div>
+
                             </div>
                         </div>
-                        
                     </div>
-                    <div class="mbr-table-cell col-md-4">
-                        <div class="text-xs-center">
-                            <div class="row">
-                            <button type="submit" class="btn btn-primary btn-lg" id="filter_btn" >YEAH, I AGREE</button>
-                            </div>
-                            
-                            <div class = "row">
-                                <a class="btn btn-primary" id = "clear-filter-btn">NAH! SHOW EVERYTHING</a>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
 
                 </form>
 
             </div>
         </div>
         <div id="notification_scrape_result" class="container-notification hide">
-	   <div class="rectangle">
-		<div class="notification-text">
-			<i class="fa fa-info-circle"></i>
-			<span>&nbsp;&nbsp;This is a test notification.</span>
-		</div>
-	   </div>
-            
+            <div class="rectangle">
+                <div class="notification-text">
+                    <i class="fa fa-info-circle"></i>
+                    <span>&nbsp;&nbsp;This is a test notification.</span>
+                </div>
+            </div>
+
         </div>
         <div id="notification_scrape_start" class="container-notification hide">
-	   <div class="rectangle">
-		<div class="notification-text">
-			<i class="fa fa-info-circle"></i>
-			<span>&nbsp;&nbsp;Started Scraping sceper.ws</span>
-		</div>
-	   </div>
-            
+            <div class="rectangle">
+                <div class="notification-text">
+                    <i class="fa fa-info-circle"></i>
+                    <span>&nbsp;&nbsp;Started Scraping sceper.ws</span>
+                </div>
+            </div>
+
         </div>
 
 
     </section>
-    
+
     <section class="mbr-cards mbr-section mbr-section-nopadding" id="manage" style="background-color: rgb(239, 239, 239);">
         <h1 class="text-xs-center" style="padding-top: 10px;">Manage Movies</h1>
-    <div class="mbr-cards-row row">
+        <div class="mbr-cards-row row">
             <div class="form-overlay"></div>
-        <!--Update Rating -->
-<div class="icon-expanding fa fa-star form-container relevant-icon ripple" id="left">
-  <span class="icon-expanding fa fa-close" id="form-close"></span>
-</div>
-    
-    <!--Delete Movies -->
-<div class="icon-expanding fa fa-minus-circle form-container relevant-icon form-container-expandable" id="middle1">
-  <span class="icon-expanding fa fa-close" id="form-close"></span>
-  <div id="form-content">
-    <div id="form-head">
-      <h1 class="pre">Get in touch</h1>
-    </div>
-    <form>
-      <input class="input name" name="user_name" placeholder="Your name please" type="text"></input>
-      <input class="input email" name="user_email" placeholder="A contact email" type="text"></input>
-      <select class="input select" name="subject">
-        <option>What shall we talk about?</option>
-        <option>About a new project</option>
-        <option>About a job opportunity</option>
-        <option>Let's do this over a coffee</option>
-      </select>
-      <textarea class="input message" placeholder="How can I help?"></textarea>
-      <input class="input submit" type="submit" value="Send Message"></input>
-    </form>
-  </div>
-</div>
-<!--Remove Duplicates -->
-<div class="icon-expanding fa fa-files-o form-container relevant-icon form-container-expandable" id="middle2">
-  <span class="icon-expanding fa fa-close" id="form-close"></span>
-  <div id="form-content">
-    <div id="form-head">
-      <h1 class="pre">Get in touch</h1>
-    </div>
-    <form>
-      <input class="input name" name="user_name" placeholder="Your name please" type="text"></input>
-      <input class="input email" name="user_email" placeholder="A contact email" type="text"></input>
-      <select class="input select" name="subject">
-        <option>What shall we talk about?</option>
-        <option>About a new project</option>
-        <option>About a job opportunity</option>
-        <option>Let's do this over a coffee</option>
-      </select>
-      <textarea class="input message" placeholder="How can I help?"></textarea>
-      <input class="input submit" type="submit" value="Send Message"></input>
-    </form>
-  </div>
-</div>
-<!--Mark Read -->
-<div class="icon-expanding fa fa-check-circle form-container relevant-icon form-container-expandable" id="right">
-  <span class="icon-expanding fa fa-close" id="form-close"></span>
-  <div id="form-content">
-    <div id="form-head">
-      <h1 class="pre">Get in touch</h1>
-    </div>
-    <form>
-      <input class="input name" name="user_name" placeholder="Your name please" type="text"></input>
-      <input class="input email" name="user_email" placeholder="A contact email" type="text"></input>
-      <select class="input select" name="subject">
-        <option>What shall we talk about?</option>
-        <option>About a new project</option>
-        <option>About a job opportunity</option>
-        <option>Let's do this over a coffee</option>
-      </select>
-      <textarea class="input message" placeholder="How can I help?"></textarea>
-      <input class="input submit" type="submit" value="Send Message"></input>
-    </form>
-  </div>
-</div>
-        <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
-            <div class="container">
-                <div class="card cart-block">
-                    <div class="card-img iconbox" style="visibility:hidden;">
-                        <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
-<!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
-                        </a>
-                    </div>
-                    <div class="card-block">
-                        <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id = "update_ratings">Update Ratings</a>
-                        
-                        
-                    </div>
-                </div>
-          </div>
-        </div>
-        <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
-            <div class="container">
-                <div class="card cart-block">
-                    <div class="card-img iconbox" style="visibility:hidden;">
-                        <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
-<!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
-                        </a>
-                    </div>
-                    <div class="card-block">
-                        <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id = "update_ratings">Delete Movies</a>
-                        
-                        
-                    </div>
-                </div>
-          </div>
-        </div>
-        <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
-            <div class="container">
-                <div class="card cart-block">
-                    <div class="card-img iconbox" style="visibility:hidden;">
-                        <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
-<!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
-                        </a>
-                    </div>
-                    <div class="card-block">
-                        <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id = "update_ratings">Remove Duplicates</a>
-                        
-                        
-                    </div>
-                </div>
+            <!--Update Rating -->
+            <div class="icon-expanding fa fa-star form-container relevant-icon ripple exclude-mbr-animation" id="left">
+                <span class="icon-expanding fa fa-close" id="form-close"></span>
             </div>
-        </div>
-        <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
-            <div class="container">
-                <div class="card cart-block">
-                    <div class="card-img iconbox"  style="visibility:hidden;">
-                        <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
-<!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
-                        </a>
-                    </div>
-                    <div class="card-block">
-                        <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id = "update_ratings">Mark Read</a>
-                        
-                        
-                    </div>
-                </div>
 
+            <!--Delete Movies -->
+            <div class="icon-expanding fa fa-minus-circle form-container relevant-icon form-container-expandable exclude-mbr-animation" id="middle1">
+                <span class="icon-expanding fa fa-close" id="form-close"></span>
+                <div id="form-content">
+                    <div id="form-head">
+                        <h1 class="pre">Get in touch</h1>
+                    </div>
+                    <form>
+                        <input class="input name" name="user_name" placeholder="Your name please" type="text"></input>
+                        <input class="input email" name="user_email" placeholder="A contact email" type="text"></input>
+                        <select class="input select" name="subject">
+        <option>What shall we talk about?</option>
+        <option>About a new project</option>
+        <option>About a job opportunity</option>
+        <option>Let's do this over a coffee</option>
+      </select>
+                        <textarea class="input message" placeholder="How can I help?"></textarea>
+                        <input class="input submit" type="submit" value="Send Message"></input>
+                    </form>
+                </div>
+            </div>
+            <!--Remove Duplicates -->
+            <div class="icon-expanding fa fa-files-o form-container relevant-icon form-container-expandable exclude-mbr-animation" id="middle2">
+                <span class="icon-expanding fa fa-close" id="form-close"></span>
+                <div id="form-content">
+                    <div id="form-head">
+                        <h1 class="pre">Get in touch</h1>
+                    </div>
+                    <form>
+                        <input class="input name" name="user_name" placeholder="Your name please" type="text"></input>
+                        <input class="input email" name="user_email" placeholder="A contact email" type="text"></input>
+                        <select class="input select" name="subject">
+        <option>What shall we talk about?</option>
+        <option>About a new project</option>
+        <option>About a job opportunity</option>
+        <option>Let's do this over a coffee</option>
+      </select>
+                        <textarea class="input message" placeholder="How can I help?"></textarea>
+                        <input class="input submit" type="submit" value="Send Message"></input>
+                    </form>
+                </div>
+            </div>
+            <!--Mark Read -->
+            <div class="icon-expanding fa fa-check-circle form-container relevant-icon form-container-expandable exclude-mbr-animation" id="right">
+                <span class="icon-expanding fa fa-close" id="form-close"></span>
+                <div id="form-content">
+                    <div id="form-head">
+                        <h1 class="pre">Get in touch</h1>
+                    </div>
+                    <form>
+                        <input class="input name" name="user_name" placeholder="Your name please" type="text"></input>
+                        <input class="input email" name="user_email" placeholder="A contact email" type="text"></input>
+                        <select class="input select" name="subject">
+        <option>What shall we talk about?</option>
+        <option>About a new project</option>
+        <option>About a job opportunity</option>
+        <option>Let's do this over a coffee</option>
+      </select>
+                        <textarea class="input message" placeholder="How can I help?"></textarea>
+                        <input class="input submit" type="submit" value="Send Message"></input>
+                    </form>
+                </div>
+            </div>
+            <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
+                <div class="container">
+                    <div class="card cart-block">
+                        <div class="card-img iconbox" style="visibility:hidden;">
+                            <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
+                                <!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
+                            </a>
+                        </div>
+                        <div class="card-block">
+                            <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id="update_ratings">Update Ratings</a>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
+                <div class="container">
+                    <div class="card cart-block">
+                        <div class="card-img iconbox" style="visibility:hidden;">
+                            <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
+                                <!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
+                            </a>
+                        </div>
+                        <div class="card-block">
+                            <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id="update_ratings">Delete Movies</a>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
+                <div class="container">
+                    <div class="card cart-block">
+                        <div class="card-img iconbox" style="visibility:hidden;">
+                            <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
+                                <!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
+                            </a>
+                        </div>
+                        <div class="card-block">
+                            <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id="update_ratings">Remove Duplicates</a>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
+                <div class="container">
+                    <div class="card cart-block">
+                        <div class="card-img iconbox" style="visibility:hidden;">
+                            <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
+                                <!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
+                            </a>
+                        </div>
+                        <div class="card-block">
+                            <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id="update_ratings">Mark Read</a>
+
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-2" style="background-color: rgb(249, 249, 249); padding-top: 1.75rem; padding-bottom: 1.75rem;">
 
@@ -418,7 +414,7 @@ torrentz
         </div>
     </footer>
 
-     
+
     <script src="{% static 'assets/web/assets/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'assets/tether/tether.min.js' %}"></script>
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
@@ -429,216 +425,41 @@ torrentz
     <script src="{% static 'assets/jarallax/jarallax.js' %}"></script>
     <script src="{% static 'assets/theme/js/script.js' %}"></script>
     <script src="{% static 'assets/formoid/formoid.min.js' %}"></script>
+
     <script src="{% static 'assets/theme/js/ajax-script.js' %}"></script>
-    
+    <script src="{% static 'assets/theme/js/expandable-buttons.js' %}"></script>
+    <script src="{% static 'assets/theme/js/spotlight.js' %}"></script>
+
     <script type="text/javascript">
-
-    
-//Expandable buttons
-bindFormClickInit();
-//init the form
-function bindFormClickInit(){  
-  $('.form-container-expandable').on('click', function(e) {
-    e.preventDefault();
-    var id = $(this).prop('id');
-      $("#"+id+".form-container-expandable").attr('style','z-index:1002;');
-    toggleForm(id);
-    //Ensure container doesn't togleForm when open
-//    $(this).off();
-      $("#"+id+".form-container-expandable").off();
-  });
-}
-
-//Opening the form
-function bindFormClick(id){
-  $("#"+id+".form-container-expandable").on('click', function(e) {
-    e.preventDefault();
-    var id = $(this).prop('id');
-    $("#"+id+".form-container-expandable").attr('style','z-index:1002;');
-    toggleForm(id);
-      
-    //Ensure container doesn't togleForm when open
-//    $(this).off();
-      $("#"+id+".form-container-expandable").off();
-  });
-}
-
-//Closing the form
-$('#form-close, .form-overlay').click(function(e) {
-  e.stopPropagation();
-  e.preventDefault();
-  var id = $(this).closest("div").prop("id");
-    toggleForm(id);
-    setTimeout(
-  function() 
-  {
-    //do something special
-      $("#"+id+".form-container-expandable").attr('style','z-index:1000;');
-  }, 500);
-    
-  bindFormClick(id);
-});
-
-function toggleForm(id){
-  $("#"+id+".form-container-expandable").toggleClass('expand');
-  $("#"+id+".form-container-expandable").children().toggleClass('expand');
-  $('body').toggleClass('show-form-overlay');
-  $('.form-submitted').removeClass('form-submitted');
-}
-
-////Form validation
-//$('form').submit(function() {
-//  var form = $(this);
-//  form.find('.form-error').removeClass('form-error');
-//  var formError = false;
-//  
-//  form.find('.input').each(function() {
-//    if ($(this).val() == '') {
-//      $(this).addClass('form-error');
-//      $(this).select();
-//      formError = true;
-//      return false;
-//    }
-//    else if ($(this).hasClass('email') && !isValidEmail($(this).val())) {
-//      $(this).addClass('form-error');
-//      $(this).select();
-//      formError = true;
-//      return false;
-//    }
-//  });
-//  
-//  if (!formError) {
-//    $('body').addClass('form-submitted');
-//    $('#form-head').addClass('form-submitted'); 
-//    setTimeout(function(){
-//      $(form).trigger("reset");
-//    }, 1000);
-//  }
-//  return false;
-//});
-//
-//function isValidEmail(email) {
-//    var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
-//    return pattern.test(email);
-//};
-
-        
-        
-        
-        
         $(document).ready(function() {
-            
+            $('#scrap_button').click(function(e) {
+                $('#scrap_button').addClass('disabled')
+                $('#scrape_movies_form').submit();
+            });
 
-            
-          $('#scrap_button').click(function(e) {
-              $('#scrap_button').addClass('disabled')
-              $('#scrape_movies_form').submit();
-          });
+            $('#scrape_movies_form').on('submit', function(event) {
+                event.preventDefault();
+                console.log("form submitted!") // sanity check
+                scrape_movies();
+            });
 
-          $('.popup-close').click(function(e) {
-            $('.popup-wrap').fadeOut(500);
-            $('.popup-box').removeClass('transform-in').addClass('transform-out');
+            $('.popup-close').click(function(e) {
+                $('.popup-wrap').fadeOut(500);
+                $('.popup-box').removeClass('transform-in').addClass('transform-out');
+                e.preventDefault();
+            });
 
-            e.preventDefault();
-          });
-            
-            $('#scrape_movies_form').on('submit', function(event){
-            event.preventDefault();
-            console.log("form submitted!")  // sanity check
-            scrape_movies();
-        });
-        
-            $("#clear-filter-btn").on('click', function(){
-                console.log("on click!");  // sanity check
+
+            $("#clear-filter-btn").on('click', function() {
+                console.log("on click!"); // sanity check
                 $('#min_rating').val(0);
                 $('#min_votes').val(0);
                 $('#toggleButton').removeAttr('checked');
                 $('#filter-movies-form').submit()
             });
         });
-        
-        
-        //Dev Spotlight
-        var $play = $('.detail .play'),
-    $detail  = $('.detail'),
-    $movie = $('.movie', $detail),
-    $close = $('.close-app');
-
-$('.movies .movie').click(function(){
-  $movie.html($(this).html());
-//  $play.appendTo($movie);
-    $play.show();
-
-  $poster = $('.poster', this).addClass('active');
-
-  $('.poster', $detail).css({
-    top: $poster.position().top,
-    left: $poster.position().left,
-    width: $poster.width(),
-    height: $poster.height()
-  }).data({
-    top: $poster.position().top,
-    left: $poster.position().left,
-    width: $poster.width(),
-    height: $poster.height()
-  })
-
-  $detail.show();
-
-  $('.poster', $detail).delay(10).queue(function(next) {
-    $detail.addClass('ready');
-
-    next();
-  }).delay(100).queue(function(next){
-    $(this).css({
-      top: '-10%',
-      left: '-6%',
-      width: 266,
-      height: 400
-    });
-    next();
-  })
-})
-
-
-/*--------------------
-Close
---------------------*/
-function close(){
-  console.log('asd');
-  $p = $('.detail .poster');
-  console.log($p)
-  $p.css({
-    top: $p.data('top'),
-    left: $p.data('left'),
-    width: $p.data('width'),
-    height: $p.data('height'),
-  })
-  $detail.removeClass('ready').delay(500).queue(function(next){
-    $(this).hide();
-    $poster.removeClass('active');
-    next();
-  });
-}
-
-$close.click(close);
-
-//Disabling clicks inside the body
-//$('body').click(function(e){
-//  $p = $(e.target).parents();
-//  if ($p.is('.app')){
-//    return false;
-//  } else {
-//    close();
-//  }
-//})
-
-
-
-        
-        
     </script>
-     <input name="animation" type="hidden"> 
+    <input name="animation" type="hidden">
 </body>
 
 </html>
