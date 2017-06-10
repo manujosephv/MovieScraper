@@ -33,8 +33,13 @@ INIT_SCRAP_TIME = 30 #days
 # Create your views here.
 def index(request):
     # return render(request, 'movielistview/index.html', {})
+    movie_list_id = (Movie.objects.filter(post_date__lte =timezone.now()-datetime.timedelta(days=30),movie_read = False, imdb_votes__gte = 3000)
+                                    .order_by('-imdb_rating','-rt_rating','-post_date')
+                                        .values_list('id', flat=True))
+    spot_light_movies = (Movie.objects.order_by('-imdb_rating','-rt_rating','-post_date').filter(id__in=list(movie_list_id[:4])))
     return render(request, 'movielistview/index.html', {"movie_count_unread":Movie.objects.filter(movie_read = False).count(),
-                                                        "last_scrape_time" : timezone.make_naive(Movie.objects.latest('date_time').date_time)
+                                                        "last_scrape_time" : timezone.make_naive(Movie.objects.latest('date_time').date_time),
+                                                        "spotlight" : spot_light_movies
         })
 
 @transaction.atomic
@@ -119,7 +124,7 @@ color_dict = {1: "Red",
 def view_movies(request):
     movies = Movie.objects.all().order_by('-post_date')
     #print(movies)
-    return render(request, 'movielistview/view_movies_v2.html', {'movies': movies,'color_dict':color_dict})
+    return render(request, 'movielistview/view_movies.html', {'movies': movies,'color_dict':color_dict})
 #    return render(request, 'movielistview/page1.html', {})
 
 def filter_movies(request):
@@ -162,10 +167,10 @@ def filter_movies(request):
             else:
                 # show_read = False
                 movies = Movie.objects.filter(imdb_rating__gte = min_rating, imdb_votes__gte = min_votes, movie_read = show_read ).order_by('-post_date')
-            response_data = {'movies':movies, 'show_read':show_read, 'min_rating':min_rating, 'min_votes':min_votes}
+            response_data = {'movies':movies, 'show_read':show_read, 'min_rating':min_rating, 'min_votes':min_votes, 'color_dict':color_dict}
         else:
             movie = Movie()
-            response_data = {'movies':movie}
+            response_data = {'movies':movie,'color_dict':color_dict}
         return render(request, 'movielistview/view_movies.html', response_data)
 
 def mark_read_movies(request):

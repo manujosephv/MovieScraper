@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load humanize %}
+{% load custom_filters %}
 <html>
 <head>
     <!-- Site made with Mobirise Website Builder v3.12.1, https://mobirise.com -->
@@ -53,7 +55,11 @@
                         </button>
 
                         <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
-                            <li class="nav-item"><a class="nav-link link" href="#">Home</a></li><li class="nav-item"><a class="nav-link link" href="#msg-box2-0">Reviewer</a></li></ul>
+                            <li class="nav-item"><a class="nav-link link" href="#">Home</a></li>
+                            <li class="nav-item"><a class="nav-link link" href="#spotlight">Spotlight</a></li>
+                            <li class="nav-item"><a class="nav-link link" href="#review">Reviewer</a></li>
+                            <li class="nav-item"><a class="nav-link link" href="#manage">Manage</a></li>
+                        </ul>
                         
                         <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
                             <div class="close-icon"></div>
@@ -68,7 +74,7 @@
     </section>
 
     <section class="engine"><a rel="external" href="https://mobirise.com">Mobirise Web Site Maker</a></section>
-    <section class="mbr-section mbr-section-hero mbr-section-full mbr-parallax-background mbr-section-with-arrow" id="header1-1" style="background-image: url(static/assets/images/mbr-2-2000x1333.jpg);">
+    <section class="mbr-section mbr-section-hero mbr-section-full mbr-parallax-background mbr-section-with-arrow" id="header" style="background-image: url(static/assets/images/mbr-2-2000x1333.jpg);">
 
         <div class="mbr-table-cell">
             
@@ -95,7 +101,7 @@
           </div>
         </div>
 
-        <div class="mbr-arrow mbr-arrow-floating" aria-hidden="true"><a href="#msg-box2-0"><i class="mbr-arrow-icon"></i></a></div>
+        <div class="mbr-arrow mbr-arrow-floating" aria-hidden="true"><a href="#spotlight"><i class="mbr-arrow-icon"></i></a></div>
 
     </section>
 
@@ -103,61 +109,49 @@
                 <div class="app">
   <h2>Spotlight</h2>
   <section class="movies">
+      {% for movie in spotlight %}
     <div class="movie">
-      <img src="http://movium.io/data/posters/eqFckcHuFCT1FrzLOAvXBb4jHwq.jpg" alt="" class="poster" />
-      <div class="title">Room</div>
+        <div class = "poster img-responsive" style="background-image:url('{{ movie.thumbnail_link }}');">
+<!--      <img src="{{ movie.thumbnail_link }}" alt="" class="poster img-responsive" />-->
+        </div>
+      <div class="title resize">{{ movie.name }}</div>
       <div class="info">
-        <span class="length">117 min</span>
-        <span class="year">2015</span>
+        <span class="year">{{ movie.year }}</span>
+        <span class="length"><i class="fa fa-star"></i> {{ movie.imdb_rating|floatformat:1 }} ({% if movie.imdb_votes == 0 %}
+                                            N/A
+                                            {% else %}
+                                            {{ movie.imdb_votes|intcomma }}
+                                            {% endif %})</span>
+          <span class="release"><i class="fa fa-film"></i> {% if movie.release_type %} {{ movie.release_type }} {% else %} N/A {% endif %}</span>
       </div>
       <div class="desc">
-        Jack is a young boy of 5 years old who has lived all his life in one room. He believes everything within it are the only real things in the world. But what will happen when his Ma suddenly tells him that there are other things outside of Room?
+        {{movie.plot}}
       </div>
+    <div class="exclude-mbr-animation">
+    <button class="play exclude-mbr-animation">
+        <a href="{{ movie.trailer_link }}" target="_blank">
+        <i class="fa fa-play"></i> 
+Trailer </a>
+      </button>
+        <button class="play exclude-mbr-animation">
+            <a href="{% yts_link movie.name %}" target="_blank" >
+        <i class="fa fa-cloud-download"></i>
+yts.ag </a>
+      </button>
+        <button class="play exclude-mbr-animation">
+            <a href="{% torrentz_link movie.name movie.year|stringformat:"i"%}" target="_blank" >
+        <i class="fa fa-cloud-download"></i>
+torrentz </a>
+      </button>
+        </div>
     </div>
-    <div class="movie">
-      <img src="http://movium.io/data/posters/lIv1QinFqz4dlp5U4lQ6HaiskOZ.jpg" alt="" class="poster" />
-      <div class="title">Whiplash</div>
-      <div class="info">
-        <span class="length">167 min</span>
-        <span class="year">2015</span>
-      </div>
-      <div class="desc">
-        Under the direction of a ruthless instructor, a talented young drummer begins to pursue perfection at any cost, even his humanity.
-      </div>
-    </div>
-    <div class="movie">
-      <img src="http://movium.io/data/posters/kqjL17yufvn9OVLyXYpvtyrFfak.jpg" alt="" class="poster" />
-      <div class="title">Mad Max</div>
-      <div class="info">
-        <span class="length">120 min</span>
-        <span class="year">2015</span>
-      </div>
-      <div class="desc">
-        An apocalyptic story set in the furthest reaches of our planet, in a stark desert landscape where humanity is broken, and most everyone is crazed fighting for the necessities of life. Within this world exist two rebels on the run who just might be able to restore order. There's Max, a man of action and a man of few words, who seeks peace of mind following the loss of his wife and child in the aftermath of the chaos.
-      </div>
-    </div>
-    <div class="movie">
-      <img src="http://movium.io/data/posters/5W794ugjRwYx6IdFp1bXJqqMWRg.jpg" alt="" class="poster" />
-      <div class="title">The Revenant</div>
-      <div class="info">
-        <span class="length">156 min</span>
-        <span class="year">2015</span>
-      </div>
-      <div class="desc">
-        In the 1820s, a frontiersman, Hugh Glass, sets out on a path of vengeance against those who left him for dead after a bear mauling.
-      </div>
-    </div>
+      {% endfor %}
   </section>
   <div class="detail">
       <i class="fa fa-times close-app"></i>
-<!--
-    <svg class="close-app">
-      <use xlink:href="#close"></use>
-    </svg>
--->
     <div class="movie">
 
-      <img src="http://movium.io/data/posters/eqFckcHuFCT1FrzLOAvXBb4jHwq.jpg" alt="" class="poster" />
+      <img src="http://img.sceper.ws/images/Ge53d.jpg" alt="" class="poster" />
       <div class="title">Room</div>
       <div class="info">
         <span class="length">117 min</span>
@@ -167,18 +161,27 @@
         Jack is a young boy of 5 years old who has lived all his life in one room. He believes everything within it are the only real things in the world. But what will happen when his Ma suddenly tells him that there are other things outside of Room?
       </div>
 
-      
-    <button class="play exclude-mbr-animation">
+    <div class="exclude-mbr-animation">
+    <button data-toggle="lightbox" data-gallery="remoteload" class="play exclude-mbr-animation">
         <i class="fa fa-play"></i>
-play movie
+Trailer
       </button>
+        <button class="play exclude-mbr-animation">
+        <i class="fa fa-cloud-download"></i>
+yts.ag
+      </button>
+        <button class="play exclude-mbr-animation">
+        <i class="fa fa-cloud-download"></i>
+torrentz
+      </button>
+        </div>
     </div>
   </div>
 </div>
 </section>
     
     
-    <section class="mbr-info mbr-section mbr-section-md-padding" id="msg-box2-0" style="background-color: rgb(46, 46, 46); padding-top: 90px; padding-bottom: 90px;">
+    <section class="mbr-info mbr-section mbr-section-md-padding" id="review" style="background-color: rgb(46, 46, 46); padding-top: 90px; padding-bottom: 90px;">
 
 
         <div class="container">
@@ -268,7 +271,7 @@ play movie
 
     </section>
     
-    <section class="mbr-cards mbr-section mbr-section-nopadding" id="features7-p" style="background-color: rgb(239, 239, 239);">
+    <section class="mbr-cards mbr-section mbr-section-nopadding" id="manage" style="background-color: rgb(239, 239, 239);">
         <h1 class="text-xs-center" style="padding-top: 10px;">Manage Movies</h1>
     <div class="mbr-cards-row row">
             <div class="form-overlay"></div>
@@ -430,8 +433,8 @@ play movie
     
     <script type="text/javascript">
 
-//        var formContainer = $('.form-container');
-
+    
+//Expandable buttons
 bindFormClickInit();
 //init the form
 function bindFormClickInit(){  
@@ -483,47 +486,50 @@ function toggleForm(id){
   $('.form-submitted').removeClass('form-submitted');
 }
 
-//Form validation
-$('form').submit(function() {
-  var form = $(this);
-  form.find('.form-error').removeClass('form-error');
-  var formError = false;
-  
-  form.find('.input').each(function() {
-    if ($(this).val() == '') {
-      $(this).addClass('form-error');
-      $(this).select();
-      formError = true;
-      return false;
-    }
-    else if ($(this).hasClass('email') && !isValidEmail($(this).val())) {
-      $(this).addClass('form-error');
-      $(this).select();
-      formError = true;
-      return false;
-    }
-  });
-  
-  if (!formError) {
-    $('body').addClass('form-submitted');
-    $('#form-head').addClass('form-submitted'); 
-    setTimeout(function(){
-      $(form).trigger("reset");
-    }, 1000);
-  }
-  return false;
-});
-
-function isValidEmail(email) {
-    var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
-    return pattern.test(email);
-};
+////Form validation
+//$('form').submit(function() {
+//  var form = $(this);
+//  form.find('.form-error').removeClass('form-error');
+//  var formError = false;
+//  
+//  form.find('.input').each(function() {
+//    if ($(this).val() == '') {
+//      $(this).addClass('form-error');
+//      $(this).select();
+//      formError = true;
+//      return false;
+//    }
+//    else if ($(this).hasClass('email') && !isValidEmail($(this).val())) {
+//      $(this).addClass('form-error');
+//      $(this).select();
+//      formError = true;
+//      return false;
+//    }
+//  });
+//  
+//  if (!formError) {
+//    $('body').addClass('form-submitted');
+//    $('#form-head').addClass('form-submitted'); 
+//    setTimeout(function(){
+//      $(form).trigger("reset");
+//    }, 1000);
+//  }
+//  return false;
+//});
+//
+//function isValidEmail(email) {
+//    var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+//    return pattern.test(email);
+//};
 
         
         
         
         
         $(document).ready(function() {
+            
+
+            
           $('#scrap_button').click(function(e) {
               $('#scrap_button').addClass('disabled')
               $('#scrape_movies_form').submit();
@@ -553,14 +559,15 @@ function isValidEmail(email) {
         
         
         //Dev Spotlight
-        var $play = $('.play'),
+        var $play = $('.detail .play'),
     $detail  = $('.detail'),
     $movie = $('.movie', $detail),
     $close = $('.close-app');
 
 $('.movies .movie').click(function(){
   $movie.html($(this).html());
-  $play.appendTo($movie);
+//  $play.appendTo($movie);
+    $play.show();
 
   $poster = $('.poster', this).addClass('active');
 
@@ -615,14 +622,16 @@ function close(){
 }
 
 $close.click(close);
-$('body').click(function(e){
-  $p = $(e.target).parents();
-  if ($p.is('.app')){
-    return false;
-  } else {
-    close();
-  }
-})
+
+//Disabling clicks inside the body
+//$('body').click(function(e){
+//  $p = $(e.target).parents();
+//  if ($p.is('.app')){
+//    return false;
+//  } else {
+//    close();
+//  }
+//})
 
 
 

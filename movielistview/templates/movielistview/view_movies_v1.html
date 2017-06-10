@@ -30,10 +30,7 @@
     <link rel="stylesheet" href="{% static 'assets/socicon/css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/theme/css/custom_style.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/theme/css/ripple.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/mobirise/css/mbr.additional.css' %}" type="text/css">
-    
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
 
 </head>
 
@@ -145,7 +142,7 @@
                             <div class="col-md-2"  style="padding:0.5em 0.5em 0 0.5em">
                                 <div class="round-buttons">
                                     <div>
-                                      <a id = "reset-filter-btn" class="ripple">
+                                      <a id = "reset-filter-btn">
                                         <span class="label">Reset</span>
                                         <span class="inner"></span>
                                         <i class="fa fa-refresh" style="font-size:x-large;"></i>
@@ -191,52 +188,55 @@
     </section>
     <section class="content">
         <main>
+            <!--Main layout-->
             <div id="card-append" class="container">
-<hr class="extra-margins"></hr>
+
+                <hr class="extra-margins"></hr>
                 <form action="/mark_read_movies/" method="post" id="mark_read_form">
                 {% csrf_token %}
                 <input type="hidden" name="post_id" id="post_id" id="post_id" value=""/>
                 <input type="hidden" name="checked" id="checked" id="checked" value=""/>
-    <div class="row active-with-click">
-         {% paginate 15 movies %}
+                <!--Number row-->
+                <div class="row">
+                    {% paginate 9 movies %}
                     {% for movie in movies %}
-        <div class="col-md-4 col-sm-6 col-xs-12">
-<!--            color_dict|key_value:forloop.counter-->
-            <article class="material-card {{ color_dict|key_value:forloop.counter}}" id="{{ forloop.counter }}">
-                <h2>
-                    <span>{{ movie.name }} ({{ movie.year }})</span>
-                    <strong>
-                        <i class="fa fa-fw fa-star"></i>
-                        {{ movie.imdb_rating|floatformat:1 }} ({% if movie.imdb_votes == 0 %}
-                                            Not Available
-                                            {% else %}
-                                            {{ movie.imdb_votes|intcomma }}
-                                            {% endif %}) | {% if movie.release_type %} {{ movie.release_type }} {% else %} Not Available {% endif %}
-                    </strong>
-                    <div class="date">
-                        <span class="day">12</span>
-                        <span class="month">Aug</span>
-                        <span class="year">2016</span>
-                      </div>
-                </h2>
-                <div class="mc-content">
-                    <div class="img-container">
-                        <img class="img-responsive" src=" {% if proxy %}
+                    <div class="col-md-4">
+                        <!--Card-->
+                        <div class="card" id="{{ forloop.counter }}">
+                            <!--Card image-->
+                            <div class="view overlay hm-white-slight" id="thumbnail">
+                                <figure class="mbr-figure">
+                                    <div class="img-wrapper">
+<!--                                        <img src="https://applove.gadgetnyooz.com/websurf/browse.php?u={{ movie.thumbnail_link }}">-->
+                                        <img src=" {% if proxy %}
                                                   https://applove.gadgetnyooz.com/websurf/browse.php?u={{ movie.thumbnail_link }}
                                                   {% else %}
                                                   {{ movie.thumbnail_link }}
                                                   {% endif %}
                                                   ">
-                                <div class="checkbox close">
+                                            
+                                        <div class="checkbox close">
                                             <label>
                                                 <input type="checkbox" name="post_id_check" id="post_id_check" value="{{ movie.id }}" 
                                                        {% if movie.movie_read %} checked {% endif %} />
                                                 <span class="cr" style="margin-right:0px;background-color:white; font-size:medium"><i class="cr-icon fa fa-suitcase"></i></span>
                                             </label>
                                         </div>
-                    </div>
-                    <div class="mc-description">
-                        <div class="row">
+                                        
+                                    </div>
+
+                                    <figcaption class="mbr-figure-caption mbr-figure-caption-over">
+                                        <div class="container"><span>{{ movie.name }} ({{ movie.year }})</span>
+                                                                <br> <span>{{ movie.release_type }}</span>
+                                        </div>
+                                    </figcaption>
+
+                                </figure>
+                            </div>
+                            <!--/.Card image-->
+                            <!--Card content-->
+                            <div class="card-block">
+                                <div class="row">
                                     <div class="col-xs-6 col-md-6 text-center">
                                         <div>
                                             <i aria-hidden="true" class="fa fa-film"></i>
@@ -289,111 +289,93 @@
                                         </div>
                                     </div>
                                 </div>
-                    </div>
-                </div>
-                <a class="mc-btn-action">
-                    <i class="fa fa-bars"></i>
-                </a>
-                <div class="mc-footer">
-                    <h4>
-                        {{ movie.release_name }}
-                    </h4>
-                    <a data-toggle="lightbox" data-gallery="remoteload" href="{{ movie.trailer_link }}" id="trailer-link">
-                                            <i aria-hidden="true" class="fa fa-youtube-play" style="padding-left:13px">
+                                <hr></hr>
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-6 text-center">
+                                        <a data-toggle="lightbox" data-gallery="remoteload" href="{{ movie.trailer_link }}" id="trailer-link">
+                                            <i aria-hidden="true" class="fa fa-youtube-play" style="padding-right:15px">
                                     </i>
+                                            <span style="font-weight:bold;padding-right:15px">
+                                        Trailer
+                                    </span>
                                         </a>
-                    <a href="{% yts_link movie.name %}" target="_blank" class="livepreview" data-position="top"><i aria-hidden="true" class="fa fa-yahoo" style="padding-left:13px">
-                                    </i></a>
-                    <a href="{% torrentz_link movie.name movie.year|stringformat:"i"%}" target="_blank" class="livepreview" data-position="top"><i aria-hidden="true" class="fa fa-cloud-download" style="padding-left:13px">
-                                    </i></a>
-                    <a class="fa fa-fw fa-info modal__trigger" href="" data-modal="#modal{{ forloop.counter }}" ></a>
-                </div>
-        
-        <!-- Modal -->
-	<div id="modal{{ forloop.counter }}" class="modal modal__bg" role="dialog" aria-hidden="true">
-		<div class="modal__dialog">
-			<div class="modal__content">
-				<div class="card-info">
-  <div class="card_left">
-    <img src="{% if proxy %}
-                                                  https://applove.gadgetnyooz.com/websurf/browse.php?u={{ movie.thumbnail_link }}
-                                                  {% else %}
-                                                  {{ movie.thumbnail_link }}
-                                                  {% endif %}"/>
-  </div>
-  <div class="card_right">
-    <h1>{{ movie.name }}</h1>
-    <div class="card_right__details">
-        <div class="card_right__rating">
-        <div class="card_right__rating__stars">
-          {% with rating=movie.imdb_rating|get_no_of_stars  %}
-            {% for i in "xxxxx" %}
-                {% if forloop.counter <= rating %}
-                    <i aria-hidden="true" class="fa fa-star"></i>
-                {% else %}
-                    <i aria-hidden="true" class="fa fa-star-o"></i>
-                {% endif %}
+                                    </div>
+                                    <div class="col-xs-6 col-md-6 text-center">
+                                        <a style="cursor:pointer;" data-toggle="collapse" data-target="#card_text{{ forloop.counter }}" aria-expanded="false" aria-controls="card_text{{ forloop.counter }}" id="post-link"><i aria-hidden="true" class="fa fa-plus" style="padding-right:15px"></i> Read more</a>
+                                    </div>
+                                </div>
 
-            {% endfor %}
-            {% endwith %}
-            
-             <i aria-hidden="true" class="fa fa-user" style="margin-left:5px;"></i>
-                                            {% if movie.imdb_votes == 0 %}
-                                            Not Available
-                                            {% else %}
-                                            {{ movie.imdb_votes|intcomma }}
-                                            {% endif %}
-        </div>
-        
-                                           
-                                        
-      </div>
-      <ul>
-        <li>{{ movie.year }}</li>
-        <li>{{ movie.genre }}</li>
-<!--        <li>Action</li>-->
-      </ul>
-      
-      <div class="card_right__review">
-        <p>{{movie.plot|encode_utf}}</p>
-          <p><strong>Starring :</strong> {{ movie.starring }}</p>
-          <p><strong>Directed by:</strong> {{ movie.director }}</p>
-        <a href="{{ movie.post_link }}" target="_blank">Read more at Sceper</a>
-      </div>
-      <div class="card_right__button">
-          <ul>
-        <li><a data-toggle="lightbox" data-gallery="remoteload" href="{{ movie.trailer_link }}" id="trailer-link">
-                                            Trailer
-                                    
-                                        </a></li>
-        <li><a href="{% yts_link movie.name %}" target="_blank" class="livepreview" data-position="top">Yts.ag
-                                    </a></li>
-        <li><a href="{% torrentz_link movie.name movie.year|stringformat:"i"%}" target="_blank" class="livepreview" data-position="top">Torrentz </a></li>
-      </ul>
-<!--        <a href="https://www.youtube.com/watch?v=ot6C1ZKyiME" target="_blank">WATCH TRAILER</a>-->
-      </div>
-    </div>
-  </div>
-</div>
-				
-				<!-- modal close button -->
-				<a href="" class="modal__close demo-close">
-					<svg class="" viewBox="0 0 24 24"><path d="M19 6.41l-1.41-1.41-5.59 5.59-5.59-5.59-1.41 1.41 5.59 5.59-5.59 5.59 1.41 1.41 5.59-5.59 5.59 5.59 1.41-1.41-5.59-5.59z"/><path d="M0 0h24v24h-24z" fill="none"/></svg>
-				</a>
-			</div>
-		</div>
-	</div>
-        
-        
-            </article>
-        </div>
-        {% if forloop.counter|divisibleby:3 %}
+                            <hr></hr>
+                            <div class="row text-xs-center">
+                                <a href="{% yts_link movie.name %}" target="_blank" class="livepreview" data-position="top"> YTS.AG Search</a> <span> | </span>
+                                    <a href="{% torrentz_link movie.name movie.year|stringformat:"i"%}" target="_blank" class="livepreview" data-position="top">Torrentz Search</a>
+                            </div>
+                    <hr></hr>
+                                <!--Text-->
+                                <p class="card-text collapse" style="transform: none" id="card_text{{ forloop.counter }}">
+
+                                    <span style="font-weight:bold;padding-right:15px">
+                                    Release Name:
+                                </span>
+                                    <span id="release-name">
+                                    {{ movie.release_name }}
+                                    </span>
+                                    <br> </br>
+
+                            <span style="font-weight:bold;padding-right:15px">
+                                    Release Date:
+                                </span>
+                                    <span id="release_date">
+                                    {{ movie.release_date|slice:"0:10" }}
+                                </span>
+                                    <br> </br>
+                                    <span style="font-weight:bold;padding-right:15px">
+                                 Plot:
+                             </span>
+                                    <span id="plot">
+                                 {{ movie.plot|encode_utf }}
+                             </span>
+                                    <br> </br>
+                                    <span style="font-weight:bold;padding-right:15px">
+                                    Genre:
+                                </span>
+                                    <span id="genre">
+                                    {{ movie.genre }}
+                                </span>
+                                    <br> </br>
+                                    <span style="font-weight:bold;padding-right:15px">
+                                    Sceper.ws:
+                                </span>
+                                    <a href="{{ movie.post_link }}"> Post Link</a>
+                                    <br> </br>
+                                    <span style="font-weight:bold;padding-right:15px">
+                                    Director:
+                                </span>
+                                    <span id="director">
+                                    {{ movie.director }}
+                                </span>
+                                    <br> </br>
+                                    <span style="font-weight:bold;padding-right:15px">
+                                    Starring:
+                                </span>
+                                    <span id="starring">
+                                    {{ movie.starring }}
+                                </span>
+                                </p>
+                                <!-- href="{{ movie.post_link }}" -->
+                            </div>
+                            <!--/.Card content-->
+                        </div>
+                        <!--/.Card-->
+                    </div>
+                    {% if forloop.counter|divisibleby:3 %}
                 </div>
                 <div class="row">
                     {% endif %} {% endfor %}
                 </div>
             </form>
-            <nav aria-label="Page navigation example">
+                <!--/.Number row-->
+<nav aria-label="Page navigation example">
   {% get_pages %}
 <ul class="pagination">
 {% if pages.paginated %}
@@ -445,13 +427,10 @@
 {% endif %}
 </ul>
 </nav>
-    </div>
-
-
-            
-            
-            
+            </div>
+            <!--/.Main layout-->
         </main>
+
     </section>
 
     <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-l" style="background-color: rgb(50, 50, 50); padding-top: 1.75rem; padding-bottom: 1.75rem;">
@@ -476,204 +455,6 @@
     <script src ="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.1.1/ekko-lightbox.js"></script>
 
     <script type="text/javascript">
-        
-        //Modal Dev
-    var Modal = (function() {
-
-  var trigger = $qsa('.modal__trigger'); // what you click to activate the modal
-  var modals = $qsa('.modal'); // the entire modal (takes up entire window)
-  var modalsbg = $qsa('.modal__bg'); // the entire modal (takes up entire window)
-  var content = $qsa('.modal__content'); // the inner content of the modal
-  var closers = $qsa('.modal__close'); // an element used to close the modal
-  var w = window;
-  var isOpen = false;
-	var contentDelay = 600; // duration after you click the button and wait for the content to show
-  var len = trigger.length;
-
-  // make it easier for yourself by not having to type as much to select an element
-  function $qsa(el) {
-    return document.querySelectorAll(el);
-  }
-
-  var getId = function(event) {
-
-    event.preventDefault();
-    var self = this;
-    // get the value of the data-modal attribute from the button
-    var modalId = self.dataset.modal;
-    var len = modalId.length;
-    // remove the '#' from the string
-    var modalIdTrimmed = modalId.substring(1, len);
-    // select the modal we want to activate
-    var modal = document.getElementById(modalIdTrimmed);
-    // execute function that creates the temporary expanding div
-    makeDiv(self, modal);
-  };
-
-  var makeDiv = function(self, modal) {
-
-    var fakediv = document.getElementById('modal__temp');
-
-    /**
-     * if there isn't a 'fakediv', create one and append it to the button that was
-     * clicked. after that execute the function 'moveTrig' which handles the animations.
-     */
-
-    if (fakediv === null) {
-      var div = document.createElement('div');
-      div.style.borderRadius = 0 //dev
-      div.id = 'modal__temp';
-      self.appendChild(div);
-      moveTrig(self, modal, div);
-    }
-  };
-
-  var moveTrig = function(trig, modal, div) {
-    var trigProps = trig.getBoundingClientRect();
-    var m = modal;
-    var mProps = m.querySelector('.modal__content').getBoundingClientRect();
-    var transX, transY, scaleX, scaleY;
-    var xc = w.innerWidth / 2;
-    var yc = w.innerHeight / 2;
-
-    // this class increases z-index value so the button goes overtop the other buttons
-    trig.classList.add('modal__trigger--active');
-
-    // these values are used for scale the temporary div to the same size as the modal
-    scaleX = mProps.width / trigProps.width;
-    scaleY = mProps.height / trigProps.height;
-
-//    scaleX = scaleX.toFixed(3); // round to 3 decimal places
-//    scaleY = scaleY.toFixed(3);
-
-
-    // these values are used to move the button to the center of the window
-    transX = Math.round(xc - trigProps.left - trigProps.width / 2);
-    transY = Math.round(yc - trigProps.top - trigProps.height / 2);
-
-		// if the modal is aligned to the top then move the button to the center-y of the modal instead of the window
-    if (m.classList.contains('modal--align-top')) {
-      transY = Math.round(mProps.height / 2 + mProps.top - trigProps.top - trigProps.height / 2);
-    }
-
-
-		// translate button to center of screen
-		trig.style.transform = 'translate(' + transX + 'px, ' + transY + 'px)';
-		trig.style.webkitTransform = 'translate(' + transX + 'px, ' + transY + 'px)';
-		// expand temporary div to the same size as the modal
-		div.style.transform = 'scale(' + scaleX + ',' + scaleY + ')';
-		div.style.webkitTransform = 'scale(' + scaleX + ',' + scaleY + ')';
-        div.style.borderRadius = "1px" //dev
-
-		window.setTimeout(function() {
-			window.requestAnimationFrame(function() {
-				open(m, div);
-			});
-		}, contentDelay);
-
-  };
-
-  var open = function(m, div) {
-
-    if (!isOpen) {
-      // select the content inside the modal
-      var content = m.querySelector('.modal__content');
-      // reveal the modal
-      m.classList.add('modal--active');
-      // reveal the modal content
-      content.classList.add('modal__content--active');
-
-      /**
-       * when the modal content is finished transitioning, fadeout the temporary
-       * expanding div so when the window resizes it isn't visible ( it doesn't
-       * move with the window).
-       */
-
-      content.addEventListener('transitionend', hideDiv, false);
-
-      isOpen = true;
-    }
-
-    function hideDiv() {
-      // fadeout div so that it can't be seen when the window is resized
-      div.style.opacity = '0';
-      content.removeEventListener('transitionend', hideDiv, false);
-    }
-  };
-
-  var close = function(event) {
-
-		event.preventDefault();
-    event.stopImmediatePropagation();
-
-    var target = event.target;
-    var div = document.getElementById('modal__temp');
-
-    /**
-     * make sure the modal__bg or modal__close was clicked, we don't want to be able to click
-     * inside the modal and have it close.
-     */
-
-    if (isOpen && target.classList.contains('modal__bg') || target.classList.contains('modal__close')) {
-
-      // make the hidden div visible again and remove the transforms so it scales back to its original size
-      div.style.opacity = '1';
-      div.removeAttribute('style');
-
-			/**
-			* iterate through the modals and modal contents and triggers to remove their active classes.
-      * remove the inline css from the trigger to move it back into its original position.
-			*/
-
-			for (var i = 0; i < len; i++) {
-				modals[i].classList.remove('modal--active');
-				content[i].classList.remove('modal__content--active');
-				trigger[i].style.transform = 'none';
-        trigger[i].style.webkitTransform = 'none';
-				trigger[i].classList.remove('modal__trigger--active');
-			}
-
-      // when the temporary div is opacity:1 again, we want to remove it from the dom
-			div.addEventListener('transitionend', removeDiv, false);
-
-      isOpen = false;
-
-    }
-
-    function removeDiv() {
-      setTimeout(function() {
-        window.requestAnimationFrame(function() {
-          // remove the temp div from the dom with a slight delay so the animation looks good
-          div.remove();
-        });
-      }, contentDelay - 50);
-    }
-
-  };
-
-  var bindActions = function() {
-    for (var i = 0; i < len; i++) {
-      trigger[i].addEventListener('click', getId, false);
-      closers[i].addEventListener('click', close, false);
-      modalsbg[i].addEventListener('click', close, false);
-    }
-  };
-
-  var init = function() {
-    bindActions();
-  };
-
-  return {
-    init: init
-  };
-
-}());
-
-Modal.init();
-        
-        
-        
-        
                 $('#mark_read_form').find("input:checkbox").on('click', function(){
                 console.log("on click!"+ $(this).val() );  // sanity check
                 console.log($(this).prop("checked"));
@@ -702,39 +483,39 @@ Modal.init();
             });
         $("#reset-filter-btn").on('click', function(e){
                 console.log("on click!");  // sanity check
-//            //Ripple Effect    
-//            // Remove any old one
-//                  $(".ripple").remove();
-//
-//                  // Setup
-//                  var posX = $(this).offset().left,
-//                      posY = $(this).offset().top,
-//                      buttonWidth = $(this).width(),
-//                      buttonHeight =  $(this).height();
-//
-//                  // Add the element
-//                  $(this).prepend("<span class='ripple' style='z-index:2;'></span>");
-//
-//
-//                 // Make it round!
-//                  if(buttonWidth >= buttonHeight) {
-//                    buttonHeight = buttonWidth;
-//                  } else {
-//                    buttonWidth = buttonHeight; 
-//                  }
-//
-//                  // Get the center of the element
-//                  var x = e.pageX - posX - buttonWidth / 2;
-//                  var y = e.pageY - posY - buttonHeight / 2;
-//
-//
-//                  // Add the ripples CSS and start the animation
-//                  $(".ripple").css({
-//                    width: buttonWidth,
-//                    height: buttonHeight,
-//                    top: y + 'px',
-//                    left: x + 'px'
-//                  }).addClass("rippleEffect");
+            //Ripple Effect    
+            // Remove any old one
+                  $(".ripple").remove();
+
+                  // Setup
+                  var posX = $(this).offset().left,
+                      posY = $(this).offset().top,
+                      buttonWidth = $(this).width(),
+                      buttonHeight =  $(this).height();
+
+                  // Add the element
+                  $(this).prepend("<span class='ripple' style='z-index:2;'></span>");
+
+
+                 // Make it round!
+                  if(buttonWidth >= buttonHeight) {
+                    buttonHeight = buttonWidth;
+                  } else {
+                    buttonWidth = buttonHeight; 
+                  }
+
+                  // Get the center of the element
+                  var x = e.pageX - posX - buttonWidth / 2;
+                  var y = e.pageY - posY - buttonHeight / 2;
+
+
+                  // Add the ripples CSS and start the animation
+                  $(".ripple").css({
+                    width: buttonWidth,
+                    height: buttonHeight,
+                    top: y + 'px',
+                    left: x + 'px'
+                  }).addClass("rippleEffect");
             
                 $('#min_rating').val(6);
                 $('#min_votes').val(1000);
@@ -748,7 +529,7 @@ Modal.init();
                 if($(this).prop("checked") == true){
                     $('.card').find('img').each(function() {
                         $(this).attr('src',proxy + $(this).attr('src'));
-                    });
+                    });    
                     if (typeof(Storage) !== "undefined") {
                             sessionStorage.setItem("proxy",true)
                         }
@@ -781,38 +562,8 @@ Modal.init();
         });
         
 
-        $(function() {
-        $('.material-card > .mc-btn-action').click(function () {
-            var card = $(this).parent('.material-card');
-            var icon = $(this).children('i');
-            icon.addClass('fa-spin-fast');
-
-            if (card.hasClass('mc-active')) {
-                card.removeClass('mc-active');
-
-                window.setTimeout(function() {
-                    icon
-                        .removeClass('fa-arrow-left')
-                        .removeClass('fa-spin-fast')
-                        .addClass('fa-bars');
-
-                }, 800);
-            } else {
-                card.addClass('mc-active');
-
-                window.setTimeout(function() {
-                    icon
-                        .removeClass('fa-bars')
-                        .removeClass('fa-spin-fast')
-                        .addClass('fa-arrow-left');
-
-                }, 800);
-            }
-        });
-    });
-             
     </script>
-<!--    <input name="animation" type="hidden">-->
+    <input name="animation" type="hidden">
 </body>
 
 </html>

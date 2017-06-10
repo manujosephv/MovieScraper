@@ -2,6 +2,8 @@ from __future__ import absolute_import
 
 from celery import task, current_task
 from .Utils import Utils
+from django.utils import timezone
+import datetime
 # from some_project import my_intensive_task # need to change
 # from my_app.models import my_model # need to change
 import random

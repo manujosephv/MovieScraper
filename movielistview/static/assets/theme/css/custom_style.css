@@ -25,6 +25,19 @@ span {
   height:100%;
 }
 
+.img-wrapper-crop {
+  height: 200px;
+  width: 142px;
+/*  padding-bottom: 130%;*/
+  overflow: hidden;
+/*  width: 100%;*/
+}
+.img-wrapper-crop img {
+    height: 200px;
+    width: 100%;
+}
+
+
 a {
     color:#3d8eb9
 }
@@ -3086,10 +3099,11 @@ App
 .app {
   position: relative;
   top: 50%;
-  left: 25%;
+/*  left: 25%;*/
 /*  transform: translate(-50%, -50%);*/
-  width: 640px;
+  width: 744px;
   height: 330px;
+  margin: auto;
   background: #fff;
   border-radius: 15px;
   box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
@@ -3110,15 +3124,21 @@ Movies
 .movies {
   display: flex;
   padding: 8px 18px;
+  height: 100%;
 }
 .movies .movie {
   padding: 10px;
   cursor: pointer;
+    width: 25%;
 }
 .movies .movie .poster {
   width: 100%;
+  height: 80%;
   margin-bottom: 6px;
   border-radius: 4px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .movies .movie .poster.active {
   opacity: 0;
@@ -3127,13 +3147,28 @@ Movies
   color: #525661;
   margin-bottom: 4px;
   font-size: 16px;
+  overflow: auto;
+  height: 26px;
+  display:none;
 }
 .movies .movie .info {
   font-size: 11px;
   opacity: .8;
 }
+
+.movie .info span {
+  padding: 12px;
+}
 .movies .movie .desc {
   display: none;
+}
+
+.movies .movie .play {
+    display: none;
+}
+
+.movies .movie .release {
+    display: none;
 }
 
 /*--------------------
@@ -3176,6 +3211,9 @@ Detail
 .detail .poster {
   position: absolute;
   z-index: 2;
+    background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
   top: -10%;
   left: -6%;
   height: 100%;
@@ -3200,6 +3238,9 @@ Detail
   font-weight: 300;
   color: #525661;
   margin-bottom: 5px;
+  overflow: auto;
+  height: 55px;
+    display:block;
 }
 .detail .info {
   font-size: 11px;
@@ -3214,25 +3255,29 @@ Detail
     overflow: auto;
 }
 .detail .play {
-  background: linear-gradient(90deg, #E4761F, #FF8B32);
+  background: linear-gradient(90deg, #d6493a, #e25041);
   border: none;
   border-radius: 20px;
   color: #fff;
   font-size: 12px;
   line-height: 1.5;
   padding: 8px 17px;
-  margin: 30px 0 0 -2px;
+  margin: 30px 10px 0 -2px;
   text-transform: uppercase;
   z-index: 10;
   outline: none !important;
   cursor: pointer;
   opacity: 0;
 }
-.detail .play svg {
-  vertical-align: middle;
-  position: relative;
-  top: -2px;
-  margin-right: 3px;
+.detail .play a {
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.detail .movie .release {
+    display: inline;
 }
 
 .detail.ready::before {

@@ -15,6 +15,8 @@ def get_no_of_stars(value):
 @register.filter(name='encode_utf')
 def encode_utf(value):
     return (value.encode('ascii','ignore'))
+    # return map(lambda x: x.encode('ascii','ignore'), value)
+    # return str(value[0])
 
 @register.filter(name='key_value')
 def key_value(dict, key):
