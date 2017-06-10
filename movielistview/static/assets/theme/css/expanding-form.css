@@ -58,6 +58,19 @@
   right: 21vh;
 }
 
+.form-container.disabled{
+    box-shadow: 0;
+    background-color: #d01a36;
+    cursor: not-allowed;
+}
+
+.form-container.disabled:before {
+  content:" ";
+  display:block;
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  z-index:10;
+}
 
 .form-container.expand {
 /*  position: absolute;*/
@@ -83,6 +96,9 @@
   transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.icon-expanding.disabled:hover::before{
+    animation: none;
+}
 .icon-expanding:hover::before {
   animation: wiggle 0.3s linear infinite;
 }

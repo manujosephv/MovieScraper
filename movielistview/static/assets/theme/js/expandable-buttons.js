@@ -4,12 +4,14 @@ bindFormClickInit();
 function bindFormClickInit(){  
   $('.form-container-expandable').on('click', function(e) {
     e.preventDefault();
+    if ( !$( this ).hasClass( "disabled" ) ) {
     var id = $(this).prop('id');
       $("#"+id+".form-container-expandable").attr('style','z-index:1002;');
     toggleForm(id);
     //Ensure container doesn't togleForm when open
 //    $(this).off();
       $("#"+id+".form-container-expandable").off();
+    }
   });
 }
 
@@ -17,6 +19,7 @@ function bindFormClickInit(){
 function bindFormClick(id){
   $("#"+id+".form-container-expandable").on('click', function(e) {
     e.preventDefault();
+    if ( !$( this ).hasClass( "disabled" ) ) {
     var id = $(this).prop('id');
     $("#"+id+".form-container-expandable").attr('style','z-index:1002;');
     toggleForm(id);
@@ -24,6 +27,7 @@ function bindFormClick(id){
     //Ensure container doesn't togleForm when open
 //    $(this).off();
       $("#"+id+".form-container-expandable").off();
+    }
   });
 }
 

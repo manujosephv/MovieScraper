@@ -15,8 +15,8 @@ def get_no_of_stars(value):
 @register.filter(name='encode_utf')
 def encode_utf(value):
 	# print(value[0])
-	print(value.encode('ascii','ignore'))
-	print "haha"
+	# print(value.encode('ascii','ignore'))
+	# print "haha"
 	ret_str = (value.replace('[u"','')
 				.replace("[u'","")
 				.replace("u'","")

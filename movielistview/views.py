@@ -113,10 +113,11 @@ def poll_state_scrape(request):
     json_data = json.dumps(response_data)
     return HttpResponse(json_data, content_type='application/json')
 
-@transaction.atomic
+@csrf_exempt
 def update_ratings(request):
     if request.method == 'GET':
-        res = update_ratings_task.delay()
+        # res = update_ratings_task.delay()
+        res = test_task.delay()
         response_data = {}
         response_data['task_id_rating'] = res.id
         # response_data['no_of_rows_updated'] = no_of_rows_updated
@@ -134,6 +135,86 @@ def update_ratings(request):
             json.dumps({"result": "this isn't happening"}),
             content_type="application/json"
         )
+
+
+@csrf_exempt
+def poll_state_rating(request):
+    """ A view to report the progress to the user """
+    data = 'Fail'
+    if request.is_ajax():
+        print('task_id_rating' in request.POST.keys())
+        if 'task_id_rating' in request.POST.keys() and request.POST['task_id_rating']:
+            task_id_rating = request.POST['task_id_rating']
+            task = AsyncResult(task_id_rating)
+            data = task.result or task.state
+            print(task.result)
+            print(task.state)
+            response_data = {}
+            # response_data['no_of_rows'] = Movie.objects.count()
+            # response_data['no_of_unread_rows'] = Movie.objects.filter(movie_read = False).count()
+            response_data['result'] = 'Rating Completed'
+            response_data['movie_rating_updated'] = task.result
+            response_data['state'] = task.state
+        else:
+            response_data = 'No task_id_scrape in the request'
+    else:
+        response_data = 'This is not an ajax request'
+
+    json_data = json.dumps(response_data)
+    return HttpResponse(json_data, content_type='application/json')
+
+
+@csrf_exempt
+def remove_duplicates(request):
+    if request.method == 'GET':
+        # res = update_ratings_task.delay()
+        res = test_task.delay()
+        response_data = {}
+        response_data['task_id_duplicate'] = res.id
+        # response_data['no_of_rows_updated'] = no_of_rows_updated
+        response_data['result'] = 'Removing Duplicates'
+        # response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
+        # response_data['last_scrap_time'] = timezone.make_naive(Movie.objects.latest('date_time').date_time).isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
+        #response_data['debug_info2'] = Movie.objects.all().latest('post_date')
+
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"result": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+
+@csrf_exempt
+def poll_state_duplicates(request):
+    """ A view to report the progress to the user """
+    data = 'Fail'
+    if request.is_ajax():
+        print('task_id_duplicate' in request.POST.keys())
+        if 'task_id_duplicate' in request.POST.keys() and request.POST['task_id_duplicate']:
+            task_id_duplicate = request.POST['task_id_duplicate']
+            task = AsyncResult(task_id_duplicate)
+            data = task.result or task.state
+            print(task.result)
+            print(task.state)
+            response_data = {}
+            # response_data['no_of_rows'] = Movie.objects.count()
+            # response_data['no_of_unread_rows'] = Movie.objects.filter(movie_read = False).count()
+            response_data['result'] = 'Rating Completed'
+            response_data['movie_rating_updated'] = task.result
+            response_data['state'] = task.state
+        else:
+            response_data = 'No task_id_scrape in the request'
+    else:
+        response_data = 'This is not an ajax request'
+
+    json_data = json.dumps(response_data)
+    return HttpResponse(json_data, content_type='application/json')
+
+
 
 
 '''
