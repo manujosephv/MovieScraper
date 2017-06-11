@@ -308,72 +308,18 @@ torrentz
     </section>
 
     <section class="mbr-cards mbr-section mbr-section-nopadding" id="manage" style="background-color: rgb(239, 239, 239);">
-        <h1 class="text-xs-center" style="padding-top: 10px;">Manage Movies</h1>
+        <h1 class="text-xs-center" style="padding-top: 30px;padding-bottom: 30px;">Manage Movies</h1>
         <div class="mbr-cards-row row">
             <div class="form-overlay"></div>
-            <!--Update Rating -->
-            <div class="icon-expanding fa fa-star form-container relevant-icon ripple exclude-mbr-animation update-rating" id="left">
-                <span class="icon-expanding fa fa-close" id="form-close"></span>
-            </div>
-
-            <!--Delete Movies -->
-            <div class="icon-expanding fa fa-minus-circle form-container relevant-icon form-container-expandable exclude-mbr-animation" id="middle1">
-                <span class="icon-expanding fa fa-close" id="form-close"></span>
-                <div id="form-content">
-                    <div id="form-head">
-                        <h1 class="pre">Get in touch</h1>
-                    </div>
-                    <form>
-                        <input class="input name" name="user_name" placeholder="Your name please" type="text"></input>
-                        <input class="input email" name="user_email" placeholder="A contact email" type="text"></input>
-                        <select class="input select" name="subject">
-        <option>What shall we talk about?</option>
-        <option>About a new project</option>
-        <option>About a job opportunity</option>
-        <option>Let's do this over a coffee</option>
-      </select>
-                        <textarea class="input message" placeholder="How can I help?"></textarea>
-                        <input class="input submit" type="submit" value="Send Message"></input>
-                    </form>
-                </div>
-            </div>
-            <!--Remove Duplicates -->
-            <div class="icon-expanding fa fa-files-o form-container relevant-icon exclude-mbr-animation remove-duplicates" id="middle2">
-                <span class="icon-expanding fa fa-close" id="form-close"></span>
-            </div>
-            <!--Mark Read -->
-            <div class="icon-expanding fa fa-check-circle form-container relevant-icon form-container-expandable exclude-mbr-animation" id="right">
-                <span class="icon-expanding fa fa-close" id="form-close"></span>
-                <div id="form-content">
-                    <div id="form-head">
-                        <h1 class="pre">Get in touch</h1>
-                    </div>
-                    <form>
-                        <input class="input name" name="user_name" placeholder="Your name please" type="text"></input>
-                        <input class="input email" name="user_email" placeholder="A contact email" type="text"></input>
-                        <select class="input select" name="subject">
-        <option>What shall we talk about?</option>
-        <option>About a new project</option>
-        <option>About a job opportunity</option>
-        <option>Let's do this over a coffee</option>
-      </select>
-                        <textarea class="input message" placeholder="How can I help?"></textarea>
-                        <input class="input submit" type="submit" value="Send Message"></input>
-                    </form>
-                </div>
-            </div>
-            <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
+            <div class="mbr-cards-col col-xs-12 col-lg-3">
                 <div class="container">
                     <div class="card cart-block">
-                        <div class="card-img iconbox" style="visibility:hidden;">
-                            <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
-                                <!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
-                            </a>
+                        <!--Update Rating -->
+                        <div class="icon-expanding fa fa-star form-container relevant-icon ripple exclude-mbr-animation update-rating" id="left">
+                            <span class="icon-expanding fa fa-close" id="form-close"></span>
                         </div>
                         <div class="card-block">
                             <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id="update_ratings">Update Ratings</a>
-
-
                         </div>
                     </div>
                 </div>
@@ -381,15 +327,96 @@ torrentz
             <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
                 <div class="container">
                     <div class="card cart-block">
-                        <div class="card-img iconbox" style="visibility:hidden;">
-                            <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
-                                <!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
-                            </a>
+                        <!--Delete Movies -->
+                        <div class="icon-expanding fa fa-minus-circle form-container relevant-icon form-container-expandable exclude-mbr-animation" id="middle1">
+                            <span class="icon-expanding fa fa-close" id="form-close"></span>
+                            <div id="form-content">
+                                <div id="form-head">
+                                    <h2 class="pre">Delete Movies</h1>
+                                </div>
+                                <form action="/search_movies/" method="post" id="delete-movies-form">
+                                    <div class="row" style="margin-bottom: 15px;">
+                                    <div class="col-lg-3 label-wrapper">
+                                        <label for="movie_name">Movie Name</label>
+                                    </div>
+                                    <div class="col-lg-3 label-wrapper">
+                                        <select class="input select" name="condition_name">
+                                        <option>equal to</option>
+                                        <option>not equal to</option>
+                                    </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    <div class="search-wrapper" id="movie_name_delete">
+                                        <input type="text" name="movie_name" placeholder="Search" class="search-input"/>
+                                        <i class="fa fa-search"></i>
+                                        <i class="fa fa-minus-circle hide"></i>
+                                      </div>
+                                    </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 15px;">
+                                    <div class="col-lg-3 label-wrapper">
+                                        <label for="rating">Rating</label>
+                                    </div>
+                                    <div class="col-lg-3 label-wrapper">
+                                        <select class="input select" name="condition_rating">
+                                        <option>less than</option>
+                                        <option>equal to</option>
+                                        <option>greater than</option>
+                                    </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    <div class="search-wrapper" id="rating_delete">
+                                        <input type="number" name="rating" placeholder="Search" class="search-input"/>
+                                        <i class="fa fa-search"></i>
+                                        <i class="fa fa-minus-circle hide"></i>
+                                      </div>
+                                    </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 15px;">
+                                    <div class="col-lg-3 label-wrapper">
+                                        <label for="votes">Votes</label>
+                                    </div>
+                                    <div class="col-lg-3 label-wrapper">
+                                        <select class="input select" name="condition_votes">
+                                        <option>less than</option>
+                                        <option>greater than</option>
+                                    </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    <div class="search-wrapper" id="votes_delete">
+                                        <input type="number" name="votes" placeholder="Search" class="search-input"/>
+                                        <i class="fa fa-search"></i>
+                                        <i class="fa fa-minus-circle hide"></i>
+                                      </div>
+                                    </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 15px;">
+                                    <div class="col-lg-3 label-wrapper">
+                                        <label for="date">Date</label>
+                                    </div>
+                                    <div class="col-lg-3 label-wrapper">
+                                        <select class="input select" name="condition_date">
+                                        <option>before</option>
+                                        <option>after</option>
+                                    </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    <div class="search-wrapper input-group" id="date_delete">
+                                        <input type="number" name="date" placeholder="Search" class="search-input"/>
+                                        <span class="input-group-addon">days</span>
+                                        <i class="fa fa-search"></i>
+                                        <i class="fa fa-minus-circle hide"></i>
+                                        
+                                      </div>
+                                    </div>
+                                    </div>
+                                    
+                                    <input class="input submit" type="submit" value="Search"/>
+                                </form>
+                            </div>
                         </div>
                         <div class="card-block">
                             <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id="update_ratings">Delete Movies</a>
-
-
                         </div>
                     </div>
                 </div>
@@ -397,10 +424,9 @@ torrentz
             <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
                 <div class="container">
                     <div class="card cart-block">
-                        <div class="card-img iconbox" style="visibility:hidden;">
-                            <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
-                                <!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
-                            </a>
+                        <!--Remove Duplicates -->
+                        <div class="icon-expanding fa fa-files-o form-container relevant-icon exclude-mbr-animation remove-duplicates" id="middle2">
+                            <span class="icon-expanding fa fa-close" id="form-close"></span>
                         </div>
                         <div class="card-block">
                             <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id="update_ratings">Remove Duplicates</a>
@@ -413,11 +439,92 @@ torrentz
             <div class="mbr-cards-col col-xs-12 col-lg-3" style="padding-top: 80px; padding-bottom: 80px;">
                 <div class="container">
                     <div class="card cart-block">
-                        <div class="card-img iconbox" style="visibility:hidden;">
-                            <a href="https://mobirise.com" class="etst" style="color: rgb(255, 255, 255);">
-                                <!--                            <i class="fa fa-info-circle fa-2x" style="color:black;"></i>-->
-                            </a>
+                    <!--Mark Read -->
+                    <div class="icon-expanding fa fa-check-circle form-container relevant-icon form-container-expandable exclude-mbr-animation" id="right">
+                        <span class="icon-expanding fa fa-close" id="form-close"></span>
+                        <div id="form-content">
+                            <div id="form-head">
+                                    <h2 class="pre">Mark Read Movies</h1>
+                                </div>
+                                <form action="/search_movies/" method="post" id="mark-read-movies-form">
+                                    <div class="row" style="margin-bottom: 15px;">
+                                    <div class="col-lg-3 label-wrapper">
+                                        <label for="movie_name">Movie Name</label>
+                                    </div>
+                                    <div class="col-lg-3 label-wrapper">
+                                        <select class="input select" name="condition_name">
+                                        <option>equal to</option>
+                                        <option>not equal to</option>
+                                    </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    <div class="search-wrapper" id="movie_name_mark">
+                                        <input type="text" name="movie_name" placeholder="Search" class="search-input"/>
+                                        <i class="fa fa-search"></i>
+                                        <i class="fa fa-minus-circle hide"></i>
+                                      </div>
+                                    </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 15px;">
+                                    <div class="col-lg-3 label-wrapper">
+                                        <label for="rating">Rating</label>
+                                    </div>
+                                    <div class="col-lg-3 label-wrapper">
+                                        <select class="input select" name="condition_rating">
+                                        <option>less than</option>
+                                        <option>equal to</option>
+                                        <option>greater than</option>
+                                    </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    <div class="search-wrapper" id="rating_mark">
+                                        <input type="number" name="rating" placeholder="Search" class="search-input"/>
+                                        <i class="fa fa-search"></i>
+                                        <i class="fa fa-minus-circle hide"></i>
+                                      </div>
+                                    </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 15px;">
+                                    <div class="col-lg-3 label-wrapper">
+                                        <label for="votes">Votes</label>
+                                    </div>
+                                    <div class="col-lg-3 label-wrapper">
+                                        <select class="input select" name="condition_votes">
+                                        <option>less than</option>
+                                        <option>greater than</option>
+                                    </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    <div class="search-wrapper" id="votes_mark">
+                                        <input type="number" name="votes" placeholder="Search" class="search-input"/>
+                                        <i class="fa fa-search"></i>
+                                        <i class="fa fa-minus-circle hide"></i>
+                                      </div>
+                                    </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 15px;">
+                                    <div class="col-lg-3 label-wrapper">
+                                        <label for="date">Date</label>
+                                    </div>
+                                    <div class="col-lg-3 label-wrapper">
+                                        <select class="input select" name="condition_date">
+                                        <option>before</option>
+                                        <option>after</option>
+                                    </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    <div class="search-wrapper input-group" id="date_mark">
+                                        <input type="number" name="date" placeholder="Search" class="search-input"/>
+                                        <span class="input-group-addon">days</span>
+                                        <i class="fa fa-search"></i>
+                                        <i class="fa fa-minus-circle hide"></i>
+                                      </div>
+                                    </div>
+                                    </div>
+                                    <input class="input submit" type="submit" value="Search"/>
+                                </form>
                         </div>
+                    </div>                        
                         <div class="card-block">
                             <a class="btn btn-primary disabled" style="background-color: #e25041 !important;border-color: #e25041 !important; opacity:1 !important;" id="update_ratings">Mark Read</a>
 
@@ -504,7 +611,8 @@ torrentz
                 $('#scrap_button').removeClass('disabled')
                 $('.form-container').removeClass('disabled')
         }
-    </script>
+        
+</script>
     <input name="animation" type="hidden">
 </body>
 

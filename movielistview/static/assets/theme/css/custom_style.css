@@ -974,3 +974,74 @@ float: right;
   transform: scale(1);
   opacity: 1;
 }
+
+/* Dev */
+
+.label-wrapper {
+    height: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-wrapper {
+  position: relative;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4vh;
+  transform-origin: 100% 50%;
+  width: 8vh;
+  height: 8vh;
+  cursor: pointer;
+  transition: 250ms ease;
+}
+.search-wrapper.focused {
+/*  width: 200px;*/
+    width: 100%;
+    border-radius: 30px;
+}
+.search-wrapper.focused input {
+  padding: 0 40px 0 13px;
+  width: 100%;
+  transform: scale(1);
+}
+.search-wrapper input {
+  background: transparent;
+  border: 0;
+  color: white;
+  outline: none;
+  height: 8vh;
+  width: 0;
+  overflow: hidden;
+  font-weight: 100;
+  transform: scale(0);
+  transform-origin: 0 50%;
+  transition: 275ms ease;
+}
+.search-wrapper input::placeholder {
+  color: #cccccc;
+}
+.search-wrapper i {
+  position: absolute;
+  color: white;
+  font-size: 18px;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+}
+
+.search-wrapper span.input-group-addon {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: 13vh;
+    
+    padding-top: 2.5vh;
+    background: transparent;
+    color: white;
+    border: 0;
+    display: none;
+}
+
+.search-wrapper.focused span.input-group-addon {
+    display: inherit;
+}

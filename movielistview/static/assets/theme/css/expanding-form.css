@@ -30,7 +30,7 @@
   margin: 0 auto;
 /*  left: 21vh;*/
 /*  right: 0;*/
-  top: 16vh;
+  top: -16vh;
   background-color: #f72f4e;
   overflow: hidden;
   border-radius: 50%;
@@ -43,19 +43,23 @@
 }
 
 #left.form-container {
-  left: 21vh;
+      left: 0;
+    right: 0;
 }
 
 #middle1.form-container {
-  left: 73vh;
+      left: 0;
+    right: 0;
 }
 
 #middle2.form-container {
-  right: 73vh;
+      left: 0;
+    right: 0;
 }
 
 #right.form-container {
-  right: 21vh;
+    right: 50%;
+    margin-right: -30px;
 }
 
 .form-container.disabled{
@@ -77,9 +81,9 @@
     cursor: auto;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.17);
   border-radius: 0;
-  width: 70%;
-  height: 400px;
-  max-width: 610px;
+  width: 50vw;
+  height: 72vh;
+  max-width: 50vw;
   padding: 0;
   transition: all 0.2s, max-width 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, height 0.3s ease 0.25s;
 }
@@ -151,6 +155,7 @@
   font-size: 100%;
   padding: 0;
   margin: 0 20px;
+  margin-bottom: 5vh;
   color: #FFF;
   text-align: center;
   transition: all 0.8s 0.6s;
@@ -241,8 +246,10 @@ input, select, textarea {
   background-color: #FFF;
   color: #f72f4e;
   font-size: 120%;
-  height: 80px;
-  box-shadow: 0 5px rgba(0, 0, 0, 0.5);
+  height: 50px;
+  -webkit-box-shadow: 2px 2px 12px -3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 2px 12px -3px rgba(0,0,0,0.75);
+  box-shadow: 2px 2px 12px -3px rgba(0,0,0,0.75);
   transition: all 0.1s, transform 0s 0.6s;
 }
 .input.submit:active {
