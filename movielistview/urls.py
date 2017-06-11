@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^poll_state_scrape/$', views.poll_state_scrape, name='poll_state_scrape'),
     url(r'^poll_state_rating/$', views.poll_state_rating, name='poll_state_rating'),
     url(r'^poll_state_duplicates/$', views.poll_state_duplicates, name='poll_state_duplicates'),
+    url(r'^search_movies/$', views.search_movies, name='search_movies'),
 ]
 

@@ -235,13 +235,53 @@ function mark_read_movies() {
 
         // handle a non-successful response
         error : function(xhr,errmsg,err) {
-            //$('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-              //  " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+};
+
+function search_movies(id) {
+    
+    console.log(id + "in ajax fn")    
+    var frm = $('#'+id);
+    $.ajax({
+        type: frm.attr('method'), //GET or POST as defined in HTML
+        url: frm.attr('action'), //action defined in HTML
+        data: frm.serialize(), //Serializing the object to pass through
+        // handle a successful response
+        success : function(json) {
+            // frm[0].reset(); // remove the value from the input
+            console.log(json); // log the returned json to the console
+            console.log("success"); // another sanity check
+            movies = json.result;
+            frm.addClass('searched');
+            frm.find('input[type=submit]').val('Go Ahead');
+            frm.siblings('#form-head').find('h4').html(movies + " movies selected! Proceed?");
+            frm.addClass('form-submitted');
+            frm.siblings('#form-head').addClass('form-submitted');
+            // setTimeout(function(){
+            //       frm.trigger("reset");
+            //     }, 1000);
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            frm.addClass('searched');
+            frm.find('input[type=submit]').val('Search Again').prop('disabled',true); //disable option
+            frm.siblings('#form-head').find('h4').html("Something unexpected Happened. Please try again");
+            frm.addClass('form-submitted');
+            frm.siblings('#form-head').addClass('form-submitted');
+            frm.find('input[type=submit]').addClass('form-error');
+            setTimeout(function(){
+              frm.find('input[type=submit]').removeClass('form-error');
+            }, 1000);
             
         }
     });
 };
+
+
 
 function humanizeDate(date_str) {
     var readable = new Date(date_str);  // When we pass the ISO format to the JS Date constructor, the return is "Fri Jul 04 2014 21:06:08 GMT-0400 (Eastern Daylight Time)"

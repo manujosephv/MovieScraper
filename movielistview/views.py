@@ -5,9 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import datetime
 import json
-from .forms import ScrapeForm
-from .forms import FilterForm
-from .forms import MarkReadForm
+from .forms import ScrapeForm, FilterForm, MarkReadForm, SearchMovieForm
 from .models import Movie
 from .MovieScraper import MovieScraper
 from .MovieListCleaner import MovieListCleaner
@@ -18,6 +16,7 @@ from django.db import transaction
 from django.db.models import Max
 from django.db.models import Min
 from django.utils import timezone
+from django.db.models import Q
 import imdb
 import re
 from imdb._exceptions import IMDbDataAccessError, IMDbParserError
@@ -214,6 +213,67 @@ def poll_state_duplicates(request):
     json_data = json.dumps(response_data)
     return HttpResponse(json_data, content_type='application/json')
 
+def search_movies(request):
+    if request.method == 'POST':
+        search_movies_form = SearchMovieForm(request.POST)
+        response_data = {}
+        if search_movies_form.is_valid():
+            
+            condition_name = search_movies_form.cleaned_data['condition_name']
+            movie_name = search_movies_form.cleaned_data['movie_name']
+            condition_rating = search_movies_form.cleaned_data['condition_rating']
+            rating = search_movies_form.cleaned_data['rating']
+            condition_votes = search_movies_form.cleaned_data['condition_votes']
+            votes = search_movies_form.cleaned_data['votes']
+            condition_date = search_movies_form.cleaned_data['condition_date']
+            date = search_movies_form.cleaned_data['date']
+            
+            print("name is {}".format(movie_name))
+            print("rating is {}".format(rating))
+            print("votes is {}").format(votes)
+            print("date is {}").format(date)
+            queryset = Movie.objects.all()
+            print("count before filtering: {}".format(queryset.count()))
+            if movie_name:
+                if condition_name == "contains":
+                    queryset = queryset.filter(name__icontains = movie_name)
+                elif condition_name == "does not contain":
+                    queryset = queryset.filter(~Q(name__icontains = movie_name))
+            print("count after name: {}".format(queryset.count()))
+            if rating:
+                if condition_rating == "equal to":
+                    queryset= queryset.filter(imdb_rating = rating)
+                elif condition_rating == "less than":
+                    queryset= queryset.filter(imdb_rating__lte = rating)
+                elif condition_rating == "greater than":
+                    queryset= queryset.filter(imdb_rating__gte = rating)
+            print("count after rating: {}".format(queryset.count()))
+            if votes:
+                if condition_votes == "less than":
+                    queryset = queryset.filter(imdb_votes__lte = votes)
+                if condition_votes == "greater than":
+                    queryset = queryset.filter(imdb_votes__gte = votes)
+            print("count after votes: {}".format(queryset.count()))
+            if date:
+                if condition_date == "before":
+                    queryset= queryset.filter(post_date__lte = timezone.now()-datetime.timedelta(days=date))
+
+            response_data['result'] = queryset.count()
+
+            return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )
+        else:
+            return HttpResponse(
+            json.dumps({"result": "invalid form"}),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"result": "this isn't happening"}),
+            content_type="application/json"
+        )
 
 
 

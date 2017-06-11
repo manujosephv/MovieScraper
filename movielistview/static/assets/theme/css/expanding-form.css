@@ -82,7 +82,7 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.17);
   border-radius: 0;
   width: 50vw;
-  height: 72vh;
+  height: 73vh;
   max-width: 50vw;
   padding: 0;
   transition: all 0.2s, max-width 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, height 0.3s ease 0.25s;
@@ -168,20 +168,29 @@
   display: block;
 }
 #form-head .post {
-  display: none;
+/*  display: none;*/
+  transition: all 0.5s;
+  transition-delay: 1s;
+  position: absolute;
+  transform: translateY(-150%);
+  opacity: 0;
+  left: 0;
+  right: 0;
 }
 
 .form-submitted#form-head {
-  transform: translateY(250%);
+/*  transform: translateY(250%);*/
 }
 .form-submitted#form-head .pre {
-  display: none;
+/*  display: none;*/
 }
 .form-submitted#form-head .post {
   display: block;
+  transform: translateY(0);
+  opacity: 1;
 }
 
-.input {
+.input-visual {
   background: rgba(0, 0, 0, 0.2);
   display: block;
   height: 50px;
@@ -193,7 +202,10 @@
   border: none;
   outline: none;
   box-shadow: none;
-  transform: translateX(0);
+}
+
+.input {
+    transform: translateX(0);
 }
 
 ::-webkit-input-placeholder {
@@ -276,15 +288,50 @@ select option:disabled {
   font-size: 90%;
 }
 
-.input {
+.input:not(.search-wrapper) {
   transition: transform 0s 1s;
 }
 
-.form-submitted .input {
+.form-submitted .input:not([type=submit]) {
   transform: translateX(150%);
   opacity: 0;
   transition: all 0.5s, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0s;
 }
+
+.form-submitted .input[type=submit] {
+  transform: translateY(-300%);
+/*  opacity: 0;*/
+  transition: all 0.5s, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+}
+
+.form-submitted .input[type=submit].exit {
+  transform: translateY(-300%) translateX(150%);
+/*  opacity: 0;*/
+  transition: all 0.5s, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+}
+
+.input.cancel {
+/*    display: none;*/
+    opacity: 0;
+    cursor: pointer;
+}
+
+.form-submitted .input.cancel {
+  transform: translateY(-900%);
+  display: inline;
+  color: white;
+  float: right;
+  opacity: 1;
+  transition: all 0.5s, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  transition-delay: 0.6s;
+}
+
+.form-submitted .input.cancel.exit {
+  transform: translateY(-900%) translateX(150%);
+  transition: all 0.5s, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+}
+
+
 .form-submitted .input:nth-child(1) {
   transition-delay: 0.1s;
 }
@@ -299,6 +346,9 @@ select option:disabled {
 }
 .form-submitted .input:nth-child(5) {
   transition-delay: 0.5s;
+}
+.form-submitted .input:nth-child(6) {
+  transition-delay: 0.6s;
 }
 
 input:-webkit-autofill {

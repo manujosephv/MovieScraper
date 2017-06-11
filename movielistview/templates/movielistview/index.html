@@ -332,21 +332,23 @@ torrentz
                             <span class="icon-expanding fa fa-close" id="form-close"></span>
                             <div id="form-content">
                                 <div id="form-head">
-                                    <h2 class="pre">Delete Movies</h1>
+                                    <h2 class="pre">Delete Movies</h2>
+                                    <h4 class="post">24 movies selected! Delete?</h4>
                                 </div>
-                                <form action="/search_movies/" method="post" id="delete-movies-form">
+                                <form action="/search_movies/" method="post" class="search-movies-form" id="delete-movies-form">
+                                    {% csrf_token %}
                                     <div class="row" style="margin-bottom: 15px;">
                                     <div class="col-lg-3 label-wrapper">
-                                        <label for="movie_name">Movie Name</label>
+                                        <label class="input" for="movie_name">Movie Name</label>
                                     </div>
                                     <div class="col-lg-3 label-wrapper">
-                                        <select class="input select" name="condition_name">
-                                        <option>equal to</option>
-                                        <option>not equal to</option>
+                                        <select class="input-visual input select" name="condition_name">
+                                        <option>contains</option>
+                                        <option>does not contain</option>
                                     </select>
                                     </div>
                                     <div class="col-lg-6">
-                                    <div class="search-wrapper" id="movie_name_delete">
+                                    <div class="search-wrapper input" id="movie_name_delete">
                                         <input type="text" name="movie_name" placeholder="Search" class="search-input"/>
                                         <i class="fa fa-search"></i>
                                         <i class="fa fa-minus-circle hide"></i>
@@ -355,17 +357,17 @@ torrentz
                                     </div>
                                     <div class="row" style="margin-bottom: 15px;">
                                     <div class="col-lg-3 label-wrapper">
-                                        <label for="rating">Rating</label>
+                                        <label class="input" for="rating">Rating</label>
                                     </div>
                                     <div class="col-lg-3 label-wrapper">
-                                        <select class="input select" name="condition_rating">
+                                        <select class="input input-visual select" name="condition_rating">
                                         <option>less than</option>
                                         <option>equal to</option>
                                         <option>greater than</option>
                                     </select>
                                     </div>
                                     <div class="col-lg-6">
-                                    <div class="search-wrapper" id="rating_delete">
+                                    <div class="search-wrapper input" id="rating_delete">
                                         <input type="number" name="rating" placeholder="Search" class="search-input"/>
                                         <i class="fa fa-search"></i>
                                         <i class="fa fa-minus-circle hide"></i>
@@ -374,16 +376,16 @@ torrentz
                                     </div>
                                     <div class="row" style="margin-bottom: 15px;">
                                     <div class="col-lg-3 label-wrapper">
-                                        <label for="votes">Votes</label>
+                                        <label class="input" for="votes">Votes</label>
                                     </div>
                                     <div class="col-lg-3 label-wrapper">
-                                        <select class="input select" name="condition_votes">
+                                        <select class="input input-visual select" name="condition_votes">
                                         <option>less than</option>
                                         <option>greater than</option>
                                     </select>
                                     </div>
                                     <div class="col-lg-6">
-                                    <div class="search-wrapper" id="votes_delete">
+                                    <div class="search-wrapper input" id="votes_delete">
                                         <input type="number" name="votes" placeholder="Search" class="search-input"/>
                                         <i class="fa fa-search"></i>
                                         <i class="fa fa-minus-circle hide"></i>
@@ -392,16 +394,15 @@ torrentz
                                     </div>
                                     <div class="row" style="margin-bottom: 15px;">
                                     <div class="col-lg-3 label-wrapper">
-                                        <label for="date">Date</label>
+                                        <label class="input" for="date">Date</label>
                                     </div>
                                     <div class="col-lg-3 label-wrapper">
-                                        <select class="input select" name="condition_date">
+                                        <select class="input input-visual select" name="condition_date">
                                         <option>before</option>
-                                        <option>after</option>
                                     </select>
                                     </div>
                                     <div class="col-lg-6">
-                                    <div class="search-wrapper input-group" id="date_delete">
+                                    <div class="search-wrapper input-group input" id="date_delete">
                                         <input type="number" name="date" placeholder="Search" class="search-input"/>
                                         <span class="input-group-addon">days</span>
                                         <i class="fa fa-search"></i>
@@ -410,8 +411,8 @@ torrentz
                                       </div>
                                     </div>
                                     </div>
-                                    
-                                    <input class="input submit" type="submit" value="Search"/>
+                                    <input id="delete_submit" class="input input-visual submit" type="submit" value="Search"/>
+                                    <a id="go-back-delete" class="input cancel">Cancel</a>
                                 </form>
                             </div>
                         </div>
@@ -444,21 +445,23 @@ torrentz
                         <span class="icon-expanding fa fa-close" id="form-close"></span>
                         <div id="form-content">
                             <div id="form-head">
-                                    <h2 class="pre">Mark Read Movies</h1>
+                                    <h2 class="pre">Mark Read Movies</h2>
+                                    <h4 class="post">24 movies selected! Mark Read?</h4>
                                 </div>
-                                <form action="/search_movies/" method="post" id="mark-read-movies-form">
+                                <form action="/search_movies/" method="post" class="search-movies-form" id="mark-read-movies-form">
+                                    {% csrf_token %}
                                     <div class="row" style="margin-bottom: 15px;">
                                     <div class="col-lg-3 label-wrapper">
-                                        <label for="movie_name">Movie Name</label>
+                                        <label class="input" for="movie_name">Movie Name</label>
                                     </div>
                                     <div class="col-lg-3 label-wrapper">
-                                        <select class="input select" name="condition_name">
-                                        <option>equal to</option>
-                                        <option>not equal to</option>
+                                        <select class="input input-visual select" name="condition_name">
+                                        <option>contains</option>
+                                        <option>does not contain</option>
                                     </select>
                                     </div>
                                     <div class="col-lg-6">
-                                    <div class="search-wrapper" id="movie_name_mark">
+                                    <div class="search-wrapper input" id="movie_name_mark">
                                         <input type="text" name="movie_name" placeholder="Search" class="search-input"/>
                                         <i class="fa fa-search"></i>
                                         <i class="fa fa-minus-circle hide"></i>
@@ -467,17 +470,17 @@ torrentz
                                     </div>
                                     <div class="row" style="margin-bottom: 15px;">
                                     <div class="col-lg-3 label-wrapper">
-                                        <label for="rating">Rating</label>
+                                        <label class ="input" for="rating">Rating</label>
                                     </div>
                                     <div class="col-lg-3 label-wrapper">
-                                        <select class="input select" name="condition_rating">
+                                        <select class="input input-visual select" name="condition_rating">
                                         <option>less than</option>
                                         <option>equal to</option>
                                         <option>greater than</option>
                                     </select>
                                     </div>
                                     <div class="col-lg-6">
-                                    <div class="search-wrapper" id="rating_mark">
+                                    <div class="search-wrapper input" id="rating_mark">
                                         <input type="number" name="rating" placeholder="Search" class="search-input"/>
                                         <i class="fa fa-search"></i>
                                         <i class="fa fa-minus-circle hide"></i>
@@ -486,16 +489,16 @@ torrentz
                                     </div>
                                     <div class="row" style="margin-bottom: 15px;">
                                     <div class="col-lg-3 label-wrapper">
-                                        <label for="votes">Votes</label>
+                                        <label class="input" for="votes">Votes</label>
                                     </div>
                                     <div class="col-lg-3 label-wrapper">
-                                        <select class="input select" name="condition_votes">
+                                        <select class="input input-visual select" name="condition_votes">
                                         <option>less than</option>
                                         <option>greater than</option>
                                     </select>
                                     </div>
                                     <div class="col-lg-6">
-                                    <div class="search-wrapper" id="votes_mark">
+                                    <div class="search-wrapper input" id="votes_mark">
                                         <input type="number" name="votes" placeholder="Search" class="search-input"/>
                                         <i class="fa fa-search"></i>
                                         <i class="fa fa-minus-circle hide"></i>
@@ -504,16 +507,15 @@ torrentz
                                     </div>
                                     <div class="row" style="margin-bottom: 15px;">
                                     <div class="col-lg-3 label-wrapper">
-                                        <label for="date">Date</label>
+                                        <label class="input" for="date">Date</label>
                                     </div>
                                     <div class="col-lg-3 label-wrapper">
-                                        <select class="input select" name="condition_date">
+                                        <select class="input input-visual select" name="condition_date">
                                         <option>before</option>
-                                        <option>after</option>
                                     </select>
                                     </div>
                                     <div class="col-lg-6">
-                                    <div class="search-wrapper input-group" id="date_mark">
+                                    <div class="search-wrapper input-group input" id="date_mark">
                                         <input type="number" name="date" placeholder="Search" class="search-input"/>
                                         <span class="input-group-addon">days</span>
                                         <i class="fa fa-search"></i>
@@ -521,7 +523,8 @@ torrentz
                                       </div>
                                     </div>
                                     </div>
-                                    <input class="input submit" type="submit" value="Search"/>
+                                    <input id="mark-read-submit" class="input input-visual submit" type="submit" value="Search"/>
+                                    <a id="go-back-mark" class="input cancel">Cancel</a>
                                 </form>
                         </div>
                     </div>                        
@@ -601,6 +604,39 @@ torrentz
                 $('#toggleButton').removeAttr('checked');
                 $('#filter-movies-form').submit()
             });
+            
+            $('.search-movies-form').on('submit', function(event) {
+                event.preventDefault();
+                frm = $(this);
+                console.log("in event") // sanity check
+                if (frm.hasClass('searched')) {
+                    frm.removeClass('searched');
+                    if(frm.attr('id')=='delete-movies-form'){
+                        console.log("submitting delete form");
+                        //Ajax Call
+                        movies = 23;
+                        frm.siblings('#form-head').find('h4').html(movies + " movies Deleted!");
+                        exit_form();
+                    } else if ($(this).attr('id')=='mark-read-movies-form') {
+                        console.log("submitting mark read form");
+                        //Ajax Call
+                        movies = 23;
+                        frm.siblings('#form-head').find('h4').html(movies + " movies marked read!");
+                        exit_form();
+                    }
+                } else {
+                    submit_form($(this));    
+                }
+            });
+       
+            $('.input.cancel').on('click',function(){
+                $(this).parent('form').hide();
+                $(this).parent('form').removeClass('searched');
+                $(this).parent('form').removeClass('form-submitted');
+                $(this).parent('form').siblings('#form-head').removeClass('form-submitted');
+                $(this).parent('form').find('input[type=submit]').val('Search').prop('disabled',false);
+                $(this).parent('form').delay("slow").fadeIn();
+            });
         });
         
         function disable_buttons(){
@@ -610,6 +646,44 @@ torrentz
         function enable_buttons(){
                 $('#scrap_button').removeClass('disabled')
                 $('.form-container').removeClass('disabled')
+        }
+        
+        function exit_form(){
+            frm.find('input[type=submit]').addClass('exit');
+            frm.find('.input.cancel').addClass('exit');
+            setTimeout(function(){
+                  id = frm.closest('.form-container').prop('id');
+                  toggleForm(id);
+                  $("#"+id+".form-container-expandable").attr('style','z-index:1000;');
+                  bindFormClick(id);
+                }, 1500);
+        }
+        
+        function submit_form(frm){
+            frm.find('input[type=submit]').removeClass('form-error');
+            var filled = false
+            frm.find('input').not(':input[type=submit],:input[type=hidden]').each(function(){
+                filled = (filled || ($(this).val().length > 0)) 
+            });
+            console.log(filled)
+            if (filled) {
+                //ajax call search
+                search_movies(frm.prop('id'));
+//                frm.addClass('searched');
+//                frm.addClass('form-submitted');
+//                frm.siblings('#form-head').addClass('form-submitted');
+//                frm.find('input[type=submit]').val('Go Ahead');
+//                movies = 23;
+//                frm.siblings('#form-head').find('h4').html(movies + " movies selected! Proceed?");
+//                setTimeout(function(){
+//                  frm.trigger("reset");
+//                }, 1000);
+            } else {
+                frm.find('input[type=submit]').addClass('form-error');
+                setTimeout(function(){
+                  frm.find('input[type=submit]').removeClass('form-error');
+                }, 1000);
+            }
         }
         
 </script>
