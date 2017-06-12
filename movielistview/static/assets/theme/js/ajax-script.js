@@ -170,7 +170,7 @@ function remove_duplicates() {
                                 console.log(response);
                                 if (response.state == 'SUCCESS'){
                                     willstop = 1
-                                    $('#notification_duplicates_result').find('.notification-text').find('span').html('&nbsp;&nbsp;Removed Duplicates.');
+                                    $('#notification_duplicates_result').find('.notification-text').find('span').html('&nbsp;&nbsp;Removed '+ response.duplicates_removed +' Duplicates.');
                                     show_notifications('notification_duplicates_result', 5000)
                                     enable_buttons();
                                 }
@@ -188,7 +188,7 @@ function remove_duplicates() {
                   }
 
                   
-                },5000);
+                },4000);
               })();
         },
 
@@ -241,8 +241,7 @@ function mark_read_movies() {
 };
 
 function search_movies(id) {
-    
-    console.log(id + "in ajax fn")    
+    console.log(id + "in search ajax fn")    
     var frm = $('#'+id);
     $.ajax({
         type: frm.attr('method'), //GET or POST as defined in HTML
@@ -272,6 +271,69 @@ function search_movies(id) {
             frm.siblings('#form-head').find('h4').html("Something unexpected Happened. Please try again");
             frm.addClass('form-submitted');
             frm.siblings('#form-head').addClass('form-submitted');
+            frm.find('input[type=submit]').addClass('form-error');
+            setTimeout(function(){
+              frm.find('input[type=submit]').removeClass('form-error');
+            }, 1000);
+            
+        }
+    });
+};
+
+
+function mark_read_bulk() {
+    console.log("in mark_read_bulk ajax fn");
+    // var frm = $('#'+id);
+    $.ajax({
+        type: 'POST', //GET or POST as defined in HTML
+        url: '/mark_read_bulk/', //action defined in HTML
+        // data: frm.serialize(), //Serializing the object to pass through
+        // handle a successful response
+        success : function(json) {
+            // frm[0].reset(); // remove the value from the input
+            console.log(json); // log the returned json to the console
+            console.log("success"); // another sanity check
+            movies = json.count;
+            frm.siblings('#form-head').find('h4').html(movies + " movies marked read!");
+            exit_form();
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            frm.find('input[type=submit]').val('Try Again').prop('disabled',true); //disable option
+            frm.siblings('#form-head').find('h4').html("Something unexpected Happened. Please try again");
+            frm.find('input[type=submit]').addClass('form-error');
+            setTimeout(function(){
+              frm.find('input[type=submit]').removeClass('form-error');
+            }, 1000);
+            
+        }
+    });
+};
+
+function delete_bulk() {
+    console.log("in delete_bulk ajax fn");
+    // var frm = $('#'+id);
+    $.ajax({
+        type: 'POST', //GET or POST as defined in HTML
+        url: '/delete_bulk/', //action defined in HTML
+        // data: frm.serialize(), //Serializing the object to pass through
+        // handle a successful response
+        success : function(json) {
+            // frm[0].reset(); // remove the value from the input
+            console.log(json); // log the returned json to the console
+            console.log("success"); // another sanity check
+            movies = json.count;
+            frm.siblings('#form-head').find('h4').html(movies + " movies deleted!");
+            exit_form();
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            frm.find('input[type=submit]').val('Try Again').prop('disabled',true); //disable option
+            frm.siblings('#form-head').find('h4').html("Something unexpected Happened. Please try again");
             frm.find('input[type=submit]').addClass('form-error');
             setTimeout(function(){
               frm.find('input[type=submit]').removeClass('form-error');

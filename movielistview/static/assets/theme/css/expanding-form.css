@@ -270,7 +270,12 @@ input, select, textarea {
 }
 
 .input.form-error {
-  animation: error 0.8s ease;
+  animation: error-normal 0.8s ease;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.form-submitted .input.form-error {
+  animation: error-up 0.8s ease;
   background: rgba(0, 0, 0, 0.7);
 }
 
@@ -378,17 +383,30 @@ input:-webkit-autofill {
     transition: none;
   }
 }
-@keyframes error {
+@keyframes error-up {
   0%, 100% {
-    transform: translateX(0);
+    transform: translateX(0) translateY(-300%);
   }
   10%, 30%, 50%, 70%, 90% {
-    transform: translateX(-6px);
+    transform: translateX(-6px) translateY(-300%);
   }
   20%, 40%, 60%, 80% {
-    transform: translateX(6px);
+    transform: translateX(6px) translateY(-300%);
   }
 }
+
+@keyframes error-normal {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-6px) translateY(0);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(6px) translateY(0);
+  }
+}
+
 @keyframes wiggle {
   0%, 100% {
     transform: rotate(-15deg);

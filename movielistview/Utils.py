@@ -12,6 +12,7 @@ import difflib
 
 import time
 import numpy as np
+import pandas as pd
 
 from MovieScraper import MovieScraper
 from MovieListCleaner import MovieListCleaner
@@ -164,3 +165,14 @@ class Utils:
                 return ia.search_movie(imdb_name)[0], False
             else:
                 return False, False
+
+    @classmethod
+    def remove_duplicates_in_db(self):
+        df = pd.DataFrame(list(Movie.objects.all().values()))
+        movie_cleaner = MovieListCleaner(df)
+        df = movie_cleaner.remove_duplicates_model(df)
+        id_list = df.id.tolist()
+        duplicates = Movie.objects.exclude(id__in = id_list).delete()
+        #Movie query to delete all ids which are not in this list
+        # print(df.id)
+        return duplicates[0]

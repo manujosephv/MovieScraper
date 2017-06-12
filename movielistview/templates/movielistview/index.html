@@ -614,15 +614,11 @@ torrentz
                     if(frm.attr('id')=='delete-movies-form'){
                         console.log("submitting delete form");
                         //Ajax Call
-                        movies = 23;
-                        frm.siblings('#form-head').find('h4').html(movies + " movies Deleted!");
-                        exit_form();
+                        delete_bulk();
                     } else if ($(this).attr('id')=='mark-read-movies-form') {
                         console.log("submitting mark read form");
                         //Ajax Call
-                        movies = 23;
-                        frm.siblings('#form-head').find('h4').html(movies + " movies marked read!");
-                        exit_form();
+                        mark_read_bulk();
                     }
                 } else {
                     submit_form($(this));    

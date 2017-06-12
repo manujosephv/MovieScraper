@@ -32,6 +32,14 @@ def update_ratings_task():
     print "Task finished successfully"
     return no_of_rows_updated
 
+@task(name='tasks.remove_duplicates_task')
+def remove_duplicates_task():
+    print "Remove Duplicate Task"
+    utils = Utils()
+    duplicates = utils.remove_duplicates_in_db()
+    # Movie.objects.filter(post_date__lte =timezone.now()-datetime.timedelta(days=10),movie_read = True).delete()
+    return duplicates
+
 @task(name='tasks.delete_read_movies_task')
 def delete_read_movies_task():
     print "Delete Task"

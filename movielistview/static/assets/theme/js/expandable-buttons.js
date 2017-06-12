@@ -56,9 +56,8 @@ function toggleForm(id){
   $('.search-wrapper').find('.fa-minus-circle').addClass('hide');
   $('.search-wrapper').find('.fa-search').removeClass('hide');
   $('.search-wrapper').find('.search-input').val('');
-
   $("#"+id+".form-container-expandable").find('input[type=submit]').removeClass('exit');
-  $("#"+id+".form-container-expandable").find('input[type=submit]').val('Search');
+  $("#"+id+".form-container-expandable").find('input[type=submit]').val('Search').prop('disabled',false);
   $("#"+id+".form-container-expandable").find('.input.cancel').removeClass('exit');
 }
 

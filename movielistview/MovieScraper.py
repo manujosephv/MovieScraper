@@ -11,11 +11,11 @@ import pandas as pd
 import datetime
 import sys
 import re
-from django.utils import timezone
+
 from dateutil.parser import parse
 import datefinder
 import difflib
-from datetime import datetime, timedelta
+
 import time
 import numpy as np
 
@@ -23,29 +23,27 @@ import numpy as np
 class MovieScraper:
     
     movieScraped = pd.DataFrame()
-    std_list_of_releases = ['CAMRip','CAM ','TS','TELESYNC','PDVD ','WP','WORKPRINT ','TC','TELECINE ',
-                            'PPV','PPVRip ','SCR','SCREENER','DVDSCR','DVDSCREENER','BDSCR ','DDC ','R5',
-                            'R5.LINE','R5.AC3.5.1.HQ ','DVDRip ','DVDR','DVD-Full','Full-Rip','ISO rip',
+    std_list_of_release_names = ['CAMRip','CAM','HDCAM','TS','HD-TS','HDTS','TELESYNC','PDVD','WP','WORKPRINT','TC','TELECINE',
+                            'PPV','PPVRip ','SCR','SCREENER','DVDSCR','DVDSCREENER','BDSCR','DDC','R5',
+                            'R5.LINE','R5.AC3.5.1.HQ','DVDRip','DVDR','DVD-Full','Full-Rip','ISO rip',
                             'untouched rip','DSR','DSRip','SATRip','DTHRip','DVBRip','HDTV','PDTV','TVRip',
-                            'HDTVRip ','VODRip','VODR ','WEBDL','WEB DL','WEB-DL','HDRip ','WEBRip (P2P)',
-                            'WEB Rip (P2P)','WEB-Rip (P2P)','WEB (Scene) ','WEB-Cap','WEBCAP','WEB Cap ',
+                            'HDTVRip','VODRip','VODR','WEB','WEBDL','WEB DL','WEB-DL','HDRip','WEBRip (P2P)','WEBRip',
+                            'WEB Rip (P2P)','WEB-Rip (P2P)','WEB (Scene)','WEB-Cap','WEBCAP','WEB Cap',
                             'BDRip','BRRip','Blu-Ray','BluRay','BLURAY','BDMV','BDR']
 
     @classmethod
     def __init__(self):
-        stdout = sys.stdout
         reload(sys)
         sys.setdefaultencoding('utf-8')
-        sys.stdout = stdout
+        self.std_list_of_release_names = [x.upper() for x in self.std_list_of_release_names]
 
     @classmethod
-    def find_release_type_from_name(self,name,std_list_of_release_names):
-        std_list_of_release_names = [x.upper() for x in std_list_of_release_names]
+    def find_release_type_from_name(self,name):
         release = ""
         release_score = 0
         for part in name.upper().split('.'):
-            if len(difflib.get_close_matches(part,std_list_of_release_names,1,0.8))==1:
-                curr_release = difflib.get_close_matches(part,std_list_of_release_names,1,0.8)[0]
+            if len(difflib.get_close_matches(part,self.std_list_of_release_names,1,0.8))==1:
+                curr_release = difflib.get_close_matches(part,self.std_list_of_release_names,1,0.8)[0]
                 curr_release_score = difflib.SequenceMatcher(None,curr_release, part).ratio()
                 if curr_release_score > release_score:
                     release_score = curr_release_score
@@ -120,7 +118,7 @@ class MovieScraper:
                 if len(dict_items) > 1:
                     entry_dict[dict_items[0]] = dict_items[1]
             if 'Release Name' in entry_dict:
-                entry_dict['Release Type'] = self.find_release_type_from_name(entry_dict['Release Name'], self.std_list_of_releases)
+                entry_dict['Release Type'] = self.find_release_type_from_name(entry_dict['Release Name'])
             if 'Release Date' in entry_dict:
                 try:
                     if entry_dict['Release Date'] is not None:
@@ -146,11 +144,11 @@ class MovieScraper:
             for match in matches:
                 entry_dict['post_date'] = match
                 break
-            entry_dict['date_time'] = datetime.now()
+            entry_dict['date_time'] = datetime.datetime.now()
             # #Debug
             # entry_dict['post_meta'] = post_meta.text
             #if condition to stop scraping once date is hit
-            if entry_dict['post_date'] > max_post_date - timedelta(days=1):
+            if entry_dict['post_date'] > max_post_date - datetime.timedelta(days=1):
                 scrape_list.append(entry_dict)
             else:
                 return scrape_list,False
@@ -162,11 +160,6 @@ class MovieScraper:
         continue_scrap = True
         print(1)
         scraped_movies, continue_scrap = self.scrape_page('http://sceper.ws/category/movies',scraped_movies,max_post_date) #Replace with date
-        # print("scrape first page done")
-        # print(type(scraped_movies))
-        #from progressbar import ProgressBar
-        #pbar = ProgressBar()
-        #for x in pbar(range(2,pages)):
         x=2
         while continue_scrap:
             print(x)
@@ -179,8 +172,3 @@ class MovieScraper:
             x= x+1
             time.sleep(5)
         self.movieScraped = pd.DataFrame.from_dict(scraped_movies)
-        
-#Calling the main function
-#movie_scraped = MovieScraper()
-#movie_scraped.scrape_site(5)
-#print(movie_scraped.movieScraped.count())

@@ -21,7 +21,7 @@ import imdb
 import re
 from imdb._exceptions import IMDbDataAccessError, IMDbParserError
 
-from .tasks import scrape_movies_task, update_ratings_task, test_task
+from .tasks import scrape_movies_task, update_ratings_task, test_task, remove_duplicates_task
 
 from celery.result import AsyncResult
 from django.views.decorators.csrf import csrf_exempt
@@ -115,8 +115,8 @@ def poll_state_scrape(request):
 @csrf_exempt
 def update_ratings(request):
     if request.method == 'GET':
-        # res = update_ratings_task.delay()
-        res = test_task.delay()
+        res = update_ratings_task.delay()
+        # res = test_task.delay()
         response_data = {}
         response_data['task_id_rating'] = res.id
         # response_data['no_of_rows_updated'] = no_of_rows_updated
@@ -166,8 +166,8 @@ def poll_state_rating(request):
 @csrf_exempt
 def remove_duplicates(request):
     if request.method == 'GET':
-        # res = update_ratings_task.delay()
-        res = test_task.delay()
+        res = remove_duplicates_task.delay()
+        # res = test_task.delay()
         response_data = {}
         response_data['task_id_duplicate'] = res.id
         # response_data['no_of_rows_updated'] = no_of_rows_updated
@@ -202,8 +202,8 @@ def poll_state_duplicates(request):
             response_data = {}
             # response_data['no_of_rows'] = Movie.objects.count()
             # response_data['no_of_unread_rows'] = Movie.objects.filter(movie_read = False).count()
-            response_data['result'] = 'Rating Completed'
-            response_data['movie_rating_updated'] = task.result
+            response_data['result'] = 'Removed Duplicates'
+            response_data['duplicates_removed'] = task.result
             response_data['state'] = task.state
         else:
             response_data = 'No task_id_scrape in the request'
@@ -259,7 +259,8 @@ def search_movies(request):
                     queryset= queryset.filter(post_date__lte = timezone.now()-datetime.timedelta(days=date))
 
             response_data['result'] = queryset.count()
-
+            response_data['search_id_array'] = list(queryset.values_list('id',flat=True))
+            request.session['search_id_array'] = list(queryset.values_list('id',flat=True))
             return HttpResponse(
                 json.dumps(response_data),
                 content_type="application/json"
@@ -276,6 +277,52 @@ def search_movies(request):
         )
 
 
+@csrf_exempt
+def mark_read_bulk(request):
+    if request.method == 'POST':
+        id_array = request.session['search_id_array']
+        response_data = {}
+        print("search_id_array is {}".format(id_array))
+        q = Movie.objects.filter(id__in = id_array).update(movie_read = True)
+
+        response_data['result'] = 'mark read success'
+        response_data['count'] = q
+        # response_data['id_array'] = queryset.values_list('id',flat=True)
+        # request.session['id_array'] = queryset.values_list('id',flat=True)
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+
+    else:
+        return HttpResponse(
+            json.dumps({"result": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+@csrf_exempt
+def delete_bulk(request):
+    if request.method == 'POST':
+        id_array = request.session['search_id_array']
+        response_data = {}
+
+        print("search_id_array is {}".format(id_array))
+        f = Movie.objects.filter(id__in = id_array).delete()
+        print(f)
+        response_data['result'] = 'delete success'
+        response_data['count'] = f[0]
+        # response_data['id_array'] = queryset.values_list('id',flat=True)
+        # request.session['id_array'] = queryset.values_list('id',flat=True)
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+
+    else:
+        return HttpResponse(
+            json.dumps({"result": "this isn't happening"}),
+            content_type="application/json"
+        )
 
 '''
 View Movies Section
@@ -290,8 +337,8 @@ def filter_movies(request):
     print(request)
     print(request.method)
     if not request.method == 'POST':
-        print("not POST")
-        print('filter-params' in request.session)
+        # print("not POST")
+        # print('filter-params' in request.session)
         if 'filter-params' in request.session:
             request.POST = request.session['filter-params']
             request.method = 'POST'

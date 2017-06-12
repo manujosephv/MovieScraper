@@ -13,5 +13,7 @@ urlpatterns = [
     url(r'^poll_state_rating/$', views.poll_state_rating, name='poll_state_rating'),
     url(r'^poll_state_duplicates/$', views.poll_state_duplicates, name='poll_state_duplicates'),
     url(r'^search_movies/$', views.search_movies, name='search_movies'),
+    url(r'^mark_read_bulk/$', views.mark_read_bulk, name='mark_read_bulk'),
+    url(r'^delete_bulk/$', views.delete_bulk, name='delete_bulk'),
 ]
 

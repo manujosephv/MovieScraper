@@ -4,7 +4,7 @@
 
 import pandas as pd
 import re
-import difflib
+
 
 
 
@@ -12,34 +12,25 @@ class MovieListCleaner:
     
     inputMovieList = pd.DataFrame()
     cleanMovieList = pd.DataFrame()
-    # minRating = 6.0
-    # minVotes = 1000
-    std_list_of_releases = ['CAMRip','CAM','TS','TELESYNC','PDVD','WP','WORKPRINT','TC','TELECINE',
-                            'PPV','PPVRip ','SCR','SCREENER','DVDSCR','DVDSCREENER','BDSCR','DDC','R5',
-                            'R5.LINE','R5.AC3.5.1.HQ','DVDRip','DVDR','DVD-Full','Full-Rip','ISO rip',
-                            'untouched rip','DSR','DSRip','SATRip','DTHRip','DVBRip','HDTV','PDTV','TVRip',
-                            'HDTVRip','VODRip','VODR','WEBDL','WEB DL','WEB-DL','HDRip','WEBRip (P2P)',
-                            'WEB Rip (P2P)','WEB-Rip (P2P)','WEB (Scene)','WEB-Cap','WEBCAP','WEB Cap',
-                            'BDRip','BRRip','Blu-Ray','BluRay','BLURAY','BDMV','BDR']
 
-    rank_list_of_releases = {'CAMRip':55 ,'CAM':54,'TS':53,'TELESYNC':52,'PDVD':51,'WP':50,'WORKPRINT':49,'TC':48,'TELECINE':47,
-                            'PPV':46,'PPVRip':45,'SCR':44,'SCREENER':43,'DVDSCR':42,'DVDSCREENER':41,'BDSCR':40,'DDC':39,'R5':38,
-                            'R5.LINE':37,'R5.AC3.5.1.HQ':36,'DVDRip':35,'DVDR':34,'DVD-Full':33,'Full-Rip':32,'ISO rip':31,
-                            'untouched rip':30,'DSR':29,'DSRip':28,'SATRip':27,'DTHRip':26,'DVBRip':25,'HDTV':24,'PDTV':23,'TVRip':22,
-                            'HDTVRip':21,'VODRip':20,'VODR':19,'WEBDL':18,'WEB DL':17,'WEB-DL':16,'HDRip':15,'WEBRip (P2P)':14,
+    rank_list_of_releases = {'CAMRip':60 ,'CAM':59,'HDCAM':58,'TS':57,'HDTS':56, 'HD-TS':55,'TELESYNC':54,'PDVD':53,'WP':52,'WORKPRINT':51,'TC':50,'TELECINE':49,
+                            'PPV':48,'PPVRip':47,'SCR':46,'SCREENER':45,'DVDSCR':44,'DVDSCREENER':43,'BDSCR':42,'DDC':41,'R5':40,
+                            'R5.LINE':39,'R5.AC3.5.1.HQ':38,'DVDRip':37,'DVDR':36,'DVD-Full':35,'Full-Rip':34,'ISO rip':33,
+                            'untouched rip':32,'DSR':31,'DSRip':30,'SATRip':29,'DTHRip':28,'DVBRip':27,'HDTV':26,'PDTV':25,'TVRip':24,
+                            'HDTVRip':23,'VODRip':22,'VODR':21,'WEB':20,'WEBDL':19,'WEB DL':18,'WEB-DL':17,'HDRip':16,'WEBRip':15,'WEBRip (P2P)':14,
                             'WEB Rip (P2P)':13,'WEB-Rip (P2P)':12,'WEB (Scene)':11,'WEB-Cap':10,'WEBCAP':9,'WEB Cap':8,
                             'BDRip':7,'BRRip':6,'Blu-Ray':5,'BluRay':4,'BLURAY':3,'BDMV':2,'BDR':1}
 
-    avoid_list_of_releases = ['CAMRip','CAM','TS','TELESYNC','PDVD','WP','WORKPRINT','TC','TELECINE',
+    avoid_list_of_releases = ['CAMRip','CAM','HDCAM','TS', 'HDTS','HD-TS','TELESYNC','PDVD','WP','WORKPRINT','TC','TELECINE',
                             'PPV','PPVRip ','SCR','SCREENER','DVDSCR','DVDSCREENER','BDSCR ','DDC','R5',
                             'R5.LINE','R5.AC3.5.1.HQ']
 
 
-    #def __init__(self,df, rating, votes):
+    
     def __init__(self,df):
         self.inputMovieList = df
-        #self.minRating = rating
-        #self.minVotes = votes
+        self.rank_list_of_releases.update([(k.upper(), v) for k, v in self.rank_list_of_releases.iteritems()])
+        self.avoid_list_of_releases = [x.upper() for x in self.avoid_list_of_releases]
 
 
     # ### Extracting Movie Name and other details from the file name   
@@ -49,8 +40,6 @@ class MovieListCleaner:
         year = 0
         match_found = False
         res_bool = False
-        #debug
-        #print(row)
         if row is not None:
             for part in row.split("."):
                 matchObj = re.match('^(19|20)\d{2}$',part)
@@ -69,8 +58,6 @@ class MovieListCleaner:
 # ### Extracting IMDB Rating
     
     def imdb_rating(self,row):
-        #print("imdb rating: {}".format(row))
-        #from IPython.core.debugger import Tracer; Tracer()() 
         row = str(row).decode('unicode_escape').encode('ascii','ignore')
         if row is not None:
             row = row.replace(",","").replace("(","").replace(")","")
@@ -97,10 +84,7 @@ class MovieListCleaner:
     # ### RottenTomato Ratings
     
     def rt_rating(self,row):
-        #print(row)
         row = str(row).decode('unicode_escape').encode('ascii','ignore')
-        #print("rt rating: {}".format(row))
-        #from IPython.core.debugger import Tracer; Tracer()()
         rating = " "
         tomatometer = " "
         if row is not None:
@@ -131,15 +115,6 @@ class MovieListCleaner:
         # ### Removing Duplicates
         
         movies_extra_info[['IMDB','Year','Votes','RT']] = movies_extra_info[['IMDB','Year','Votes','RT']].convert_objects(convert_numeric=True)
-        #std_resolution = ['1080p','780p','BDRip','BRRip','DVDRip','HC','HDRip','BluRay','HDCAM','WEBDL','UNRATED','HDTS','480p','3D','WebRip',""]
-        #rank_resolution = {'1080p':1,'780p':2,'BDRip':4,'BRRip':3,'BluRay':5,'DVDRip':6,'HC':8,'HDRip':7,'WebRip':12,'WEBDL':11,'UNRATED':9,'480p':10,'':13}
-        #for index, row in movies_scraped_extra_info.iterrows():
-        #if movies_scraped_extra_info['Resolution'] is not None:
-        # movies_extra_info['Resolution'] = movies_extra_info.Resolution.map(
-        #     lambda x: (difflib.get_close_matches(x,std_resolution)[0] if len(difflib.get_close_matches(x,std_resolution))>0 else ""))
-
-        #vote_mask = movies_extra_info['Votes'] > self.minVotes
-        #rating_mask = movies_extra_info['IMDB'] > self.minRating
         
         ##Removing entries with unwanted
         mask=None
@@ -150,18 +125,32 @@ class MovieListCleaner:
             else:
                 mask = mask & mask_curr
         
-        #mask = vote_mask & rating_mask & hdts_mask & hdcam_mask & three_d_mask
-        #mask = vote_mask & rating_mask & hdts_mask & hdcam_mask & three_d_mask
         movies_extra_info = movies_extra_info[mask]
         ##Dropping duplicates after sorting with rank
-        movies_extra_info['Res_Rank'] = movies_extra_info.Resolution.map(self.rank_list_of_releases)
-        movies_extra_info['sort_name'] = movies_extra_info['Name'].str.lower()                 
-        movies_extra_info.sort_values(['sort_name','Res_Rank'], ascending=[True,True], axis = 0, inplace=True)
-        movies_extra_info.drop_duplicates('sort_name', keep ='first', inplace=True)
-        movies_extra_info.reset_index(drop=True, inplace=True)
+        movies_extra_info = self.remove_duplicates(movies_extra_info)
+
 
         
         cols = [ 'Name','Year', 'Genre', 'IMDB', 'Votes','RT Critics','Plot', 'Starring','Directed By', 
                 'IMDB Link','RT Link', 'Post Link','Release Name','Release Type', 'Release Date','Thumbnail Link',
                 'date_time','Trailer Link', 'Tomatometer','RT', 'post_date']
         self.cleanMovieList = movies_extra_info[cols]
+
+
+    def remove_duplicates(self, df):
+        ##Dropping duplicates after sorting with rank
+        df['Res_Rank'] = df['Release Type'].map(lambda x: x.strip()).map(str.strip).map(self.rank_list_of_releases)
+        df['sort_name'] = df['Name'].str.lower()                 
+        df.sort_values(['sort_name','Res_Rank'], ascending=[True,True], axis = 0, inplace=True)
+        df.drop_duplicates('sort_name', keep ='first', inplace=True)
+        df.reset_index(drop=True, inplace=True)
+        return df
+
+    def remove_duplicates_model(self, df):
+        ##Dropping duplicates after sorting with rank from model
+        df['Res_Rank'] = df.release_type.map(lambda x: x.strip()).map(self.rank_list_of_releases)
+        df['sort_name'] = df['name'].str.lower()                 
+        df.sort_values(['sort_name','Res_Rank'], ascending=[True,True], axis = 0, inplace=True)
+        df.drop_duplicates('sort_name', keep ='first', inplace=True)
+        df.reset_index(drop=True, inplace=True)
+        return df
