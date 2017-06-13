@@ -1,3 +1,4 @@
+
 from __future__ import absolute_import
 """
 Django settings for MovieScraper project.
@@ -14,7 +15,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 from django.conf.global_settings import TEMPLATES
 from celery.schedules import crontab
-
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,9 +28,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '2+x*x0ij=b#kev0s4vd6^5$09wr_&p@)1rg6oo96=9(y*&h85&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+ALLOWED_HOSTS = ['scrapswag.herokuapp.com']
 
 
 # Application definition
@@ -75,19 +76,15 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'MovieScraper.wsgi.application'
+WSGI_APPLICATION = 'MovieScraper.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'movie_list.sqlite3'),
-    }
+    'default': dj_database_url.config()
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -176,12 +173,19 @@ QUEUES = {
 }
 
 # Generate the Broker Url
-BROKER_URL = 'amqp://' + QUEUES['default']['USER'] + ':' + QUEUES['default']['PASSWORD'] + '@' + QUEUES['default']['HOST'] + ':' + QUEUES['default']['PORT'] + '/' + QUEUES['default']['NAME']
+#BROKER_URL = 'amqp://' + QUEUES['default']['USER'] + ':' + QUEUES['default']['PASSWORD'] + '@' + QUEUES['default']['HOST'] + ':' + QUEUES['default']['PORT'] + '/' + QUEUES['default']['NAME']
+BROKER_URL = os.environ.get("CLOUDAMQP_URL", "django://")
+BROKER_POOL_LIMIT = 1
+BROKER_CONNECTION_MAX_RETRIES = None
+
+CELERY_TASK_SERIALIZER = "json"
+CELERY_ACCEPT_CONTENT = ["json", "msgpack"]
+
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Asia/Kolkata'
 CELERY_RESULT_BACKEND = 'rpc'
+CELERY_TIMEZONE = 'Asia/Kolkata'
 
 CELERYBEAT_SCHEDULE = {
     'movie_scrape-every-midnight': {
@@ -196,7 +200,23 @@ CELERYBEAT_SCHEDULE = {
     },
     'delete-read-movies-every-month': {
     'task': 'tasks.delete_read_movies_task',
-    'schedule': crontab(0, 0, day_of_month='2') ,
+    'schedule': crontab(6, 6, day_of_month='2') ,
+    # 'schedule': crontab() ,
     # 'args': (1,2),
     },
 }
+
+
+
+
+
+
+
+
+
+
+
+
+DATABASES['default'] = dj_database_url.config()
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
