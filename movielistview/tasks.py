@@ -45,6 +45,15 @@ def delete_read_movies_task():
     print "Delete Task"
     Movie.objects.filter(post_date__lte =timezone.now()-datetime.timedelta(days=10),movie_read = True).delete()
 
+@task(name='tasks.update_release_type')
+def update_release_type():
+    print "update_release_type task"
+    utils = Utils()
+    updated = utils.update_release_type()
+    # Movie.objects.filter(post_date__lte =timezone.now()-datetime.timedelta(days=10),movie_read = True).delete()
+    return updated
+
+
 @task(name='tasks.test_task')
 def test_task():
 

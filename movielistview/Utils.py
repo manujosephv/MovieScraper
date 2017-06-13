@@ -23,7 +23,7 @@ from django.utils import timezone
 import imdb
 import re
 from imdb._exceptions import IMDbDataAccessError, IMDbParserError
-from django.db import transaction
+
 
 
 class Utils:
@@ -176,3 +176,14 @@ class Utils:
         #Movie query to delete all ids which are not in this list
         # print(df.id)
         return duplicates[0]
+
+    # @commit_on_success
+    @classmethod
+    def update_release_type(self):
+        movies = Movie.objects.filter(release_type="")
+        movie_scraper = MovieScraper()
+        for movie in movies:
+            movie.release_type = movie_scraper.find_release_type_from_name(movie.release_name)
+            movie.save()
+        return movies.count()
+
