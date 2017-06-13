@@ -13,7 +13,7 @@ class MovieListCleaner:
     inputMovieList = pd.DataFrame()
     cleanMovieList = pd.DataFrame()
 
-    rank_list_of_releases = {'CAMRip':60 ,'CAM':59,'HDCAM':58,'TS':57,'HDTS':56, 'HD-TS':55,'TELESYNC':54,'PDVD':53,'WP':52,'WORKPRINT':51,'TC':50,'TELECINE':49,
+    rank_list_of_releases = {'HD-TC':62,'HDTC':61,'CAMRip':60 ,'CAM':59,'HDCAM':58,'TS':57,'HDTS':56, 'HD-TS':55,'TELESYNC':54,'PDVD':53,'WP':52,'WORKPRINT':51,'TC':50,'TELECINE':49,
                             'PPV':48,'PPVRip':47,'SCR':46,'SCREENER':45,'DVDSCR':44,'DVDSCREENER':43,'BDSCR':42,'DDC':41,'R5':40,
                             'R5.LINE':39,'R5.AC3.5.1.HQ':38,'DVDRip':37,'DVDR':36,'DVD-Full':35,'Full-Rip':34,'ISO rip':33,
                             'untouched rip':32,'DSR':31,'DSRip':30,'SATRip':29,'DTHRip':28,'DVBRip':27,'HDTV':26,'PDTV':25,'TVRip':24,
@@ -21,7 +21,7 @@ class MovieListCleaner:
                             'WEB Rip (P2P)':13,'WEB-Rip (P2P)':12,'WEB (Scene)':11,'WEB-Cap':10,'WEBCAP':9,'WEB Cap':8,
                             'BDRip':7,'BRRip':6,'Blu-Ray':5,'BluRay':4,'BLURAY':3,'BDMV':2,'BDR':1}
 
-    avoid_list_of_releases = ['CAMRip','CAM','HDCAM','TS', 'HDTS','HD-TS','TELESYNC','PDVD','WP','WORKPRINT','TC','TELECINE',
+    avoid_list_of_releases = ['CAMRip','CAM','HDCAM','TS', 'HDTS','HD-TS','HDTC','HD-TC','TELESYNC','PDVD','WP','WORKPRINT','TC','TELECINE',
                             'PPV','PPVRip ','SCR','SCREENER','DVDSCR','DVDSCREENER','BDSCR ','DDC','R5',
                             'R5.LINE','R5.AC3.5.1.HQ']
 

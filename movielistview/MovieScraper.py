@@ -23,7 +23,7 @@ import numpy as np
 class MovieScraper:
     
     movieScraped = pd.DataFrame()
-    std_list_of_release_names = ['CAMRip','CAM','HDCAM','TS','HD-TS','HDTS','TELESYNC','PDVD','WP','WORKPRINT','TC','TELECINE',
+    std_list_of_release_names = ['CAMRip','CAM','HDCAM','TS','HD-TS','HDTS','HDTC','HD-TC','TELESYNC','PDVD','WP','WORKPRINT','TC','TELECINE',
                             'PPV','PPVRip ','SCR','SCREENER','DVDSCR','DVDSCREENER','BDSCR','DDC','R5',
                             'R5.LINE','R5.AC3.5.1.HQ','DVDRip','DVDR','DVD-Full','Full-Rip','ISO rip',
                             'untouched rip','DSR','DSRip','SATRip','DTHRip','DVBRip','HDTV','PDTV','TVRip',

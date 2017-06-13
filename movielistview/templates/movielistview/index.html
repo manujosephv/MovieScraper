@@ -335,7 +335,7 @@ torrentz
                                     <h2 class="pre">Delete Movies</h2>
                                     <h4 class="post">24 movies selected! Delete?</h4>
                                 </div>
-                                <form action="/search_movies/" method="post" class="search-movies-form" id="delete-movies-form">
+                                <form autocomplete="off" action="/search_movies/" method="post" class="search-movies-form" id="delete-movies-form">
                                     {% csrf_token %}
                                     <div class="row" style="margin-bottom: 15px;">
                                     <div class="col-lg-3 label-wrapper">
@@ -368,7 +368,7 @@ torrentz
                                     </div>
                                     <div class="col-lg-6">
                                     <div class="search-wrapper input" id="rating_delete">
-                                        <input type="number" name="rating" placeholder="Search" class="search-input"/>
+                                        <input type="number" name="rating" placeholder="Search" class="search-input" min="0" max ="10" step="0.5"/>
                                         <i class="fa fa-search"></i>
                                         <i class="fa fa-minus-circle hide"></i>
                                       </div>
@@ -386,7 +386,7 @@ torrentz
                                     </div>
                                     <div class="col-lg-6">
                                     <div class="search-wrapper input" id="votes_delete">
-                                        <input type="number" name="votes" placeholder="Search" class="search-input"/>
+                                        <input type="number" name="votes" placeholder="Search" class="search-input" min="0" step = "1000"/>
                                         <i class="fa fa-search"></i>
                                         <i class="fa fa-minus-circle hide"></i>
                                       </div>
@@ -448,7 +448,7 @@ torrentz
                                     <h2 class="pre">Mark Read Movies</h2>
                                     <h4 class="post">24 movies selected! Mark Read?</h4>
                                 </div>
-                                <form action="/search_movies/" method="post" class="search-movies-form" id="mark-read-movies-form">
+                                <form autocomplete="off" action="/search_movies/" method="post" class="search-movies-form" id="mark-read-movies-form">
                                     {% csrf_token %}
                                     <div class="row" style="margin-bottom: 15px;">
                                     <div class="col-lg-3 label-wrapper">
@@ -481,7 +481,7 @@ torrentz
                                     </div>
                                     <div class="col-lg-6">
                                     <div class="search-wrapper input" id="rating_mark">
-                                        <input type="number" name="rating" placeholder="Search" class="search-input"/>
+                                        <input type="number" name="rating" placeholder="Search" class="search-input" min="0" max="10" step="0.5"/>
                                         <i class="fa fa-search"></i>
                                         <i class="fa fa-minus-circle hide"></i>
                                       </div>
@@ -499,7 +499,7 @@ torrentz
                                     </div>
                                     <div class="col-lg-6">
                                     <div class="search-wrapper input" id="votes_mark">
-                                        <input type="number" name="votes" placeholder="Search" class="search-input"/>
+                                        <input type="number" name="votes" placeholder="Search" class="search-input" min="0" step="1000"/>
                                         <i class="fa fa-search"></i>
                                         <i class="fa fa-minus-circle hide"></i>
                                       </div>
