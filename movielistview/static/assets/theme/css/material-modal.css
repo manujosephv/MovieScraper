@@ -257,15 +257,16 @@ body .card_right__button {
 }
 body .card_right__button a {
   color: #9e9e9e;
+    position: relative;
   text-decoration: none;
   font-family: 'Montserrat', sans-serif;
   border: 2px solid #9e9e9e;
-  padding: 10px 10px 10px 40px;
-  font-size: 12px;
-  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/343086/COMdoWZ.png);
-  background-size: 12px 12px;
-  background-repeat: no-repeat;
-  background-position: 7% 50%;
+  padding: 5px 5px 5px 30px;
+  font-size: 13px;
+/*  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/343086/COMdoWZ.png);*/
+/*  background-size: 12px 12px;*/
+/*  background-repeat: no-repeat;*/
+/*  background-position: 7% 50%;*/
   border-radius: 5px;
   -webkit-transition-property: all;
   transition-property: all;
@@ -275,13 +276,28 @@ body .card_right__button a {
 body .card_right__button a:hover {
   color: #000000;
   background-color: #ffda00;
-  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/343086/rFQ5dHA.png);
-  background-size: 12px 12px;
-  background-repeat: no-repeat;
-  background-position: 10% 50%;
+/*    font-size: 14px;*/
+/*  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/343086/rFQ5dHA.png);*/
+/*  background-size: 12px 12px;*/
+/*  background-repeat: no-repeat;*/
+/*  background-position: 10% 50%;*/
   cursor: pointer;
   -webkit-transition-property: all;
   transition-property: all;
   -webkit-transition-duration: .5s;
   transition-duration: .5s;
+}
+
+body .card_right__button a .fa {
+    position: absolute;
+    top:31%;
+    left:7%;
+      -webkit-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: .5s;
+  transition-duration: .5s;
+}
+
+body .card_right__button a:hover .fa {
+    left:16%;
 }

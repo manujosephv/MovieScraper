@@ -196,7 +196,7 @@ function remove_duplicates() {
         error : function(xhr,errmsg,err) {
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
             enable_buttons();
-            frm_results_title.html("Update Cancelled");
+            frm_results_title.html("Remove Duplicates Cancelled");
             frm_results_text.html("<span>Something went wrong. Please try again.");
             $('#popup-box').css('background-color', '#ba2b1c');
             $('.popup-wrap').fadeIn(250);

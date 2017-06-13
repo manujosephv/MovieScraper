@@ -170,11 +170,7 @@ def remove_duplicates(request):
         # res = test_task.delay()
         response_data = {}
         response_data['task_id_duplicate'] = res.id
-        # response_data['no_of_rows_updated'] = no_of_rows_updated
         response_data['result'] = 'Removing Duplicates'
-        # response_data['scraped_time'] = datetime.datetime.now().isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
-        # response_data['last_scrap_time'] = timezone.make_naive(Movie.objects.latest('date_time').date_time).isoformat() #post.created.strftime('%B %d, %Y %I:%M %p')
-        #response_data['debug_info2'] = Movie.objects.all().latest('post_date')
 
         return HttpResponse(
             json.dumps(response_data),
