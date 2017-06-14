@@ -256,6 +256,7 @@ def search_movies(request):
 
             response_data['result'] = queryset.count()
             response_data['search_id_array'] = list(queryset.values_list('id',flat=True))
+            response_data['movie_list_name'] = list(queryset.values_list('name',flat=True))
             request.session['search_id_array'] = list(queryset.values_list('id',flat=True))
             return HttpResponse(
                 json.dumps(response_data),

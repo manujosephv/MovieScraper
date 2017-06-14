@@ -253,9 +253,13 @@ function search_movies(id) {
             console.log(json); // log the returned json to the console
             console.log("success"); // another sanity check
             movies = json.result;
+            movie_list = json.movie_list_name
             frm.addClass('searched');
             frm.find('input[type=submit]').val('Go Ahead');
-            frm.siblings('#form-head').find('h4').html(movies + " movies selected! Proceed?");
+            // frm.siblings('#form-head').find('h4').html(movies + " movies selected! Proceed?");
+            tooltip_content = '<span class="tooltip-content"><ul><li>' + movie_list.join('</li><li>')+'</li></ul></span>'
+            // tooltip_content = '<span class="tooltip-content"><ul><li>asdasdas</li><li>asdasdas</li><li>asdasdas</li><li>asdasdas</li><li>asdasdas</li><li>asdasdas</li><li>asdasdas</li><li>asdasdas</li><li>asdasdas</li><li>asdasdas</li></ul></span>';
+            frm.siblings('#form-head').find('h4').html("<a><span>" + movies + " movies selected! Proceed?</span>"+tooltip_content+"</a>");
             frm.addClass('form-submitted');
             frm.siblings('#form-head').addClass('form-submitted');
             // setTimeout(function(){

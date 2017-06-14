@@ -333,7 +333,7 @@ torrentz
                             <div id="form-content">
                                 <div id="form-head">
                                     <h2 class="pre">Delete Movies</h2>
-                                    <h4 class="post">24 movies selected! Delete?</h4>
+                                    <h4 class="post tooltip-movies right"><span>24 movies selected! Delete?</span></h4>
                                 </div>
                                 <form autocomplete="off" action="/search_movies/" method="post" class="search-movies-form" id="delete-movies-form">
                                     {% csrf_token %}
@@ -446,7 +446,7 @@ torrentz
                         <div id="form-content">
                             <div id="form-head">
                                     <h2 class="pre">Mark Read Movies</h2>
-                                    <h4 class="post">24 movies selected! Mark Read?</h4>
+                                    <h4 class="post tooltip-movies right">24 movies selected! Mark Read?</h4>
                                 </div>
                                 <form autocomplete="off" action="/search_movies/" method="post" class="search-movies-form" id="mark-read-movies-form">
                                     {% csrf_token %}
