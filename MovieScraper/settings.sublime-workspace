@@ -4,6 +4,78 @@
 		"selected_items":
 		[
 			[
+				"movie",
+				"movie_cleaner"
+			],
+			[
+				"release",
+				"release_type"
+			],
+			[
+				"class",
+				"classmethod"
+			],
+			[
+				"q",
+				"queryset"
+			],
+			[
+				"Movie",
+				"MovieListCleaner"
+			],
+			[
+				"filt",
+				"filter"
+			],
+			[
+				"mark",
+				"mark_read_bulk"
+			],
+			[
+				"id_",
+				"id_array"
+			],
+			[
+				"da",
+				"date"
+			],
+			[
+				"post",
+				"post_date"
+			],
+			[
+				"con",
+				"condition_date"
+			],
+			[
+				"condi",
+				"condition_votes"
+			],
+			[
+				"imdb",
+				"imdb_rating"
+			],
+			[
+				"cond",
+				"condition_name"
+			],
+			[
+				"mov",
+				"movie_name"
+			],
+			[
+				"ret",
+				"ret_str"
+			],
+			[
+				"smart",
+				"smart_str"
+			],
+			[
+				"spot",
+				"spot_light_movies"
+			],
+			[
 				"filter",
 				"filter_form"
 			],
@@ -34,10 +106,6 @@
 			[
 				"mo",
 				"movie_dict"
-			],
-			[
-				"movie",
-				"movie_count_added"
 			],
 			[
 				"res",
@@ -72,10 +140,6 @@
 				"no_of_rows_updated"
 			],
 			[
-				"imdb",
-				"imdb_link_present"
-			],
-			[
 				"n",
 				"name"
 			],
@@ -92,16 +156,8 @@
 				"scrape_and_add_movies"
 			],
 			[
-				"post",
-				"post_max_date"
-			],
-			[
 				"move",
 				"movie_read"
-			],
-			[
-				"Movie",
-				"MovieAdmin"
 			],
 			[
 				"fil",
@@ -112,16 +168,8 @@
 				"post_max_date"
 			],
 			[
-				"con",
-				"convert_timezone_aware"
-			],
-			[
 				"che",
 				"checkedAttr"
-			],
-			[
-				"mark",
-				"mark_read_form"
 			],
 			[
 				"sc",
@@ -167,7 +215,7 @@
 			"file": "/D/Scrap Swag/MovieScraper/movielistview/views.py",
 			"settings":
 			{
-				"buffer_size": 15752,
+				"buffer_size": 16034,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -176,7 +224,7 @@
 			"file": "/D/Scrap Swag/MovieScraper/movielistview/tasks.py",
 			"settings":
 			{
-				"buffer_size": 1522,
+				"buffer_size": 2185,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -185,16 +233,24 @@
 			"file": "/D/Scrap Swag/MovieScraper/movielistview/static/assets/theme/js/ajax-script.js",
 			"settings":
 			{
-				"buffer_size": 6920,
+				"buffer_size": 15941,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "settings_dev.py",
+			"file": "/D/Scrap Swag/MovieScraper/movielistview/static/assets/theme/js/expandable-buttons.js",
 			"settings":
 			{
-				"buffer_size": 6060,
+				"buffer_size": 3068,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Scrap Swag/MovieScraper/movielistview/urls.py",
+			"settings":
+			{
+				"buffer_size": 1055,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -203,7 +259,7 @@
 			"file": "/D/Scrap Swag/MovieScraper/movielistview/templatetags/custom_filters.py",
 			"settings":
 			{
-				"buffer_size": 1058,
+				"buffer_size": 1640,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -212,7 +268,7 @@
 			"file": "/D/Scrap Swag/MovieScraper/movielistview/forms.py",
 			"settings":
 			{
-				"buffer_size": 550,
+				"buffer_size": 1058,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -221,7 +277,15 @@
 			"file": "/D/Scrap Swag/MovieScraper/movielistview/Utils.py",
 			"settings":
 			{
-				"buffer_size": 7108,
+				"buffer_size": 7839,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Scrap Swag/MovieScraper/movielistview/management/commands/call_update_release_types_task.py",
+			"settings":
+			{
+				"buffer_size": 215,
 				"line_ending": "Windows"
 			}
 		},
@@ -229,7 +293,15 @@
 			"file": "/D/Scrap Swag/MovieScraper/movielistview/MovieListCleaner.py",
 			"settings":
 			{
-				"buffer_size": 8012,
+				"buffer_size": 6872,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Scrap Swag/MovieScraper/movielistview/MovieScraper.py",
+			"settings":
+			{
+				"buffer_size": 7782,
 				"line_ending": "Windows"
 			}
 		},
@@ -238,15 +310,6 @@
 			"settings":
 			{
 				"buffer_size": 1872,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/Scrap Swag/MovieScraper/movielistview/urls.py",
-			"settings":
-			{
-				"buffer_size": 553,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -259,12 +322,20 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 0.0,
-		"last_filter": "",
+		"height": 588.0,
+		"last_filter": "pack",
 		"selected_items":
 		[
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Install Package Control"
+			]
 		],
-		"width": 0.0
+		"width": 600.0
 	},
 	"console":
 	{
@@ -284,8 +355,17 @@
 	},
 	"file_history":
 	[
-		"/D/Scrap Swag/start-celery-server.bat",
 		"/D/Scrap Swag/MovieScraper/MovieScraper/settings.py",
+		"/D/Scrap Swag/MovieScraper/movielistview/management/commands/call_update_release_types_task.py",
+		"/D/Scrap Swag/MovieScraper/movielistview/management/commands/call_remove_duplicates_task.py",
+		"/D/Scrap Swag/MovieScraper/movielistview/static/assets/theme/js/expandable-buttons.js",
+		"/D/Scrap Swag/MovieScraper/movielistview/static/assets/theme/js/material-modal.js",
+		"/D/Scrap Swag/MovieScraper/MovieScraper/settings_dev.py",
+		"/D/Scrap Swag/MovieScraper/movielistview/static/assets/theme/js/ajax-script.js",
+		"/D/Scrap Swag/MovieScraper/movielistview/static/assets/theme/js/material-card.js",
+		"/D/Scrap Swag/MovieScraper/movielistview/static/assets/theme/js/spotlight.js",
+		"/D/Scrap Swag/MovieScraper/movielistview/unicode_to_ascii.py",
+		"/D/Scrap Swag/start-celery-server.bat",
 		"/D/Scrap Swag/start-flower.bat",
 		"/D/Scrap Swag/MovieScraper/MovieScraper/local_settings.py",
 		"/D/Scrap Swag/MovieScraper_Local/MovieScraper/settings.py",
@@ -338,6 +418,26 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"rank_list_of_releases",
+			"std_list_of",
+			"std_list_of_release_names",
+			"avoid_list_of_releases",
+			"rank_list_of_releases",
+			"std_list_of_release_names",
+			"find_release_type_from_name",
+			"std_list_of_release_names",
+			"find_release_type_from_name",
+			"avoid_list_of_releases",
+			"std_list_of_releases",
+			"inputMovieList",
+			"dupli",
+			"mark_read_form",
+			"html",
+			"task_id_rating",
+			"task_id_scrape",
+			"task_id",
+			"timedel",
+			"timede",
 			"encode",
 			"min_rating",
 			"encode",
@@ -350,6 +450,9 @@
 		"regex": false,
 		"replace_history":
 		[
+			"search_movies_form",
+			"task_id_duplicate",
+			"task_id_rating",
 			"min_votes"
 		],
 		"reverse": false,
@@ -361,7 +464,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -370,15 +473,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15752,
+						"buffer_size": 16034,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4400,
-								4400
+								10857,
+								10857
 							]
 						],
 						"settings":
@@ -387,11 +490,11 @@
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": -0.0,
-						"translation.y": 1914.0,
+						"translation.x": 0.0,
+						"translation.y": 5172.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -400,15 +503,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1522,
+						"buffer_size": 2185,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1224,
-								1224
+								1718,
+								1718
 							]
 						],
 						"settings":
@@ -418,10 +521,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 264.0,
+						"translation.y": 660.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
@@ -430,15 +533,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6920,
+						"buffer_size": 15941,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4335,
-								4329
+								10639,
+								10639
 							]
 						],
 						"settings":
@@ -447,86 +550,58 @@
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 1524.0,
+						"translation.x": 1.0,
+						"translation.y": 5324.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "settings_dev.py",
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/static/assets/theme/js/expandable-buttons.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6060,
+						"buffer_size": 3068,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5573,
-								5573
+								2036,
+								2036
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3925.0,
+						"translation.y": 660.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "/D/Scrap Swag/MovieScraper/movielistview/templatetags/custom_filters.py",
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/urls.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1058,
+						"buffer_size": 1055,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								380,
-								380
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/D/Scrap Swag/MovieScraper/movielistview/forms.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 550,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								404,
-								404
+								1051,
+								1051
 							]
 						],
 						"settings":
@@ -541,50 +616,76 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "/D/Scrap Swag/MovieScraper/movielistview/Utils.py",
+					"buffer": 5,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/templatetags/custom_filters.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7108,
+						"buffer_size": 1640,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4392,
-								4394
+								468,
+								422
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 2616.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/forms.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1058,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								592,
+								592
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
 					"buffer": 7,
-					"file": "/D/Scrap Swag/MovieScraper/movielistview/MovieListCleaner.py",
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/Utils.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8012,
+						"buffer_size": 7839,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3248,
-								3299
+								7783,
+								7783
 							]
 						],
 						"settings":
@@ -594,27 +695,55 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1208.0,
+						"translation.y": 3758.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 8,
-					"file": "/D/Scrap Swag/MovieScraper/movielistview/models.py",
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/management/commands/call_update_release_types_task.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1872,
+						"buffer_size": 215,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1287,
-								1296
+								215,
+								215
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/MovieListCleaner.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6872,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1215,
+								1215
 							]
 						],
 						"settings":
@@ -631,31 +760,63 @@
 					"type": "text"
 				},
 				{
-					"buffer": 9,
-					"file": "/D/Scrap Swag/MovieScraper/movielistview/urls.py",
+					"buffer": 10,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/MovieScraper.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 553,
+						"buffer_size": 7782,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								544,
-								544
+								437,
+								437
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 396.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "/D/Scrap Swag/MovieScraper/movielistview/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1872,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								954,
+								966
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 4,
 					"type": "text"
 				}
 			]

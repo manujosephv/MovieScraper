@@ -124,9 +124,6 @@
 
   var close = function(event) {
 
-		event.preventDefault();
-    event.stopImmediatePropagation();
-
     var target = event.target;
     var div = document.getElementById('modal__temp');
 
@@ -136,7 +133,8 @@
      */
 
     if (isOpen && target.classList.contains('modal__bg') || target.classList.contains('modal__close')) {
-
+      event.preventDefault();
+      event.stopImmediatePropagation();
       // make the hidden div visible again and remove the transforms so it scales back to its original size
       div.style.opacity = '1';
       div.removeAttribute('style');
