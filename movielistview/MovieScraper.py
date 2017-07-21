@@ -82,8 +82,8 @@ class MovieScraper:
                 time.sleep(5)
                 if attempts == 3:
                     return scrape_list.append({})
-            except socket.error:
-                print("SOCKET ERROR!")
+            except Exception, e:
+                print("An ERROR! {}".format(str(e)))
                 attempts += 1
                 print("Retrying...")
                 time.sleep(5)
