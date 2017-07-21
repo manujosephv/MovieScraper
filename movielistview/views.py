@@ -56,7 +56,11 @@ color_dict = {1: "Red",
 Landing page and it's actions
 '''
 def index(request):
-    movie_list_id = (Movie.objects.filter(post_date__lte =timezone.now()-datetime.timedelta(days=30),movie_read = False, imdb_votes__gte = 3000)
+    # movie_list_id = (Movie.objects.filter(post_date__lte =timezone.now()-datetime.timedelta(days=30),movie_read = False, imdb_votes__gte = 3000)
+    #                                 .order_by('-imdb_rating','-rt_rating','-post_date')
+    #                                     .values_list('id', flat=True))
+
+    movie_list_id = (Movie.objects.filter(movie_read = False, imdb_votes__gte = 3000)
                                     .order_by('-imdb_rating','-rt_rating','-post_date')
                                         .values_list('id', flat=True))
     print movie_list_id
