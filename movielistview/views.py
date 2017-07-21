@@ -50,6 +50,7 @@ color_dict = {1: "Red",
                 16: "Blue-Grey"
 }
 
+DEBUG = TRUE
 # Create your views here.
 
 '''
@@ -59,7 +60,12 @@ def index(request):
     movie_list_id = (Movie.objects.filter(post_date__lte =timezone.now()-datetime.timedelta(days=30),movie_read = False, imdb_votes__gte = 3000)
                                     .order_by('-imdb_rating','-rt_rating','-post_date')
                                         .values_list('id', flat=True))
+    print movie_list_id if DEBUG
+    
     spot_light_movies = (Movie.objects.order_by('-imdb_rating','-rt_rating','-post_date').filter(id__in=list(movie_list_id[:4])))
+
+    print spot_light_movies if DEBUG
+
     return render(request, 'movielistview/index.html', {"movie_count_unread":Movie.objects.filter(movie_read = False).count(),
                                                         "last_scrape_time" : timezone.make_naive(Movie.objects.latest('date_time').date_time),
                                                         "spotlight" : spot_light_movies
