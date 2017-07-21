@@ -68,7 +68,7 @@ class MovieScraper:
                 break
                 #print('OPENING WEBPAGE')
             except urllib2.HTTPError as err :
-                print("HTTPERROR!")
+                print("HTTP ERROR!")
                 # print(err.code)
                 attempts += 1
                 print("Retrying...")
@@ -76,7 +76,14 @@ class MovieScraper:
                 if attempts == 3:
                     return scrape_list.append({})
             except urllib2.URLError :
-                print("URLERROR!")
+                print("URL ERROR!")
+                attempts += 1
+                print("Retrying...")
+                time.sleep(5)
+                if attempts == 3:
+                    return scrape_list.append({})
+            except socket.error:
+                print("SOCKET ERROR!")
                 attempts += 1
                 print("Retrying...")
                 time.sleep(5)
