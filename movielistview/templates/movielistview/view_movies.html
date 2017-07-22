@@ -211,9 +211,9 @@
                                             {% endif %}) | {% if movie.release_type %} {{ movie.release_type }} {% else %} Not Available {% endif %}
                     </strong>
                                     <div class="date">
-                                        <span class="day">12</span>
-                                        <span class="month">Aug</span>
-                                        <span class="year">2016</span>
+                                        <span class="day">{{ movie.post_date|date:"j" }}</span>
+                                        <span class="month">{{ movie.post_date|date:"M" }}</span>
+                                        <span class="year">{{ movie.post_date|date:"Y" }}</span>
                                     </div>
                                 </h2>
                                 <div class="mc-content">
