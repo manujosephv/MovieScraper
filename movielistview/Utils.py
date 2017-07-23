@@ -128,8 +128,8 @@ class Utils:
         ia = imdb.IMDb() # by default access the web.
         counter = 0
         for movie in movies:
-            print("movie name: {}".format(movie.name))
-            print("movie link: {}".format(movie.imdb_link))
+            print("movie name: {}".format(u' '.join(movie.name).encode('utf-8').strip()))
+            print("movie link: {}".format(u' '.join(movie.imdb_link).encode('utf-8').strip()))
             movie_info, imdb_link_present = self.get_imdb_info(movie.imdb_link,movie.name,ia)
             if movie_info:
                 if 'rating' in movie_info.keys():
