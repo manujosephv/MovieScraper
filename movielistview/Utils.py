@@ -171,6 +171,7 @@ class Utils:
     @classmethod
     def remove_duplicates_in_db(self):
         df = pd.DataFrame(list(Movie.objects.all().values()))
+        print ("Total Number of Movies: {}".format(len(df)))
         movie_cleaner = MovieListCleaner(df)
         df = movie_cleaner.remove_duplicates_model(df)
         id_list = df.id.tolist()
