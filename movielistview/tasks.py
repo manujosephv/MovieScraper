@@ -37,6 +37,7 @@ def remove_duplicates_task():
     print "Remove Duplicate Task"
     utils = Utils()
     duplicates = utils.remove_duplicates_in_db()
+    print ("duplicates removed: {}".format(duplicates))
     # Movie.objects.filter(post_date__lte =timezone.now()-datetime.timedelta(days=10),movie_read = True).delete()
     return duplicates
 
