@@ -35,13 +35,14 @@ class MovieListCleaner:
 
     # ### Extracting Movie Name and other details from the file name   
     def movie_name(self,row):
+    	print row
         n=""
         resolution = ""
         year = 0
         match_found = False
         res_bool = False
         if row is not None:
-            for part in row.split("."):
+            for part in str(row).split("."):
                 matchObj = re.match('^(19|20)\d{2}$',part)
                 if res_bool:
                     resolution = part
