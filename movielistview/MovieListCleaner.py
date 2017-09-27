@@ -54,7 +54,7 @@ class MovieListCleaner:
                 if not match_found:
                     n = n + part +" "
                     continue
-        return pd.Series({'Name':n,'Year':year,'Resolution':resolution})
+        return pd.Series({'Name':str(n),'Year':str(year),'Resolution':str(resolution)})
 
 # ### Extracting IMDB Rating
     
