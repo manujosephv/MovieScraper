@@ -54,7 +54,7 @@ class MovieListCleaner:
                 if not match_found:
                     n = n + part +" "
                     continue
-        return pd.Series({'Name':str(n),'Year':str(year),'Resolution':str(resolution)})
+        return pd.Series({'Name':str(n),'Year':year,'Resolution':str(resolution)})
 
 # ### Extracting IMDB Rating
     
@@ -116,6 +116,7 @@ class MovieListCleaner:
         # ### Removing Duplicates
         
         movies_extra_info[['IMDB','Year','Votes','RT']] = movies_extra_info[['IMDB','Year','Votes','RT']].convert_objects(convert_numeric=True)
+        movies_extra_info['Release Type'] = movies_extra_info['Release Type'].astype(str)
         
         ##Removing entries with unwanted
         mask=None
