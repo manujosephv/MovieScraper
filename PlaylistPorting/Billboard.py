@@ -18,7 +18,7 @@ class Billboard:
             song = Song(artist=entry.artist,title = entry.title, 
                         billboard_rank = entry.rank, 
                         billboard_date = dt.datetime.now(),
-                        billboard_change = entry.change)
+                        billboard_change = entry.lastPos - entry.rank)
             if gmusic:
                 result = gmusic.search_song(song)
                 song.google_music_store_id = gmusic.get_store_id(result)
