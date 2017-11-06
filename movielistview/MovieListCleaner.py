@@ -35,7 +35,7 @@ class MovieListCleaner:
 
     # ### Extracting Movie Name and other details from the file name   
     def movie_name(self,row):
-    	print row
+    	#print row
         n=""
         resolution = ""
         year = 0
