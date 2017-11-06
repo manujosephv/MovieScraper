@@ -86,9 +86,7 @@ class Spotify:
             song_list = song_list + self.get_song_list(tracks,gmusic, strict,collect_skipped)
         return song_list
     
-    def get_playlist(self,playlist_url, sort_popularity=False, gmusic=None, strict = False,collect_skipped=False):
-        if collect_skipped:
-            global_imports('ToDoist')
+    def get_playlist_name_desc_tracks(self,playlist_url):
         playlist_id, username = self.get_playlist_id_username_from_link(playlist_url)
         results = self.sp.user_playlist(username, playlist_id, fields="name,description,tracks,next")
         playlist_name = self.html_parser.unescape(results['name'])
@@ -96,12 +94,27 @@ class Spotify:
             playlist_desc = self.html_parser.unescape(results['description'])
         else:
             playlist_desc = playlist_name
+        return playlist_name, playlist_desc, results['tracks']
+            
+            
+    def get_playlist(self,playlist_url, sort_popularity=False, gmusic=None, strict = False,collect_skipped=False):
+        if collect_skipped:
+            global_imports('ToDoist')
+#        playlist_id, username = self.get_playlist_id_username_from_link(playlist_url)
+#        results = self.sp.user_playlist(username, playlist_id, fields="name,description,tracks,next")
+#        playlist_name = self.html_parser.unescape(results['name'])
+#        if results.has_key('description') and results['description'] is not None:
+#            playlist_desc = self.html_parser.unescape(results['description'])
+#        else:
+#            playlist_desc = playlist_name
+        playlist_name, playlist_desc, tracks = self.get_playlist_name_desc_tracks(playlist_url)
         logger.info(u'Copying {} from Spotify to Google Music'.format(playlist_name))
         logger.debug(u'Playlist Name: {}, Playlist Description: {}'.format(playlist_name, playlist_desc))
-        tracks = results['tracks']
+#        tracks = results['tracks']
         song_list = self.get_all_tracks_as_list(tracks,gmusic, strict,collect_skipped)
         if collect_skipped:
                 ToDoist.ToDoist().api.commit()
         return Playlist(name=playlist_name, description=playlist_desc, song_list=song_list,
                         spotify_popularity_sort = sort_popularity)
+            
     

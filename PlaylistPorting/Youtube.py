@@ -198,7 +198,7 @@ class Youtube:
                     description = self.html_parser.unescape(snippet['description'])
         return title, description
     
-    def get_playlist_id_name_description(self,url):
+    def get_playlist_id_name_description(self,url, limit):
         url_data = urlparse.urlparse(url)
         query = urlparse.parse_qs(url_data.query)
         username = None
@@ -223,6 +223,8 @@ class Youtube:
                 playlist_name = playlist_name.split('Uploads from ')[-1]
         if channel or username:
             playlist_desc = 'The song uploads from {} as on {}.'.format(playlist_name, dt.datetime.today().strftime('%d-%b-%y'))
+        if limit:
+            playlist_name = '{} {}'.format(playlist_name, limit)
         return playlist_name, playlist_desc, playlist_id
             
     
@@ -230,9 +232,7 @@ class Youtube:
     def get_playlist(self,playlist_url,gmusic=None, limit=None, strict = False, collect_skipped=False):
         if collect_skipped:
             global_imports('ToDoist')
-        playlist_name, playlist_desc, playlist_id = self.get_playlist_id_name_description(playlist_url)
-        if limit:
-            playlist_name = '{} {}'.format(playlist_name, limit)
+        playlist_name, playlist_desc, playlist_id = self.get_playlist_id_name_description(playlist_url, limit)
         logger.info(u'Getting playlist {} from Youtube'.format(playlist_name))
         if playlist_id:
             song_list = self.get_song_list_from_playlist_id(playlist_id,gmusic,limit, strict, collect_skipped) 
