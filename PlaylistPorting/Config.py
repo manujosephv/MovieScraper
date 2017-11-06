@@ -5,11 +5,15 @@ import json
 class Config:
 
     ### LOADING THE CONFIG VARIABLES FROM FILE
+    dir = os.path.dirname(__file__)
+    
     try:
-        with open('config.json', 'r') as f:
+        filename = os.path.join(dir, 'config.json')
+        with open(filename, 'r') as f:
             config = json.load(f)
     except:
-        with open('../config.json', 'r') as f:
+        filename = os.path.join(dir,'..','config.json')
+        with open(filename, 'r') as f:
             config = json.load(f)
     GOOGLE_MUSIC_APP_PASSWORD = config['GOOGLEMUSIC']['APP_PASSWORD']
     GOOGLE_MUSIC_USER_NAME = config['GOOGLEMUSIC']['USER_NAME']
