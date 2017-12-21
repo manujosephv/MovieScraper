@@ -75,9 +75,9 @@ class Youtube:
         search_result = self.youtube_search(full_title,1)
         if len(search_result)>0:
           song = search_result[0]
-          score = difflib.SequenceMatcher(None,song.full_title.lower(),full_title.lower()).ratio()
+          score = difflib.SequenceMatcher(None,song.full_title.lower(),song.get_clean_title(full_title).lower()).ratio()
           if score < 0.50:
-              logger.warning(u"Youtube Title: {}, Actual Title: {}, Score: {}. No satisfactory results in Youtube".format(song.full_title,full_title,score))
+              logger.warning(u"Youtube Title: {}, Actual Title: {}, Score: {}. No satisfactory results in Youtube".format(song.full_title,song.get_clean_title(full_title),score))
               return None
         else:
           logger.warning(u"No Results for {} in Youtube".format(full_title))

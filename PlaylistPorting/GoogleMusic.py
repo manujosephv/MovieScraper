@@ -44,28 +44,41 @@ class GoogleMusic:
             song_ids = song_df.google_music_store_id.dropna().tolist()
         return self.gmusicapi.add_songs_to_playlist(playlist_id, song_ids)
 
+    def gmusic_constrained_search(self,song,query,strict):
+        song_hits = query['song_hits']
+        for result in song_hits:
+            track = result['track']
+            
+            if song.remix:
+                if "remix" not in track['title'].lower():
+                    continue
+            else:
+                if "remix" in track['title'].lower():
+                    continue
+            if strict:
+                full_title = "{} - {}".format(track['albumArtist'],track['title'])
+                score = difflib.SequenceMatcher(None,song.full_title.lower(),full_title.lower()).ratio()
+                if score < 0.6:
+                    continue
+            return track
+        return None
+
+    
     def search_song(self,song, strict=False):
         try:
             first_query = self.gmusicapi.search(song.full_title)
-            if len(first_query['song_hits']) >0:
-                first_result = first_query['song_hits'][0]['track']
-            else:
+            first_result = self.gmusic_constrained_search(song,first_query,strict)
+            if first_result is None:
                 second_query = self.gmusicapi.search(song.full_title_stripped)
-                if len(first_query['song_hits']) >0:
-                    first_result = second_query['song_hits'][0]['track']
-                else:
-                    first_result = None
-            if strict:
-                full_title = "{} - {}".format(first_result['albumArtist'],first_result['title'])
-                score = difflib.SequenceMatcher(None,song.full_title.lower(),full_title.lower()).ratio()
-                if score < 0.5:
-                    logger.warning('No satisfactory result found in Google Music for {}'.format(song.full_title))
-                    first_result = None
+                first_result = self.gmusic_constrained_search(song,second_query,strict)
+            if first_result is None:
+                logger.warning('No satisfactory result found in Google Music for {}'.format(song.full_title))
             return first_result
         except Exception as e:
             logger.debug('Exception: {}'.format(e))
             logger.info(u'Skipped {}'.format(song.title))
             return None
+    
     def get_store_id(self,result):
         store_id=None
         if result:

@@ -69,6 +69,7 @@ class MusicTools:
       youtube = Youtube()
       song = youtube.get_youtube_video(full_title)
       if not(song):
+          logger.info('No Match in Youtube. Searching Soundcloud')
           soundcloud = Soundcloud()
           song = soundcloud.get_soundcloud_song(full_title)
       return song

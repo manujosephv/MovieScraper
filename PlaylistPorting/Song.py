@@ -45,7 +45,13 @@ class Song:
             video_link = get_youtube_link_from_code(youtube_id)
         self.video_link = video_link
         self.youtube_id = youtube_id
+        if 'remix' in self.full_title.lower():
+            self.remix = True
+        else:
+            self.remix = False
         
+    def __repr__(self):
+       return self.full_title
 
     def split_title(self,title):
         split = re.split(r'(?: ?)-(?: ?)',title)
@@ -77,7 +83,7 @@ class Song:
 
         words_filter = ('official', 'lyric video', 'official video','official music video','lyrics','official lyric video','official lyrics video','lyric', 'audio', 'remixed', 'video',
                 'full', 'version', 'music', 'mp3', 'hd', 'hq', 'uploaded', 'reupload','re-upload','proximity release','edm.com exclusive','edm.com premeire'
-                ,'free download!','free download','visualizer')
+                ,'free download!','free download','visualizer','official audio')
         word_filter_calc = ["("+word+")" for word in words_filter] + ["["+word+"]" for word in words_filter] + ["{"+word+"}" for word in words_filter] 
         match = re.search(r'(.*)((\(|\[|\{).*(\)|\]|\}))',full_title)
         if match:
