@@ -42,7 +42,7 @@ def main():
     if chart_df_dict.has_key('HOT_100'):
         logger.info('Updating {} Playlist......'.format('Top 25 Risers'))
         top_100=chart_df_dict['HOT_100']
-        if (!pd.api.types.is_numeric_dtype(df['billboard_change'])):
+        if (not(pd.api.types.is_numeric_dtype(df['billboard_change']))):
             top_100.loc[top_100.billboard_change=='Hot Shot Debut','billboard_change'] = 100
         top_100.change = pd.to_numeric(top_100.billboard_change, errors='coerce').fillna(0)
         hot25_risers=top_100.sort_values(by=['billboard_change'], ascending=False).head(25).sort_values(by=['billboard_rank'], ascending=True)
