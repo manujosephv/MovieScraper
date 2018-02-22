@@ -11,7 +11,7 @@ import pandas as pd
 import datetime
 import sys
 import re
-
+from imdb import IMDb
 from dateutil.parser import parse
 import datefinder
 import difflib
@@ -50,6 +50,15 @@ class MovieScraper:
                     release = curr_release
         return release
 
+    @classmethod
+    def get_poster_imdb(self,link):
+    	code = link.rstrip('/').split('/')[-1]
+		ia = IMDb()
+		movie = ia.get_movie(code)
+		if 'cover url' in movie:
+		    return movie['cover url']
+		else:
+			return None
 
     @classmethod
     def scrape_page(self,url,scrape_list, max_post_date):
@@ -140,6 +149,9 @@ class MovieScraper:
                     match = re.search(r'[Ii][Mm][Dd][Bb]',link_text)
                     if match is not None:
                         entry_dict['IMDB Link'] = link.get('href')
+                        poster = get_poster_imdb(entry_dict['IMDB Link'])
+                        if poster:
+                        	entry_dict['Thumbnail Link'] = poster
                     match = re.search(r'[Rr][Tt]',link_text)
                     if match is not None:
                         entry_dict['RT Link'] = link.get('href')
