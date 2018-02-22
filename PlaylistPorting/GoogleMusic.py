@@ -12,7 +12,9 @@ logger = Logging.logger
 class GoogleMusic:
 
     __metaclass__ = Singleton
-    
+    SKIP_ARTIST =['vox freaks']
+
+
     def __init__(self):
         self.gmusicapi = Mobileclient(debug_logging=False)
         logged_in = self.gmusicapi.login(email=Config.GOOGLE_MUSIC_USER_NAME, password=Config.GOOGLE_MUSIC_APP_PASSWORD, locale='en_US', android_id=Mobileclient.FROM_MAC_ADDRESS)
@@ -48,7 +50,8 @@ class GoogleMusic:
         song_hits = query['song_hits']
         for result in song_hits:
             track = result['track']
-            
+            if track['albumArtist'].lower() in SKIP_ARTIST:
+                continue
             if song.remix:
                 if "remix" not in track['title'].lower():
                     continue
