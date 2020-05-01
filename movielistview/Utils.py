@@ -41,6 +41,7 @@ class Utils:
     # @transaction.atomic
     @classmethod
     def scrape_and_add_movies(self):
+        cut_off_year = 2015
         #Actions to be done here
         if Movie.objects.all().count()>0:
             post_max_date = timezone.make_naive(Movie.objects.latest('post_date').post_date)
@@ -68,6 +69,9 @@ class Utils:
             movie_df['key'] = movie_df[['name','year', 'genre', 'imdb_rating', 'imdb_votes','rt_critics','plot', 'starring','director', 
                 'imdb_link','rt_link', 'post_link','release_name', 'release_type', 'release_date','thumbnail_link',
                 'trailer_link', 'tomatometer','rt_rating','post_date']].apply(lambda row: ','.join(map(str, row)), axis=1)
+            movie_df['year'] = pd.to_numeric(movie_df['year'], errors='coerce')
+            movie_df.dropna(subset='year',inplace=True)
+            movie_df = movie_df.loc[movie_df.year>=cut_off_year]
             #print(movie_df.name)
             # print(movie_df.key.count())
             # print(len(movie_df.key.unique()))
